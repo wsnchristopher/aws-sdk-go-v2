@@ -4341,6 +4341,24 @@ func awsRestjson1_deserializeOpDocumentGetPlaybackConfigurationOutput(v **GetPla
 				return err
 			}
 
+		case "DualStackPlaybackEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackPlaybackEndpointPrefix = ptr.String(jtv)
+			}
+
+		case "DualStackSessionInitializationEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackSessionInitializationEndpointPrefix = ptr.String(jtv)
+			}
+
 		case "FunctionMapping":
 			if err := awsRestjson1_deserializeDocumentFunctionMapping(&sv.FunctionMapping, value); err != nil {
 				return err
@@ -6552,6 +6570,24 @@ func awsRestjson1_deserializeOpDocumentPutPlaybackConfigurationOutput(v **PutPla
 		case "DashConfiguration":
 			if err := awsRestjson1_deserializeDocumentDashConfiguration(&sv.DashConfiguration, value); err != nil {
 				return err
+			}
+
+		case "DualStackPlaybackEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackPlaybackEndpointPrefix = ptr.String(jtv)
+			}
+
+		case "DualStackSessionInitializationEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackSessionInitializationEndpointPrefix = ptr.String(jtv)
 			}
 
 		case "FunctionMapping":
@@ -10244,6 +10280,15 @@ func awsRestjson1_deserializeDocumentDashConfiguration(v **types.DashConfigurati
 
 	for key, value := range shape {
 		switch key {
+		case "DualStackManifestEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackManifestEndpointPrefix = ptr.String(jtv)
+			}
+
 		case "ManifestEndpointPrefix":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -10597,6 +10642,15 @@ func awsRestjson1_deserializeDocumentHlsConfiguration(v **types.HlsConfiguration
 
 	for key, value := range shape {
 		switch key {
+		case "DualStackManifestEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackManifestEndpointPrefix = ptr.String(jtv)
+			}
+
 		case "ManifestEndpointPrefix":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -11425,6 +11479,24 @@ func awsRestjson1_deserializeDocumentPlaybackConfiguration(v **types.PlaybackCon
 				return err
 			}
 
+		case "DualStackPlaybackEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackPlaybackEndpointPrefix = ptr.String(jtv)
+			}
+
+		case "DualStackSessionInitializationEndpointPrefix":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackSessionInitializationEndpointPrefix = ptr.String(jtv)
+			}
+
 		case "FunctionMapping":
 			if err := awsRestjson1_deserializeDocumentFunctionMapping(&sv.FunctionMapping, value); err != nil {
 				return err
@@ -12015,6 +12087,15 @@ func awsRestjson1_deserializeDocumentResponseOutputItem(v **types.ResponseOutput
 		case "DashPlaylistSettings":
 			if err := awsRestjson1_deserializeDocumentDashPlaylistSettings(&sv.DashPlaylistSettings, value); err != nil {
 				return err
+			}
+
+		case "DualStackPlaybackUrl":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected __string to be of type string, got %T instead", value)
+				}
+				sv.DualStackPlaybackUrl = ptr.String(jtv)
 			}
 
 		case "HlsPlaylistSettings":

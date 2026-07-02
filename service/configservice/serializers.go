@@ -9690,6 +9690,13 @@ func awsAwsjson11_serializeOpDocumentPutOrganizationConfigRuleInput(v *PutOrgani
 		}
 	}
 
+	if v.Tags != nil {
+		ok := object.Key("Tags")
+		if err := awsAwsjson11_serializeDocumentTagsList(v.Tags, ok); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -9724,6 +9731,13 @@ func awsAwsjson11_serializeOpDocumentPutOrganizationConformancePackInput(v *PutO
 	if v.OrganizationConformancePackName != nil {
 		ok := object.Key("OrganizationConformancePackName")
 		ok.String(*v.OrganizationConformancePackName)
+	}
+
+	if v.Tags != nil {
+		ok := object.Key("Tags")
+		if err := awsAwsjson11_serializeDocumentTagsList(v.Tags, ok); err != nil {
+			return err
+		}
 	}
 
 	if v.TemplateBody != nil {

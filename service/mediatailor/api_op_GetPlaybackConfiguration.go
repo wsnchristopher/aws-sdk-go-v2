@@ -83,6 +83,14 @@ type GetPlaybackConfigurationOutput struct {
 	// The configuration for DASH content.
 	DashConfiguration *types.DashConfiguration
 
+	// The dual-stack (IPv4 and IPv6) URL that your player accesses to get a manifest
+	// from AWS Elemental MediaTailor. The session uses server-side reporting.
+	DualStackPlaybackEndpointPrefix *string
+
+	// The dual-stack (IPv4 and IPv6) URL that your player uses to initialize a
+	// session that uses client-side reporting.
+	DualStackSessionInitializationEndpointPrefix *string
+
 	// A map of lifecycle hook event names to function identifiers. The function
 	// mapping specifies which function MediaTailor executes at each lifecycle hook
 	// during ad insertion. Valid keys are PRE_SESSION_INITIALIZATION and
@@ -129,11 +137,11 @@ type GetPlaybackConfigurationOutput struct {
 	// The Amazon Resource Name (ARN) for the playback configuration.
 	PlaybackConfigurationArn *string
 
-	// The URL that the player accesses to get a manifest from AWS Elemental
-	// MediaTailor. This session will use server-side reporting.
+	// The URL that your player accesses to get a manifest from AWS Elemental
+	// MediaTailor. The session uses server-side reporting.
 	PlaybackEndpointPrefix *string
 
-	// The URL that the player uses to initialize a session that uses client-side
+	// The URL that your player uses to initialize a session that uses client-side
 	// reporting.
 	SessionInitializationEndpointPrefix *string
 

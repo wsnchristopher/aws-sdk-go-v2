@@ -184,6 +184,14 @@ type PutPlaybackConfigurationOutput struct {
 	// The configuration for DASH content.
 	DashConfiguration *types.DashConfiguration
 
+	// The dual-stack (IPv4 and IPv6) playback endpoint prefix associated with the
+	// playback configuration.
+	DualStackPlaybackEndpointPrefix *string
+
+	// The dual-stack (IPv4 and IPv6) session initialization endpoint prefix
+	// associated with the playback configuration.
+	DualStackSessionInitializationEndpointPrefix *string
+
 	// A map of lifecycle hook event names to function identifiers. The function
 	// mapping specifies which function MediaTailor executes at each lifecycle hook
 	// during ad insertion. Valid keys are PRE_SESSION_INITIALIZATION and

@@ -1344,6 +1344,46 @@ type LambdaConfigType struct {
 	noSmithyDocumentSerde
 }
 
+// The class and attributes that identify a specific limit at the account level.
+type LimitDefinitionType struct {
+
+	// The attributes that identify the specific limit. For API rate limits, specify
+	// the Category key with a value like UserAuthentication or UserCreation .
+	//
+	// This member is required.
+	Attributes map[string]string
+
+	// The class of the limit. For API rate limits, this is API_CATEGORY .
+	//
+	// This member is required.
+	LimitClass LimitClass
+
+	noSmithyDocumentSerde
+}
+
+// The limit definition and current limit values for a provisioned limit.
+type LimitType struct {
+
+	// The default (free) limit value, in requests per second (RPS). This is the rate
+	// included at no additional cost.
+	//
+	// This member is required.
+	FreeLimitValue int32
+
+	// The definition that identifies this limit, including the class and attributes.
+	//
+	// This member is required.
+	LimitDefinition *LimitDefinitionType
+
+	// The provisioned limit value, in requests per second (RPS). This is the rate
+	// that Amazon Cognito currently enforces for your account.
+	//
+	// This member is required.
+	ProvisionedLimitValue int32
+
+	noSmithyDocumentSerde
+}
+
 // The configuration of user event logs to an external Amazon Web Services service
 // like Amazon Data Firehose, Amazon S3, or Amazon CloudWatch Logs.
 type LogConfigurationType struct {
