@@ -765,10 +765,19 @@ func TestSerdeCheckSnapshot_BatchImportFindings(t *testing.T) {
 				},
 				Resources: []types.Resource{
 					{
-						Type:         ptr.String("__Type__"),
-						Id:           ptr.String("__Id__"),
-						Partition:    types.Partition("aws"),
-						Region:       ptr.String("__Region__"),
+						Type:      ptr.String("__Type__"),
+						Id:        ptr.String("__Id__"),
+						Partition: types.Partition("aws"),
+						Region:    ptr.String("__Region__"),
+						Provider:  types.CloudProviderName("Azure"),
+						Owner: &types.ResourceOwner{
+							Account: &types.ResourceOwnerAccount{
+								Id: ptr.String("__Id__"),
+							},
+							Org: &types.ResourceOwnerOrg{
+								Id: ptr.String("__Id__"),
+							},
+						},
 						ResourceRole: ptr.String("__ResourceRole__"),
 						Tags: map[string]string{
 							"key0": "__Value__",
@@ -2293,6 +2302,7 @@ func TestSerdeCheckSnapshot_BatchImportFindings(t *testing.T) {
 							AwsS3AccessPoint:                  nil,
 							AwsEc2ClientVpnEndpoint:           nil,
 							CodeRepository:                    nil,
+							AzureResource:                     nil,
 						},
 						ApplicationName: ptr.String("__ApplicationName__"),
 						ApplicationArn:  ptr.String("__ApplicationArn__"),
@@ -2798,6 +2808,36 @@ func TestSerdeCheckSnapshot_BatchUpdateAutomationRules(t *testing.T) {
 						},
 					},
 					AwsAccountName: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceProvider: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerAccountId: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerOrgId: []types.StringFilter{
 						{
 							Value:      ptr.String("__Value__"),
 							Comparison: types.StringFilterComparison("EQUALS"),
@@ -3332,6 +3372,36 @@ func TestSerdeCheckSnapshot_BatchUpdateAutomationRules(t *testing.T) {
 						},
 					},
 					AwsAccountName: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceProvider: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerAccountId: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerOrgId: []types.StringFilter{
 						{
 							Value:      ptr.String("__Value__"),
 							Comparison: types.StringFilterComparison("EQUALS"),
@@ -4120,6 +4190,36 @@ func TestSerdeCheckSnapshot_CreateAutomationRule(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		Actions: []types.AutomationRulesAction{
 			{
@@ -4590,6 +4690,54 @@ func TestSerdeCheckSnapshot_CreateConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_CreateConnector(t *testing.T) {
+	input := &CreateConnectorInput{
+		Name:        ptr.String("__Name__"),
+		Description: ptr.String("__Description__"),
+		Provider: &types.CspmProviderConfigurationMemberAzure{
+			Value: types.AzureProviderConfiguration{
+				AWSConfigConnectorArn: ptr.String("__AWSConfigConnectorArn__"),
+				ScopeConfiguration: &types.AzureScopeConfiguration{
+					ScopeType: types.ScopeType("TENANT"),
+					ScopeValues: []string{
+						"__Member__",
+						"__Member__",
+					},
+				},
+				AzureRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+		Tags: map[string]string{
+			"key0": "__Value__",
+		},
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -5869,6 +6017,36 @@ func TestSerdeCheckSnapshot_CreateInsight(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		GroupByAttribute: ptr.String("__GroupByAttribute__"),
 	}
@@ -6095,6 +6273,33 @@ func TestSerdeCheckSnapshot_DeleteConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_DeleteConnector(t *testing.T) {
+	input := &DeleteConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -6410,6 +6615,10 @@ func TestSerdeCheckSnapshot_DescribeStandards(t *testing.T) {
 	input := &DescribeStandardsInput{
 		NextToken:  ptr.String("__NextToken__"),
 		MaxResults: ptr.Int32(1),
+		Providers: []types.StandardsProvider{
+			types.StandardsProvider("AWS"),
+			types.StandardsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -6539,6 +6748,33 @@ func TestSerdeCheckSnapshot_DisableSecurityHub(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DisableSecurityHub"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_DisableSecurityHubFeatureV2(t *testing.T) {
+	input := &DisableSecurityHubFeatureV2Input{
+		FeatureName: types.FeatureName("NETWORK_SCANNING"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DisableSecurityHubFeatureV2(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DisableSecurityHubFeatureV2"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -6734,6 +6970,33 @@ func TestSerdeCheckSnapshot_EnableSecurityHub(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_EnableSecurityHubFeatureV2(t *testing.T) {
+	input := &EnableSecurityHubFeatureV2Input{
+		FeatureName: types.FeatureName("NETWORK_SCANNING"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.EnableSecurityHubFeatureV2(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "EnableSecurityHubFeatureV2"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_EnableSecurityHubV2(t *testing.T) {
 	input := &EnableSecurityHubV2Input{
 		Tags: map[string]string{
@@ -6925,6 +7188,33 @@ func TestSerdeCheckSnapshot_GetConfigurationPolicyAssociation(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_GetConnector(t *testing.T) {
+	input := &GetConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_GetConnectorV2(t *testing.T) {
 	input := &GetConnectorV2Input{
 		ConnectorId: ptr.String("__ConnectorId__"),
@@ -6960,6 +7250,10 @@ func TestSerdeCheckSnapshot_GetEnabledStandards(t *testing.T) {
 		},
 		NextToken:  ptr.String("__NextToken__"),
 		MaxResults: ptr.Int32(1),
+		Providers: []types.StandardsProvider{
+			types.StandardsProvider("AWS"),
+			types.StandardsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -8241,6 +8535,36 @@ func TestSerdeCheckSnapshot_GetFindings(t *testing.T) {
 				},
 			},
 			ResourceApplicationArn: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
 				{
 					Value:      ptr.String("__Value__"),
 					Comparison: types.StringFilterComparison("EQUALS"),
@@ -10281,12 +10605,44 @@ func TestSerdeCheckSnapshot_ListConfigurationPolicyAssociations(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_ListConnectors(t *testing.T) {
+	input := &ListConnectorsInput{
+		NextToken:        ptr.String("__NextToken__"),
+		MaxResults:       ptr.Int32(1),
+		ProviderName:     types.CspmConnectorProviderName("AZURE"),
+		ConnectorStatus:  types.CspmConnectorStatus("CONNECTED"),
+		EnablementStatus: types.CspmEnablementStatus("ENABLED"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConnectors"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_ListConnectorsV2(t *testing.T) {
 	input := &ListConnectorsV2Input{
-		NextToken:       ptr.String("__NextToken__"),
-		MaxResults:      ptr.Int32(1),
-		ProviderName:    types.ConnectorProviderName("JIRA_CLOUD"),
-		ConnectorStatus: types.ConnectorStatus("CONNECTED"),
+		NextToken:        ptr.String("__NextToken__"),
+		MaxResults:       ptr.Int32(1),
+		ProviderName:     types.ConnectorProviderName("JIRA_CLOUD"),
+		ConnectorStatus:  types.ConnectorStatus("CONNECTED"),
+		EnablementStatus: types.EnablementStatus("ENABLED"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -10458,6 +10814,10 @@ func TestSerdeCheckSnapshot_ListSecurityControlDefinitions(t *testing.T) {
 		StandardsArn: ptr.String("__StandardsArn__"),
 		NextToken:    ptr.String("__NextToken__"),
 		MaxResults:   ptr.Int32(1),
+		Providers: []types.SecurityControlsProvider{
+			types.SecurityControlsProvider("AWS"),
+			types.SecurityControlsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -11113,6 +11473,49 @@ func TestSerdeCheckSnapshot_UpdateConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_UpdateConnector(t *testing.T) {
+	input := &UpdateConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+		Description: ptr.String("__Description__"),
+		Provider: &types.CspmProviderUpdateConfigurationMemberAzure{
+			Value: types.AzureUpdateConfiguration{
+				ScopeConfiguration: &types.AzureScopeConfiguration{
+					ScopeType: types.ScopeType("TENANT"),
+					ScopeValues: []string{
+						"__Member__",
+						"__Member__",
+					},
+				},
+				AzureRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -12387,6 +12790,36 @@ func TestSerdeCheckSnapshot_UpdateFindings(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		Note: &types.NoteUpdate{
 			Text:      ptr.String("__Text__"),
@@ -13624,6 +14057,36 @@ func TestSerdeCheckSnapshot_UpdateInsight(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		GroupByAttribute: ptr.String("__GroupByAttribute__"),
 	}
@@ -14357,10 +14820,19 @@ func TestSerdeUpdateSnapshot_BatchImportFindings(t *testing.T) {
 				},
 				Resources: []types.Resource{
 					{
-						Type:         ptr.String("__Type__"),
-						Id:           ptr.String("__Id__"),
-						Partition:    types.Partition("aws"),
-						Region:       ptr.String("__Region__"),
+						Type:      ptr.String("__Type__"),
+						Id:        ptr.String("__Id__"),
+						Partition: types.Partition("aws"),
+						Region:    ptr.String("__Region__"),
+						Provider:  types.CloudProviderName("Azure"),
+						Owner: &types.ResourceOwner{
+							Account: &types.ResourceOwnerAccount{
+								Id: ptr.String("__Id__"),
+							},
+							Org: &types.ResourceOwnerOrg{
+								Id: ptr.String("__Id__"),
+							},
+						},
 						ResourceRole: ptr.String("__ResourceRole__"),
 						Tags: map[string]string{
 							"key0": "__Value__",
@@ -15885,6 +16357,7 @@ func TestSerdeUpdateSnapshot_BatchImportFindings(t *testing.T) {
 							AwsS3AccessPoint:                  nil,
 							AwsEc2ClientVpnEndpoint:           nil,
 							CodeRepository:                    nil,
+							AzureResource:                     nil,
 						},
 						ApplicationName: ptr.String("__ApplicationName__"),
 						ApplicationArn:  ptr.String("__ApplicationArn__"),
@@ -16390,6 +16863,36 @@ func TestSerdeUpdateSnapshot_BatchUpdateAutomationRules(t *testing.T) {
 						},
 					},
 					AwsAccountName: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceProvider: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerAccountId: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerOrgId: []types.StringFilter{
 						{
 							Value:      ptr.String("__Value__"),
 							Comparison: types.StringFilterComparison("EQUALS"),
@@ -16924,6 +17427,36 @@ func TestSerdeUpdateSnapshot_BatchUpdateAutomationRules(t *testing.T) {
 						},
 					},
 					AwsAccountName: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceProvider: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerAccountId: []types.StringFilter{
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+						{
+							Value:      ptr.String("__Value__"),
+							Comparison: types.StringFilterComparison("EQUALS"),
+						},
+					},
+					ResourceOwnerOrgId: []types.StringFilter{
 						{
 							Value:      ptr.String("__Value__"),
 							Comparison: types.StringFilterComparison("EQUALS"),
@@ -17712,6 +18245,36 @@ func TestSerdeUpdateSnapshot_CreateAutomationRule(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		Actions: []types.AutomationRulesAction{
 			{
@@ -18182,6 +18745,54 @@ func TestSerdeUpdateSnapshot_CreateConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_CreateConnector(t *testing.T) {
+	input := &CreateConnectorInput{
+		Name:        ptr.String("__Name__"),
+		Description: ptr.String("__Description__"),
+		Provider: &types.CspmProviderConfigurationMemberAzure{
+			Value: types.AzureProviderConfiguration{
+				AWSConfigConnectorArn: ptr.String("__AWSConfigConnectorArn__"),
+				ScopeConfiguration: &types.AzureScopeConfiguration{
+					ScopeType: types.ScopeType("TENANT"),
+					ScopeValues: []string{
+						"__Member__",
+						"__Member__",
+					},
+				},
+				AzureRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+		Tags: map[string]string{
+			"key0": "__Value__",
+		},
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -19461,6 +20072,36 @@ func TestSerdeUpdateSnapshot_CreateInsight(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		GroupByAttribute: ptr.String("__GroupByAttribute__"),
 	}
@@ -19687,6 +20328,33 @@ func TestSerdeUpdateSnapshot_DeleteConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_DeleteConnector(t *testing.T) {
+	input := &DeleteConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -20002,6 +20670,10 @@ func TestSerdeUpdateSnapshot_DescribeStandards(t *testing.T) {
 	input := &DescribeStandardsInput{
 		NextToken:  ptr.String("__NextToken__"),
 		MaxResults: ptr.Int32(1),
+		Providers: []types.StandardsProvider{
+			types.StandardsProvider("AWS"),
+			types.StandardsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -20131,6 +20803,33 @@ func TestSerdeUpdateSnapshot_DisableSecurityHub(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DisableSecurityHub"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_DisableSecurityHubFeatureV2(t *testing.T) {
+	input := &DisableSecurityHubFeatureV2Input{
+		FeatureName: types.FeatureName("NETWORK_SCANNING"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DisableSecurityHubFeatureV2(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DisableSecurityHubFeatureV2"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -20326,6 +21025,33 @@ func TestSerdeUpdateSnapshot_EnableSecurityHub(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_EnableSecurityHubFeatureV2(t *testing.T) {
+	input := &EnableSecurityHubFeatureV2Input{
+		FeatureName: types.FeatureName("NETWORK_SCANNING"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.EnableSecurityHubFeatureV2(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "EnableSecurityHubFeatureV2"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_EnableSecurityHubV2(t *testing.T) {
 	input := &EnableSecurityHubV2Input{
 		Tags: map[string]string{
@@ -20517,6 +21243,33 @@ func TestSerdeUpdateSnapshot_GetConfigurationPolicyAssociation(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_GetConnector(t *testing.T) {
+	input := &GetConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_GetConnectorV2(t *testing.T) {
 	input := &GetConnectorV2Input{
 		ConnectorId: ptr.String("__ConnectorId__"),
@@ -20552,6 +21305,10 @@ func TestSerdeUpdateSnapshot_GetEnabledStandards(t *testing.T) {
 		},
 		NextToken:  ptr.String("__NextToken__"),
 		MaxResults: ptr.Int32(1),
+		Providers: []types.StandardsProvider{
+			types.StandardsProvider("AWS"),
+			types.StandardsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -21833,6 +22590,36 @@ func TestSerdeUpdateSnapshot_GetFindings(t *testing.T) {
 				},
 			},
 			ResourceApplicationArn: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
 				{
 					Value:      ptr.String("__Value__"),
 					Comparison: types.StringFilterComparison("EQUALS"),
@@ -23873,12 +24660,44 @@ func TestSerdeUpdateSnapshot_ListConfigurationPolicyAssociations(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_ListConnectors(t *testing.T) {
+	input := &ListConnectorsInput{
+		NextToken:        ptr.String("__NextToken__"),
+		MaxResults:       ptr.Int32(1),
+		ProviderName:     types.CspmConnectorProviderName("AZURE"),
+		ConnectorStatus:  types.CspmConnectorStatus("CONNECTED"),
+		EnablementStatus: types.CspmEnablementStatus("ENABLED"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConnectors"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_ListConnectorsV2(t *testing.T) {
 	input := &ListConnectorsV2Input{
-		NextToken:       ptr.String("__NextToken__"),
-		MaxResults:      ptr.Int32(1),
-		ProviderName:    types.ConnectorProviderName("JIRA_CLOUD"),
-		ConnectorStatus: types.ConnectorStatus("CONNECTED"),
+		NextToken:        ptr.String("__NextToken__"),
+		MaxResults:       ptr.Int32(1),
+		ProviderName:     types.ConnectorProviderName("JIRA_CLOUD"),
+		ConnectorStatus:  types.ConnectorStatus("CONNECTED"),
+		EnablementStatus: types.EnablementStatus("ENABLED"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -24050,6 +24869,10 @@ func TestSerdeUpdateSnapshot_ListSecurityControlDefinitions(t *testing.T) {
 		StandardsArn: ptr.String("__StandardsArn__"),
 		NextToken:    ptr.String("__NextToken__"),
 		MaxResults:   ptr.Int32(1),
+		Providers: []types.SecurityControlsProvider{
+			types.SecurityControlsProvider("AWS"),
+			types.SecurityControlsProvider("AWS"),
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -24705,6 +25528,49 @@ func TestSerdeUpdateSnapshot_UpdateConfigurationPolicy(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateConfigurationPolicy"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_UpdateConnector(t *testing.T) {
+	input := &UpdateConnectorInput{
+		ConnectorId: ptr.String("__ConnectorId__"),
+		Description: ptr.String("__Description__"),
+		Provider: &types.CspmProviderUpdateConfigurationMemberAzure{
+			Value: types.AzureUpdateConfiguration{
+				ScopeConfiguration: &types.AzureScopeConfiguration{
+					ScopeType: types.ScopeType("TENANT"),
+					ScopeValues: []string{
+						"__Member__",
+						"__Member__",
+					},
+				},
+				AzureRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -25979,6 +26845,36 @@ func TestSerdeUpdateSnapshot_UpdateFindings(t *testing.T) {
 					Comparison: types.StringFilterComparison("EQUALS"),
 				},
 			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
 		},
 		Note: &types.NoteUpdate{
 			Text:      ptr.String("__Text__"),
@@ -27207,6 +28103,36 @@ func TestSerdeUpdateSnapshot_UpdateInsight(t *testing.T) {
 				},
 			},
 			ResourceApplicationArn: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerAccountId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceOwnerOrgId: []types.StringFilter{
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+				{
+					Value:      ptr.String("__Value__"),
+					Comparison: types.StringFilterComparison("EQUALS"),
+				},
+			},
+			ResourceProvider: []types.StringFilter{
 				{
 					Value:      ptr.String("__Value__"),
 					Comparison: types.StringFilterComparison("EQUALS"),

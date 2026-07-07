@@ -931,6 +931,66 @@ func TestSerdeCheckSnapshot_CreateAssociationBatch(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_CreateCloudConnector(t *testing.T) {
+	input := &CreateCloudConnectorInput{
+		DisplayName: ptr.String("__DisplayName__"),
+		RoleArn:     ptr.String("__RoleArn__"),
+		Description: ptr.String("__Description__"),
+		Configuration: &types.CloudConnectorConfigurationMemberAzureConfiguration{
+			Value: types.AzureConfiguration{
+				TenantId:               ptr.String("__TenantId__"),
+				TenantDisplayName:      ptr.String("__TenantDisplayName__"),
+				ApplicationId:          ptr.String("__ApplicationId__"),
+				ApplicationDisplayName: ptr.String("__ApplicationDisplayName__"),
+				Targets: &types.ConfigurationTargetsMemberSubscriptions{
+					Value: []types.AzureSubscription{
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+					},
+				},
+			},
+		},
+		ConfigConnectorArn: ptr.String("__ConfigConnectorArn__"),
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_CreateDocument(t *testing.T) {
 	input := &CreateDocumentInput{
 		Content: ptr.String("__Content__"),
@@ -1415,6 +1475,33 @@ func TestSerdeCheckSnapshot_DeleteAssociation(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteAssociation"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_DeleteCloudConnector(t *testing.T) {
+	input := &DeleteCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteCloudConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -3307,6 +3394,33 @@ func TestSerdeCheckSnapshot_GetCalendarState(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_GetCloudConnector(t *testing.T) {
+	input := &GetCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_GetCommandInvocation(t *testing.T) {
 	input := &GetCommandInvocationInput{
 		CommandId:  ptr.String("__CommandId__"),
@@ -4425,6 +4539,50 @@ func TestSerdeCheckSnapshot_ListAssociationVersions(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListAssociationVersions"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_ListCloudConnectors(t *testing.T) {
+	input := &ListCloudConnectorsInput{
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+		Filters: []types.CloudConnectorFilter{
+			{
+				FilterKey: types.CloudConnectorFilterKey("SubscriptionId"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+			{
+				FilterKey: types.CloudConnectorFilterKey("SubscriptionId"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListCloudConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListCloudConnectors"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -6910,6 +7068,55 @@ func TestSerdeCheckSnapshot_UpdateAssociationStatus(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_UpdateCloudConnector(t *testing.T) {
+	input := &UpdateCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+		DisplayName:      ptr.String("__DisplayName__"),
+		Configuration: &types.CloudConnectorConfigurationMemberAzureConfiguration{
+			Value: types.AzureConfiguration{
+				TenantId:               ptr.String("__TenantId__"),
+				TenantDisplayName:      ptr.String("__TenantDisplayName__"),
+				ApplicationId:          ptr.String("__ApplicationId__"),
+				ApplicationDisplayName: ptr.String("__ApplicationDisplayName__"),
+				Targets: &types.ConfigurationTargetsMemberSubscriptions{
+					Value: []types.AzureSubscription{
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+					},
+				},
+			},
+		},
+		Description: ptr.String("__Description__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_UpdateDocument(t *testing.T) {
 	input := &UpdateDocumentInput{
 		Content: ptr.String("__Content__"),
@@ -7572,6 +7779,35 @@ func TestSerdeCheckSnapshot_UpdateServiceSetting(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateServiceSetting"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_ValidateCloudConnector(t *testing.T) {
+	input := &ValidateCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+		MaxResults:       ptr.Int32(1),
+		NextToken:        ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ValidateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ValidateCloudConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -8323,6 +8559,66 @@ func TestSerdeUpdateSnapshot_CreateAssociationBatch(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_CreateCloudConnector(t *testing.T) {
+	input := &CreateCloudConnectorInput{
+		DisplayName: ptr.String("__DisplayName__"),
+		RoleArn:     ptr.String("__RoleArn__"),
+		Description: ptr.String("__Description__"),
+		Configuration: &types.CloudConnectorConfigurationMemberAzureConfiguration{
+			Value: types.AzureConfiguration{
+				TenantId:               ptr.String("__TenantId__"),
+				TenantDisplayName:      ptr.String("__TenantDisplayName__"),
+				ApplicationId:          ptr.String("__ApplicationId__"),
+				ApplicationDisplayName: ptr.String("__ApplicationDisplayName__"),
+				Targets: &types.ConfigurationTargetsMemberSubscriptions{
+					Value: []types.AzureSubscription{
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+					},
+				},
+			},
+		},
+		ConfigConnectorArn: ptr.String("__ConfigConnectorArn__"),
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_CreateDocument(t *testing.T) {
 	input := &CreateDocumentInput{
 		Content: ptr.String("__Content__"),
@@ -8807,6 +9103,33 @@ func TestSerdeUpdateSnapshot_DeleteAssociation(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteAssociation"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_DeleteCloudConnector(t *testing.T) {
+	input := &DeleteCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteCloudConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -10699,6 +11022,33 @@ func TestSerdeUpdateSnapshot_GetCalendarState(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_GetCloudConnector(t *testing.T) {
+	input := &GetCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_GetCommandInvocation(t *testing.T) {
 	input := &GetCommandInvocationInput{
 		CommandId:  ptr.String("__CommandId__"),
@@ -11817,6 +12167,50 @@ func TestSerdeUpdateSnapshot_ListAssociationVersions(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListAssociationVersions"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_ListCloudConnectors(t *testing.T) {
+	input := &ListCloudConnectorsInput{
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+		Filters: []types.CloudConnectorFilter{
+			{
+				FilterKey: types.CloudConnectorFilterKey("SubscriptionId"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+			{
+				FilterKey: types.CloudConnectorFilterKey("SubscriptionId"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListCloudConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListCloudConnectors"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -14302,6 +14696,55 @@ func TestSerdeUpdateSnapshot_UpdateAssociationStatus(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_UpdateCloudConnector(t *testing.T) {
+	input := &UpdateCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+		DisplayName:      ptr.String("__DisplayName__"),
+		Configuration: &types.CloudConnectorConfigurationMemberAzureConfiguration{
+			Value: types.AzureConfiguration{
+				TenantId:               ptr.String("__TenantId__"),
+				TenantDisplayName:      ptr.String("__TenantDisplayName__"),
+				ApplicationId:          ptr.String("__ApplicationId__"),
+				ApplicationDisplayName: ptr.String("__ApplicationDisplayName__"),
+				Targets: &types.ConfigurationTargetsMemberSubscriptions{
+					Value: []types.AzureSubscription{
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+						{
+							Id:          ptr.String("__Id__"),
+							DisplayName: ptr.String("__DisplayName__"),
+						},
+					},
+				},
+			},
+		},
+		Description: ptr.String("__Description__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateCloudConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_UpdateDocument(t *testing.T) {
 	input := &UpdateDocumentInput{
 		Content: ptr.String("__Content__"),
@@ -14964,6 +15407,35 @@ func TestSerdeUpdateSnapshot_UpdateServiceSetting(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateServiceSetting"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_ValidateCloudConnector(t *testing.T) {
+	input := &ValidateCloudConnectorInput{
+		CloudConnectorId: ptr.String("__CloudConnectorId__"),
+		MaxResults:       ptr.Int32(1),
+		NextToken:        ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ValidateCloudConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ValidateCloudConnector"); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -321,6 +321,23 @@ func (AttachmentScope) Values() []AttachmentScope {
 	}
 }
 
+type AuthCodeEntityType string
+
+// Enum values for AuthCodeEntityType
+const (
+	AuthCodeEntityTypeCustomerProfile AuthCodeEntityType = "CUSTOMER_PROFILE"
+)
+
+// Values returns all known values for AuthCodeEntityType. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (AuthCodeEntityType) Values() []AuthCodeEntityType {
+	return []AuthCodeEntityType{
+		"CUSTOMER_PROFILE",
+	}
+}
+
 type AutoEvaluationStatus string
 
 // Enum values for AutoEvaluationStatus

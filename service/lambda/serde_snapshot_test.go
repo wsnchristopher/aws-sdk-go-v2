@@ -769,6 +769,7 @@ func TestSerdeCheckSnapshot_CreateFunction(t *testing.T) {
 			},
 		},
 		DurableConfig: &types.DurableConfig{
+			KMSKeyArn:             ptr.String("__KMSKeyArn__"),
 			RetentionPeriodInDays: ptr.Int32(1),
 			ExecutionTimeout:      ptr.Int32(1),
 		},
@@ -1258,7 +1259,8 @@ func TestSerdeCheckSnapshot_GetCodeSigningConfig(t *testing.T) {
 
 func TestSerdeCheckSnapshot_GetDurableExecution(t *testing.T) {
 	input := &GetDurableExecutionInput{
-		DurableExecutionArn: ptr.String("__DurableExecutionArn__"),
+		DurableExecutionArn:  ptr.String("__DurableExecutionArn__"),
+		IncludeExecutionData: ptr.Bool(true),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -3184,6 +3186,7 @@ func TestSerdeCheckSnapshot_UpdateFunctionConfiguration(t *testing.T) {
 			},
 		},
 		DurableConfig: &types.DurableConfig{
+			KMSKeyArn:             ptr.String("__KMSKeyArn__"),
 			RetentionPeriodInDays: ptr.Int32(1),
 			ExecutionTimeout:      ptr.Int32(1),
 		},
@@ -3884,6 +3887,7 @@ func TestSerdeUpdateSnapshot_CreateFunction(t *testing.T) {
 			},
 		},
 		DurableConfig: &types.DurableConfig{
+			KMSKeyArn:             ptr.String("__KMSKeyArn__"),
 			RetentionPeriodInDays: ptr.Int32(1),
 			ExecutionTimeout:      ptr.Int32(1),
 		},
@@ -4373,7 +4377,8 @@ func TestSerdeUpdateSnapshot_GetCodeSigningConfig(t *testing.T) {
 
 func TestSerdeUpdateSnapshot_GetDurableExecution(t *testing.T) {
 	input := &GetDurableExecutionInput{
-		DurableExecutionArn: ptr.String("__DurableExecutionArn__"),
+		DurableExecutionArn:  ptr.String("__DurableExecutionArn__"),
+		IncludeExecutionData: ptr.Bool(true),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -6299,6 +6304,7 @@ func TestSerdeUpdateSnapshot_UpdateFunctionConfiguration(t *testing.T) {
 			},
 		},
 		DurableConfig: &types.DurableConfig{
+			KMSKeyArn:             ptr.String("__KMSKeyArn__"),
 			RetentionPeriodInDays: ptr.Int32(1),
 			ExecutionTimeout:      ptr.Int32(1),
 		},

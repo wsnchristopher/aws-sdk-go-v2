@@ -489,6 +489,18 @@ func awsRestjson1_deserializeOpErrorCheckpointDurableExecution(response *smithyh
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
 
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
+
 	case strings.EqualFold("ServiceException", errorCode):
 		return awsRestjson1_deserializeErrorServiceException(response, errorBody)
 
@@ -4556,6 +4568,18 @@ func awsRestjson1_deserializeOpErrorGetDurableExecution(response *smithyhttp.Res
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
 
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
+
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
 
@@ -4597,6 +4621,11 @@ func awsRestjson1_deserializeOpDocumentGetDurableExecutionOutput(v **GetDurableE
 
 	for key, value := range shape {
 		switch key {
+		case "DurableConfig":
+			if err := awsRestjson1_deserializeDocumentDurableConfig(&sv.DurableConfig, value); err != nil {
+				return err
+			}
+
 		case "DurableExecutionArn":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -4634,6 +4663,15 @@ func awsRestjson1_deserializeOpDocumentGetDurableExecutionOutput(v **GetDurableE
 		case "Error":
 			if err := awsRestjson1_deserializeDocumentErrorObject(&sv.Error, value); err != nil {
 				return err
+			}
+
+		case "ExecutionDataIncluded":
+			if value != nil {
+				jtv, ok := value.(bool)
+				if !ok {
+					return fmt.Errorf("expected ExecutionDataIncluded to be of type *bool, got %T instead", value)
+				}
+				sv.ExecutionDataIncluded = ptr.Bool(jtv)
 			}
 
 		case "FunctionArn":
@@ -4817,6 +4855,18 @@ func awsRestjson1_deserializeOpErrorGetDurableExecutionHistory(response *smithyh
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
 
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
+
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
 
@@ -4986,6 +5036,18 @@ func awsRestjson1_deserializeOpErrorGetDurableExecutionState(response *smithyhtt
 	switch {
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
+
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
 
 	case strings.EqualFold("ServiceException", errorCode):
 		return awsRestjson1_deserializeErrorServiceException(response, errorBody)
@@ -13992,6 +14054,18 @@ func awsRestjson1_deserializeOpErrorSendDurableExecutionCallbackFailure(response
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
 
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
+
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
 
@@ -14192,6 +14266,18 @@ func awsRestjson1_deserializeOpErrorSendDurableExecutionCallbackSuccess(response
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
 
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
+
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
 
@@ -14316,6 +14402,18 @@ func awsRestjson1_deserializeOpErrorStopDurableExecution(response *smithyhttp.Re
 	switch {
 	case strings.EqualFold("InvalidParameterValueException", errorCode):
 		return awsRestjson1_deserializeErrorInvalidParameterValueException(response, errorBody)
+
+	case strings.EqualFold("KMSAccessDeniedException", errorCode):
+		return awsRestjson1_deserializeErrorKMSAccessDeniedException(response, errorBody)
+
+	case strings.EqualFold("KMSDisabledException", errorCode):
+		return awsRestjson1_deserializeErrorKMSDisabledException(response, errorBody)
+
+	case strings.EqualFold("KMSInvalidStateException", errorCode):
+		return awsRestjson1_deserializeErrorKMSInvalidStateException(response, errorBody)
+
+	case strings.EqualFold("KMSNotFoundException", errorCode):
+		return awsRestjson1_deserializeErrorKMSNotFoundException(response, errorBody)
 
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
@@ -21793,6 +21891,15 @@ func awsRestjson1_deserializeDocumentDurableConfig(v **types.DurableConfig, valu
 				sv.ExecutionTimeout = ptr.Int32(int32(i64))
 			}
 
+		case "KMSKeyArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected KMSKeyArn to be of type string, got %T instead", value)
+				}
+				sv.KMSKeyArn = ptr.String(jtv)
+			}
+
 		case "RetentionPeriodInDays":
 			if value != nil {
 				jtv, ok := value.(json.Number)
@@ -23568,6 +23675,15 @@ func awsRestjson1_deserializeDocumentExecution(v **types.Execution, value interf
 					return fmt.Errorf("expected NameSpacedFunctionArn to be of type string, got %T instead", value)
 				}
 				sv.FunctionArn = ptr.String(jtv)
+			}
+
+		case "KMSKeyArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected KMSKeyArn to be of type string, got %T instead", value)
+				}
+				sv.KMSKeyArn = ptr.String(jtv)
 			}
 
 		case "StartTimestamp":

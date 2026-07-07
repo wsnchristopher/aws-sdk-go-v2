@@ -623,8 +623,10 @@ type DocumentDBEventSourceConfig struct {
 	noSmithyDocumentSerde
 }
 
-// Configuration settings for [durable functions], including execution timeout and retention period
-// for execution history.
+// Configuration settings for [durable functions], including execution timeout, retention period for
+// execution history, and an optional ARN of the Key Management Service (KMS)
+// customer managed key that is used to encrypt your durable execution's payload
+// data, including input, output, and error payloads.
 //
 // [durable functions]: https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html
 type DurableConfig struct {
@@ -633,6 +635,11 @@ type DurableConfig struct {
 	// out. This timeout applies to the entire durable execution, not individual
 	// function invocations.
 	ExecutionTimeout *int32
+
+	// The ARN of the Key Management Service (KMS) customer managed key that is used
+	// to encrypt your durable execution's payload data, including input, output, and
+	// error payloads.
+	KMSKeyArn *string
 
 	// The number of days to retain execution history after a durable execution
 	// completes. After this period, execution history is no longer available through
@@ -1117,6 +1124,11 @@ type Execution struct {
 	//
 	// [ISO-8601 format]: https://www.w3.org/TR/NOTE-datetime
 	EndTimestamp *time.Time
+
+	// The ARN of the Key Management Service (KMS) customer managed key that is used
+	// to encrypt your durable execution's payload data, including input, output, and
+	// error payloads.
+	KMSKeyArn *string
 
 	noSmithyDocumentSerde
 }

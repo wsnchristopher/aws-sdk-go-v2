@@ -1531,6 +1531,44 @@ func TestSerdeCheckSnapshot_CreateAttachedFile(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_CreateAuthCode(t *testing.T) {
+	input := &CreateAuthCodeInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		Scope: &types.AuthScope{
+			SecurityProfileIds: []string{
+				"__Member__",
+				"__Member__",
+			},
+			EntityType: types.AuthCodeEntityType("CUSTOMER_PROFILE"),
+			EntityId:   ptr.String("__EntityId__"),
+			DomainName: ptr.String("__DomainName__"),
+		},
+		MaxSessionDurationMinutes:        ptr.Int32(1),
+		SessionInactivityDurationMinutes: 1,
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateAuthCode(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateAuthCode"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_CreateContact(t *testing.T) {
 	input := &CreateContactInput{
 		InstanceId:       ptr.String("__InstanceId__"),
@@ -4787,6 +4825,34 @@ func TestSerdeCheckSnapshot_DeleteSecurityProfile(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSecurityProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_DeleteSession(t *testing.T) {
+	input := &DeleteSessionInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		SessionId:  ptr.String("__SessionId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteSession(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSession"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -18590,6 +18656,44 @@ func TestSerdeUpdateSnapshot_CreateAttachedFile(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_CreateAuthCode(t *testing.T) {
+	input := &CreateAuthCodeInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		Scope: &types.AuthScope{
+			SecurityProfileIds: []string{
+				"__Member__",
+				"__Member__",
+			},
+			EntityType: types.AuthCodeEntityType("CUSTOMER_PROFILE"),
+			EntityId:   ptr.String("__EntityId__"),
+			DomainName: ptr.String("__DomainName__"),
+		},
+		MaxSessionDurationMinutes:        ptr.Int32(1),
+		SessionInactivityDurationMinutes: 1,
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateAuthCode(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateAuthCode"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_CreateContact(t *testing.T) {
 	input := &CreateContactInput{
 		InstanceId:       ptr.String("__InstanceId__"),
@@ -21846,6 +21950,34 @@ func TestSerdeUpdateSnapshot_DeleteSecurityProfile(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSecurityProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_DeleteSession(t *testing.T) {
+	input := &DeleteSessionInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		SessionId:  ptr.String("__SessionId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteSession(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSession"); err != nil {
 		t.Fatal(err)
 	}
 }

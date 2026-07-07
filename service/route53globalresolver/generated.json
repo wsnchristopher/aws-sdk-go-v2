@@ -45,6 +45,7 @@
         "api_op_ListGlobalResolvers.go",
         "api_op_ListHostedZoneAssociations.go",
         "api_op_ListManagedFirewallDomainLists.go",
+        "api_op_ListSharedDNSViews.go",
         "api_op_ListTagsForResource.go",
         "api_op_TagResource.go",
         "api_op_UntagResource.go",

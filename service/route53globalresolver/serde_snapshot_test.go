@@ -1341,6 +1341,34 @@ func TestSerdeCheckSnapshot_ListManagedFirewallDomainLists(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_ListSharedDNSViews(t *testing.T) {
+	input := &ListSharedDNSViewsInput{
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListSharedDNSViews(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSharedDNSViews"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_ListTagsForResource(t *testing.T) {
 	input := &ListTagsForResourceInput{
 		ResourceArn: ptr.String("__ResourceArn__"),
@@ -2806,6 +2834,34 @@ func TestSerdeUpdateSnapshot_ListManagedFirewallDomainLists(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListManagedFirewallDomainLists"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_ListSharedDNSViews(t *testing.T) {
+	input := &ListSharedDNSViewsInput{
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListSharedDNSViews(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSharedDNSViews"); err != nil {
 		t.Fatal(err)
 	}
 }

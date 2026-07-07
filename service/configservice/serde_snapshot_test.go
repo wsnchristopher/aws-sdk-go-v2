@@ -429,6 +429,33 @@ func TestSerdeCheckSnapshot_DeleteConformancePack(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_DeleteConnector(t *testing.T) {
+	input := &DeleteConnectorInput{
+		Arn: ptr.String("__Arn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_DeleteDeliveryChannel(t *testing.T) {
 	input := &DeleteDeliveryChannelInput{
 		DeliveryChannelName: ptr.String("__DeliveryChannelName__"),
@@ -688,6 +715,7 @@ func TestSerdeCheckSnapshot_DeleteRetentionConfiguration(t *testing.T) {
 func TestSerdeCheckSnapshot_DeleteServiceLinkedConfigurationRecorder(t *testing.T) {
 	input := &DeleteServiceLinkedConfigurationRecorderInput{
 		ServicePrincipal: ptr.String("__ServicePrincipal__"),
+		Arn:              ptr.String("__Arn__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -971,11 +999,11 @@ func TestSerdeCheckSnapshot_DescribeConfigRules(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
-		NextToken: ptr.String("__NextToken__"),
 		Filters: &types.DescribeConfigRulesFilters{
 			EvaluationMode:           types.EvaluationMode("DETECTIVE"),
 			RuleEvaluationVisibility: types.RuleEvaluationVisibility("EXTERNAL"),
 		},
+		NextToken: ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1980,6 +2008,33 @@ func TestSerdeCheckSnapshot_GetConformancePackComplianceSummary(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_GetConnector(t *testing.T) {
+	input := &GetConnectorInput{
+		Arn: ptr.String("__Arn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_GetCustomRulePolicy(t *testing.T) {
 	input := &GetCustomRulePolicyInput{
 		ConfigRuleName: ptr.String("__ConfigRuleName__"),
@@ -2331,6 +2386,50 @@ func TestSerdeCheckSnapshot_ListConformancePackComplianceScores(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConformancePackComplianceScores"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_ListConnectors(t *testing.T) {
+	input := &ListConnectorsInput{
+		MaxResults: 1,
+		NextToken:  ptr.String("__NextToken__"),
+		Filters: []types.ConnectorFilter{
+			{
+				FilterName: types.ConnectorFilterName("provider"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+			{
+				FilterName: types.ConnectorFilterName("provider"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConnectors"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -2721,6 +2820,19 @@ func TestSerdeCheckSnapshot_PutConfigurationRecorder(t *testing.T) {
 			},
 			RecordingScope:   types.RecordingScope("INTERNAL"),
 			ServicePrincipal: ptr.String("__ServicePrincipal__"),
+			ConnectorArn:     ptr.String("__ConnectorArn__"),
+			ScopeConfiguration: &types.ScopeConfiguration{
+				ScopeType: ptr.String("__ScopeType__"),
+				ScopeValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+				AllRegions: true,
+				IncludedRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
 		},
 		Tags: []types.Tag{
 			{
@@ -2807,6 +2919,48 @@ func TestSerdeCheckSnapshot_PutConformancePack(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutConformancePack"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeCheckSnapshot_PutConnector(t *testing.T) {
+	input := &PutConnectorInput{
+		ConnectorConfiguration: &types.ConnectorConfiguration{
+			Azure: &types.AzureConnectorConfiguration{
+				TenantIdentifier: ptr.String("__TenantIdentifier__"),
+				ClientIdentifier: ptr.String("__ClientIdentifier__"),
+			},
+		},
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PutConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -3343,6 +3497,56 @@ func TestSerdeCheckSnapshot_PutStoredQuery(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_PutThirdPartyServiceLinkedConfigurationRecorder(t *testing.T) {
+	input := &PutThirdPartyServiceLinkedConfigurationRecorderInput{
+		ServicePrincipal: ptr.String("__ServicePrincipal__"),
+		ConnectorArn:     ptr.String("__ConnectorArn__"),
+		ScopeConfiguration: &types.ScopeConfiguration{
+			ScopeType: ptr.String("__ScopeType__"),
+			ScopeValues: []string{
+				"__Member__",
+				"__Member__",
+			},
+			AllRegions: true,
+			IncludedRegions: []string{
+				"__Member__",
+				"__Member__",
+			},
+		},
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PutThirdPartyServiceLinkedConfigurationRecorder(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutThirdPartyServiceLinkedConfigurationRecorder"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_SelectAggregateResourceConfig(t *testing.T) {
 	input := &SelectAggregateResourceConfigInput{
 		Expression:                  ptr.String("__Expression__"),
@@ -3875,6 +4079,33 @@ func TestSerdeUpdateSnapshot_DeleteConformancePack(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_DeleteConnector(t *testing.T) {
+	input := &DeleteConnectorInput{
+		Arn: ptr.String("__Arn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_DeleteDeliveryChannel(t *testing.T) {
 	input := &DeleteDeliveryChannelInput{
 		DeliveryChannelName: ptr.String("__DeliveryChannelName__"),
@@ -4134,6 +4365,7 @@ func TestSerdeUpdateSnapshot_DeleteRetentionConfiguration(t *testing.T) {
 func TestSerdeUpdateSnapshot_DeleteServiceLinkedConfigurationRecorder(t *testing.T) {
 	input := &DeleteServiceLinkedConfigurationRecorderInput{
 		ServicePrincipal: ptr.String("__ServicePrincipal__"),
+		Arn:              ptr.String("__Arn__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -4417,11 +4649,11 @@ func TestSerdeUpdateSnapshot_DescribeConfigRules(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
-		NextToken: ptr.String("__NextToken__"),
 		Filters: &types.DescribeConfigRulesFilters{
 			EvaluationMode:           types.EvaluationMode("DETECTIVE"),
 			RuleEvaluationVisibility: types.RuleEvaluationVisibility("EXTERNAL"),
 		},
+		NextToken: ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -5426,6 +5658,33 @@ func TestSerdeUpdateSnapshot_GetConformancePackComplianceSummary(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_GetConnector(t *testing.T) {
+	input := &GetConnectorInput{
+		Arn: ptr.String("__Arn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetConnector"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_GetCustomRulePolicy(t *testing.T) {
 	input := &GetCustomRulePolicyInput{
 		ConfigRuleName: ptr.String("__ConfigRuleName__"),
@@ -5777,6 +6036,50 @@ func TestSerdeUpdateSnapshot_ListConformancePackComplianceScores(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConformancePackComplianceScores"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_ListConnectors(t *testing.T) {
+	input := &ListConnectorsInput{
+		MaxResults: 1,
+		NextToken:  ptr.String("__NextToken__"),
+		Filters: []types.ConnectorFilter{
+			{
+				FilterName: types.ConnectorFilterName("provider"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+			{
+				FilterName: types.ConnectorFilterName("provider"),
+				FilterValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListConnectors(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListConnectors"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -6167,6 +6470,19 @@ func TestSerdeUpdateSnapshot_PutConfigurationRecorder(t *testing.T) {
 			},
 			RecordingScope:   types.RecordingScope("INTERNAL"),
 			ServicePrincipal: ptr.String("__ServicePrincipal__"),
+			ConnectorArn:     ptr.String("__ConnectorArn__"),
+			ScopeConfiguration: &types.ScopeConfiguration{
+				ScopeType: ptr.String("__ScopeType__"),
+				ScopeValues: []string{
+					"__Member__",
+					"__Member__",
+				},
+				AllRegions: true,
+				IncludedRegions: []string{
+					"__Member__",
+					"__Member__",
+				},
+			},
 		},
 		Tags: []types.Tag{
 			{
@@ -6253,6 +6569,48 @@ func TestSerdeUpdateSnapshot_PutConformancePack(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutConformancePack"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_PutConnector(t *testing.T) {
+	input := &PutConnectorInput{
+		ConnectorConfiguration: &types.ConnectorConfiguration{
+			Azure: &types.AzureConnectorConfiguration{
+				TenantIdentifier: ptr.String("__TenantIdentifier__"),
+				ClientIdentifier: ptr.String("__ClientIdentifier__"),
+			},
+		},
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PutConnector(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutConnector"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -6785,6 +7143,56 @@ func TestSerdeUpdateSnapshot_PutStoredQuery(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutStoredQuery"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_PutThirdPartyServiceLinkedConfigurationRecorder(t *testing.T) {
+	input := &PutThirdPartyServiceLinkedConfigurationRecorderInput{
+		ServicePrincipal: ptr.String("__ServicePrincipal__"),
+		ConnectorArn:     ptr.String("__ConnectorArn__"),
+		ScopeConfiguration: &types.ScopeConfiguration{
+			ScopeType: ptr.String("__ScopeType__"),
+			ScopeValues: []string{
+				"__Member__",
+				"__Member__",
+			},
+			AllRegions: true,
+			IncludedRegions: []string{
+				"__Member__",
+				"__Member__",
+			},
+		},
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PutThirdPartyServiceLinkedConfigurationRecorder(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutThirdPartyServiceLinkedConfigurationRecorder"); err != nil {
 		t.Fatal(err)
 	}
 }

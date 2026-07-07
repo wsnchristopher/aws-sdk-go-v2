@@ -2496,6 +2496,10 @@ func awsRestjson1_serializeOpHttpBindingsGetDurableExecutionInput(v *GetDurableE
 		}
 	}
 
+	if v.IncludeExecutionData != nil {
+		encoder.SetQuery("IncludeExecutionData").Boolean(*v.IncludeExecutionData)
+	}
+
 	return nil
 }
 
@@ -8427,6 +8431,11 @@ func awsRestjson1_serializeDocumentDurableConfig(v *types.DurableConfig, value s
 	if v.ExecutionTimeout != nil {
 		ok := object.Key("ExecutionTimeout")
 		ok.Integer(*v.ExecutionTimeout)
+	}
+
+	if v.KMSKeyArn != nil {
+		ok := object.Key("KMSKeyArn")
+		ok.String(*v.KMSKeyArn)
 	}
 
 	if v.RetentionPeriodInDays != nil {

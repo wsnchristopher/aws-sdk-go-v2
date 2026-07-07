@@ -61,6 +61,10 @@ type UsageRecord struct {
 	// Your application can meter usage for up to 24 hours in the past. Make sure the
 	// timestamp value is not before the start of the software usage.
 	//
+	// At the end of each billing cycle, you have a 6-hour grace period to submit
+	// usage records for the previous billing month before 06:00 UTC on the first day
+	// of the next month.
+	//
 	// This member is required.
 	Timestamp *time.Time
 

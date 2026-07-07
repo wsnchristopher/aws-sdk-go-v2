@@ -932,6 +932,28 @@ type AuthenticationProfileSummary struct {
 	noSmithyDocumentSerde
 }
 
+// Contains the scope configuration for an authorization code. Defines the
+// permissions and access boundaries for the session.
+type AuthScope struct {
+
+	// The type of entity to scope the session to.
+	//
+	// This member is required.
+	EntityType AuthCodeEntityType
+
+	// The name of the Customer Profiles domain to scope the session to.
+	DomainName *string
+
+	// The identifier of the entity to scope the session to.
+	EntityId *string
+
+	// The list of security profile identifiers to scope the session to. Maximum of 10
+	// security profiles.
+	SecurityProfileIds []string
+
+	noSmithyDocumentSerde
+}
+
 // Configuration settings for auto-accept for a specific channel.
 type AutoAcceptConfig struct {
 

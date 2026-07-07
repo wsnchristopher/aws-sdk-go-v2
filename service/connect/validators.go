@@ -690,6 +690,26 @@ func (m *validateOpCreateAttachedFile) HandleInitialize(ctx context.Context, in 
 	return next.HandleInitialize(ctx, in)
 }
 
+type validateOpCreateAuthCode struct {
+}
+
+func (*validateOpCreateAuthCode) ID() string {
+	return "OperationInputValidation"
+}
+
+func (m *validateOpCreateAuthCode) HandleInitialize(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
+	out middleware.InitializeOutput, metadata middleware.Metadata, err error,
+) {
+	input, ok := in.Parameters.(*CreateAuthCodeInput)
+	if !ok {
+		return out, metadata, fmt.Errorf("unknown input parameters type %T", in.Parameters)
+	}
+	if err := validateOpCreateAuthCodeInput(input); err != nil {
+		return out, metadata, err
+	}
+	return next.HandleInitialize(ctx, in)
+}
+
 type validateOpCreateContactFlow struct {
 }
 
@@ -1905,6 +1925,26 @@ func (m *validateOpDeleteSecurityProfile) HandleInitialize(ctx context.Context, 
 		return out, metadata, fmt.Errorf("unknown input parameters type %T", in.Parameters)
 	}
 	if err := validateOpDeleteSecurityProfileInput(input); err != nil {
+		return out, metadata, err
+	}
+	return next.HandleInitialize(ctx, in)
+}
+
+type validateOpDeleteSession struct {
+}
+
+func (*validateOpDeleteSession) ID() string {
+	return "OperationInputValidation"
+}
+
+func (m *validateOpDeleteSession) HandleInitialize(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
+	out middleware.InitializeOutput, metadata middleware.Metadata, err error,
+) {
+	input, ok := in.Parameters.(*DeleteSessionInput)
+	if !ok {
+		return out, metadata, fmt.Errorf("unknown input parameters type %T", in.Parameters)
+	}
+	if err := validateOpDeleteSessionInput(input); err != nil {
 		return out, metadata, err
 	}
 	return next.HandleInitialize(ctx, in)
@@ -7546,6 +7586,10 @@ func addOpCreateAttachedFileValidationMiddleware(stack *middleware.Stack) error 
 	return stack.Initialize.Add(&validateOpCreateAttachedFile{}, middleware.After)
 }
 
+func addOpCreateAuthCodeValidationMiddleware(stack *middleware.Stack) error {
+	return stack.Initialize.Add(&validateOpCreateAuthCode{}, middleware.After)
+}
+
 func addOpCreateContactFlowValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpCreateContactFlow{}, middleware.After)
 }
@@ -7788,6 +7832,10 @@ func addOpDeleteRuleValidationMiddleware(stack *middleware.Stack) error {
 
 func addOpDeleteSecurityProfileValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpDeleteSecurityProfile{}, middleware.After)
+}
+
+func addOpDeleteSessionValidationMiddleware(stack *middleware.Stack) error {
+	return stack.Initialize.Add(&validateOpDeleteSession{}, middleware.After)
 }
 
 func addOpDeleteTaskTemplateValidationMiddleware(stack *middleware.Stack) error {
@@ -9059,6 +9107,21 @@ func validateAssignSlaActionDefinition(v *types.AssignSlaActionDefinition) error
 		if err := validateCaseSlaConfiguration(v.CaseSlaConfiguration); err != nil {
 			invalidParams.AddNested("CaseSlaConfiguration", err.(smithy.InvalidParamsError))
 		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateAuthScope(v *types.AuthScope) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "AuthScope"}
+	if len(v.EntityType) == 0 {
+		invalidParams.Add(smithy.NewErrParamRequired("EntityType"))
 	}
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -13292,6 +13355,28 @@ func validateOpCreateAttachedFileInput(v *CreateAttachedFileInput) error {
 	}
 }
 
+func validateOpCreateAuthCodeInput(v *CreateAuthCodeInput) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "CreateAuthCodeInput"}
+	if v.InstanceId == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("InstanceId"))
+	}
+	if v.Scope == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("Scope"))
+	} else if v.Scope != nil {
+		if err := validateAuthScope(v.Scope); err != nil {
+			invalidParams.AddNested("Scope", err.(smithy.InvalidParamsError))
+		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateOpCreateContactFlowInput(v *CreateContactFlowInput) error {
 	if v == nil {
 		return nil
@@ -14650,6 +14735,24 @@ func validateOpDeleteSecurityProfileInput(v *DeleteSecurityProfileInput) error {
 	}
 	if v.SecurityProfileId == nil {
 		invalidParams.Add(smithy.NewErrParamRequired("SecurityProfileId"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateOpDeleteSessionInput(v *DeleteSessionInput) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "DeleteSessionInput"}
+	if v.InstanceId == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("InstanceId"))
+	}
+	if v.SessionId == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("SessionId"))
 	}
 	if invalidParams.Len() > 0 {
 		return invalidParams

@@ -470,6 +470,18 @@ func TestCheckSnapshot_CreateAttachedFile(t *testing.T) {
 	}
 }
 
+func TestCheckSnapshot_CreateAuthCode(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.CreateAuthCode(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return testSnapshot(stack, "CreateAuthCode")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckSnapshot_CreateContact(t *testing.T) {
 	svc := New(Options{})
 	_, err := svc.CreateContact(context.Background(), nil, func(o *Options) {
@@ -1195,6 +1207,18 @@ func TestCheckSnapshot_DeleteSecurityProfile(t *testing.T) {
 	_, err := svc.DeleteSecurityProfile(context.Background(), nil, func(o *Options) {
 		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
 			return testSnapshot(stack, "DeleteSecurityProfile")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckSnapshot_DeleteSession(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.DeleteSession(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return testSnapshot(stack, "DeleteSession")
 		})
 	})
 	if _, ok := err.(snapshotOK); !ok && err != nil {
@@ -4969,6 +4993,18 @@ func TestUpdateSnapshot_CreateAttachedFile(t *testing.T) {
 	}
 }
 
+func TestUpdateSnapshot_CreateAuthCode(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.CreateAuthCode(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return updateSnapshot(stack, "CreateAuthCode")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateSnapshot_CreateContact(t *testing.T) {
 	svc := New(Options{})
 	_, err := svc.CreateContact(context.Background(), nil, func(o *Options) {
@@ -5694,6 +5730,18 @@ func TestUpdateSnapshot_DeleteSecurityProfile(t *testing.T) {
 	_, err := svc.DeleteSecurityProfile(context.Background(), nil, func(o *Options) {
 		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
 			return updateSnapshot(stack, "DeleteSecurityProfile")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateSnapshot_DeleteSession(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.DeleteSession(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return updateSnapshot(stack, "DeleteSession")
 		})
 	})
 	if _, ok := err.(snapshotOK); !ok && err != nil {
