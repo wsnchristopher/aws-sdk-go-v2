@@ -1066,8 +1066,16 @@ func TestSerdeCheckSnapshot_ListDependencies(t *testing.T) {
 func TestSerdeCheckSnapshot_ListFailureModeAssessments(t *testing.T) {
 	input := &ListFailureModeAssessmentsInput{
 		ServiceArn: ptr.String("__ServiceArn__"),
-		MaxResults: ptr.Int32(1),
-		NextToken:  ptr.String("__NextToken__"),
+		AssessmentStatuses: []types.AssessmentStatus{
+			types.AssessmentStatus("NOT_STARTED"),
+			types.AssessmentStatus("NOT_STARTED"),
+		},
+		StartedAfter: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		EndedBefore:  ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		SortBy:       types.AssessmentSortField("STARTED_AT"),
+		SortOrder:    types.SortOrder("ASC"),
+		MaxResults:   ptr.Int32(1),
+		NextToken:    ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1217,8 +1225,13 @@ func TestSerdeCheckSnapshot_ListResources(t *testing.T) {
 		ServiceArn:        ptr.String("__ServiceArn__"),
 		ServiceFunctionId: ptr.String("__ServiceFunctionId__"),
 		AwsRegion:         ptr.String("__AwsRegion__"),
-		MaxResults:        ptr.Int32(1),
-		NextToken:         ptr.String("__NextToken__"),
+		ResourceTypes: []string{
+			"__Member__",
+			"__Member__",
+		},
+		Billable:   ptr.Bool(true),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -2766,8 +2779,16 @@ func TestSerdeUpdateSnapshot_ListDependencies(t *testing.T) {
 func TestSerdeUpdateSnapshot_ListFailureModeAssessments(t *testing.T) {
 	input := &ListFailureModeAssessmentsInput{
 		ServiceArn: ptr.String("__ServiceArn__"),
-		MaxResults: ptr.Int32(1),
-		NextToken:  ptr.String("__NextToken__"),
+		AssessmentStatuses: []types.AssessmentStatus{
+			types.AssessmentStatus("NOT_STARTED"),
+			types.AssessmentStatus("NOT_STARTED"),
+		},
+		StartedAfter: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		EndedBefore:  ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		SortBy:       types.AssessmentSortField("STARTED_AT"),
+		SortOrder:    types.SortOrder("ASC"),
+		MaxResults:   ptr.Int32(1),
+		NextToken:    ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -2917,8 +2938,13 @@ func TestSerdeUpdateSnapshot_ListResources(t *testing.T) {
 		ServiceArn:        ptr.String("__ServiceArn__"),
 		ServiceFunctionId: ptr.String("__ServiceFunctionId__"),
 		AwsRegion:         ptr.String("__AwsRegion__"),
-		MaxResults:        ptr.Int32(1),
-		NextToken:         ptr.String("__NextToken__"),
+		ResourceTypes: []string{
+			"__Member__",
+			"__Member__",
+		},
+		Billable:   ptr.Bool(true),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""

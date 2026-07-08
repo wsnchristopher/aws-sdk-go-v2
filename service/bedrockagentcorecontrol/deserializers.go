@@ -32300,6 +32300,42 @@ func awsRestjson1_deserializeDocumentAdditionalModelRequestFields(v *document.In
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentAdvertisedScopeMappingType(v *map[string]string, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var mv map[string]string
+	if *v == nil {
+		mv = map[string]string{}
+	} else {
+		mv = *v
+	}
+
+	for key, value := range shape {
+		var parsedVal string
+		if value != nil {
+			jtv, ok := value.(string)
+			if !ok {
+				return fmt.Errorf("expected AllowedScopeType to be of type string, got %T instead", value)
+			}
+			parsedVal = jtv
+		}
+		mv[key] = parsedVal
+
+	}
+	*v = mv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentAgentCardDefinition(v **types.AgentCardDefinition, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -36597,6 +36633,11 @@ func awsRestjson1_deserializeDocumentCustomJWTAuthorizerConfiguration(v **types.
 
 	for key, value := range shape {
 		switch key {
+		case "advertisedScopeMapping":
+			if err := awsRestjson1_deserializeDocumentAdvertisedScopeMappingType(&sv.AdvertisedScopeMapping, value); err != nil {
+				return err
+			}
+
 		case "allowedAudience":
 			if err := awsRestjson1_deserializeDocumentAllowedAudienceList(&sv.AllowedAudience, value); err != nil {
 				return err

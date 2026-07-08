@@ -587,6 +587,10 @@ func TestSerdeCheckSnapshot_CreateMulticastGroup(t *testing.T) {
 				},
 				TransmissionInterval: ptr.Int32(1),
 			},
+			DefaultSessionParameters: &types.DefaultSessionParametersMulticast{
+				DlDr:   ptr.Int32(1),
+				DlFreq: ptr.Int32(1),
+			},
 		},
 		Tags: []types.Tag{
 			{
@@ -3961,6 +3965,10 @@ func TestSerdeCheckSnapshot_UpdateMulticastGroup(t *testing.T) {
 				},
 				TransmissionInterval: ptr.Int32(1),
 			},
+			DefaultSessionParameters: &types.DefaultSessionParametersMulticast{
+				DlDr:   ptr.Int32(1),
+				DlFreq: ptr.Int32(1),
+			},
 		},
 	}
 	body := &bytes.Buffer{}
@@ -4735,6 +4743,10 @@ func TestSerdeUpdateSnapshot_CreateMulticastGroup(t *testing.T) {
 					"__Member__",
 				},
 				TransmissionInterval: ptr.Int32(1),
+			},
+			DefaultSessionParameters: &types.DefaultSessionParametersMulticast{
+				DlDr:   ptr.Int32(1),
+				DlFreq: ptr.Int32(1),
 			},
 		},
 		Tags: []types.Tag{
@@ -8109,6 +8121,10 @@ func TestSerdeUpdateSnapshot_UpdateMulticastGroup(t *testing.T) {
 					"__Member__",
 				},
 				TransmissionInterval: ptr.Int32(1),
+			},
+			DefaultSessionParameters: &types.DefaultSessionParametersMulticast{
+				DlDr:   ptr.Int32(1),
+				DlFreq: ptr.Int32(1),
 			},
 		},
 	}

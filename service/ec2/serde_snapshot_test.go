@@ -8166,6 +8166,7 @@ func TestSerdeCheckSnapshot_CreateReplaceRootVolumeTask(t *testing.T) {
 		ImageId:                  ptr.String("__ImageId__"),
 		DeleteReplacedRootVolume: ptr.Bool(true),
 		VolumeInitializationRate: ptr.Int64(1),
+		VolumeId:                 ptr.String("__VolumeId__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -46012,6 +46013,7 @@ func TestSerdeUpdateSnapshot_CreateReplaceRootVolumeTask(t *testing.T) {
 		ImageId:                  ptr.String("__ImageId__"),
 		DeleteReplacedRootVolume: ptr.Bool(true),
 		VolumeInitializationRate: ptr.Int64(1),
+		VolumeId:                 ptr.String("__VolumeId__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""

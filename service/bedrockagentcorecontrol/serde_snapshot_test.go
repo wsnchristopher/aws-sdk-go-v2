@@ -259,6 +259,9 @@ func TestSerdeCheckSnapshot_CreateAgentRuntime(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -857,6 +860,9 @@ func TestSerdeCheckSnapshot_CreateGateway(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -1243,6 +1249,9 @@ func TestSerdeCheckSnapshot_CreateHarness(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -1922,6 +1931,9 @@ func TestSerdeCheckSnapshot_CreatePaymentManager(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -2101,6 +2113,9 @@ func TestSerdeCheckSnapshot_CreateRegistry(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -5254,6 +5269,9 @@ func TestSerdeCheckSnapshot_UpdateAgentRuntime(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -5645,6 +5663,9 @@ func TestSerdeCheckSnapshot_UpdateGateway(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -6040,6 +6061,9 @@ func TestSerdeCheckSnapshot_UpdateHarness(t *testing.T) {
 					AllowedScopes: []string{
 						"__Member__",
 						"__Member__",
+					},
+					AdvertisedScopeMapping: map[string]string{
+						"key0": "__Value__",
 					},
 					CustomClaims: []types.CustomClaimValidationType{
 						{
@@ -6923,6 +6947,9 @@ func TestSerdeCheckSnapshot_UpdatePaymentManager(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -7100,6 +7127,9 @@ func TestSerdeCheckSnapshot_UpdateRegistry(t *testing.T) {
 					AllowedScopes: []string{
 						"__Member__",
 						"__Member__",
+					},
+					AdvertisedScopeMapping: map[string]string{
+						"key0": "__Value__",
 					},
 					CustomClaims: []types.CustomClaimValidationType{
 						{
@@ -7454,6 +7484,9 @@ func TestSerdeUpdateSnapshot_CreateAgentRuntime(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -8053,6 +8086,9 @@ func TestSerdeUpdateSnapshot_CreateGateway(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -8439,6 +8475,9 @@ func TestSerdeUpdateSnapshot_CreateHarness(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -9118,6 +9157,9 @@ func TestSerdeUpdateSnapshot_CreatePaymentManager(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -9297,6 +9339,9 @@ func TestSerdeUpdateSnapshot_CreateRegistry(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -12450,6 +12495,9 @@ func TestSerdeUpdateSnapshot_UpdateAgentRuntime(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -12841,6 +12889,9 @@ func TestSerdeUpdateSnapshot_UpdateGateway(t *testing.T) {
 				AllowedScopes: []string{
 					"__Member__",
 					"__Member__",
+				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
 				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
@@ -13236,6 +13287,9 @@ func TestSerdeUpdateSnapshot_UpdateHarness(t *testing.T) {
 					AllowedScopes: []string{
 						"__Member__",
 						"__Member__",
+					},
+					AdvertisedScopeMapping: map[string]string{
+						"key0": "__Value__",
 					},
 					CustomClaims: []types.CustomClaimValidationType{
 						{
@@ -14119,6 +14173,9 @@ func TestSerdeUpdateSnapshot_UpdatePaymentManager(t *testing.T) {
 					"__Member__",
 					"__Member__",
 				},
+				AdvertisedScopeMapping: map[string]string{
+					"key0": "__Value__",
+				},
 				CustomClaims: []types.CustomClaimValidationType{
 					{
 						InboundTokenClaimName:      ptr.String("__InboundTokenClaimName__"),
@@ -14296,6 +14353,9 @@ func TestSerdeUpdateSnapshot_UpdateRegistry(t *testing.T) {
 					AllowedScopes: []string{
 						"__Member__",
 						"__Member__",
+					},
+					AdvertisedScopeMapping: map[string]string{
+						"key0": "__Value__",
 					},
 					CustomClaims: []types.CustomClaimValidationType{
 						{

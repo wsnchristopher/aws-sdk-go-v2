@@ -14311,6 +14311,17 @@ func awsRestjson1_serializeDocumentAdditionalModelRequestFields(v document.Inter
 	return nil
 }
 
+func awsRestjson1_serializeDocumentAdvertisedScopeMappingType(v map[string]string, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	for key := range v {
+		om := object.Key(key)
+		om.String(v[key])
+	}
+	return nil
+}
+
 func awsRestjson1_serializeDocumentAgentCardDefinition(v *types.AgentCardDefinition, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -15629,6 +15640,13 @@ func awsRestjson1_serializeDocumentCustomExtractionConfigurationInput(v types.Cu
 func awsRestjson1_serializeDocumentCustomJWTAuthorizerConfiguration(v *types.CustomJWTAuthorizerConfiguration, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
+
+	if v.AdvertisedScopeMapping != nil {
+		ok := object.Key("advertisedScopeMapping")
+		if err := awsRestjson1_serializeDocumentAdvertisedScopeMappingType(v.AdvertisedScopeMapping, ok); err != nil {
+			return err
+		}
+	}
 
 	if v.AllowedAudience != nil {
 		ok := object.Key("allowedAudience")

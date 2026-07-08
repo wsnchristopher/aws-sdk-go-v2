@@ -276,10 +276,16 @@ func TestSerdeCheckSnapshot_Geocode(t *testing.T) {
 			types.GeocodeAdditionalFeature("TimeZone"),
 			types.GeocodeAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.GeocodeIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
+		Language:       ptr.String("__Language__"),
+		PoliticalView:  ptr.String("__PoliticalView__"),
+		IntendedUse:    types.GeocodeIntendedUse("SingleUse"),
+		Key:            ptr.String("__Key__"),
+		PostalCodeMode: types.PostalCodeMode("MergeAllSpannedLocalities"),
+		AddressTranslations: []types.AddressTranslationComponent{
+			types.AddressTranslationComponent("District"),
+			types.AddressTranslationComponent("District"),
+		},
+		AddressNamesMode: types.GeocodeAddressNamesMode("Matched"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -311,10 +317,11 @@ func TestSerdeCheckSnapshot_GetPlace(t *testing.T) {
 			types.GetPlaceAdditionalFeature("TimeZone"),
 			types.GetPlaceAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.GetPlaceIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
+		Language:         ptr.String("__Language__"),
+		PoliticalView:    ptr.String("__PoliticalView__"),
+		IntendedUse:      types.GetPlaceIntendedUse("SingleUse"),
+		Key:              ptr.String("__Key__"),
+		AddressNamesMode: types.GetPlaceAddressNamesMode("Administrative"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -357,11 +364,12 @@ func TestSerdeCheckSnapshot_ReverseGeocode(t *testing.T) {
 			types.ReverseGeocodeAdditionalFeature("TimeZone"),
 			types.ReverseGeocodeAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.ReverseGeocodeIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
-		Heading:       1.0,
+		Language:         ptr.String("__Language__"),
+		PoliticalView:    ptr.String("__PoliticalView__"),
+		IntendedUse:      types.ReverseGeocodeIntendedUse("SingleUse"),
+		Key:              ptr.String("__Key__"),
+		Heading:          1.0,
+		AddressNamesMode: types.ReverseGeocodeAddressNamesMode("Administrative"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -495,6 +503,7 @@ func TestSerdeCheckSnapshot_SearchText(t *testing.T) {
 		PoliticalView: ptr.String("__PoliticalView__"),
 		IntendedUse:   types.SearchTextIntendedUse("SingleUse"),
 		NextToken:     ptr.String("__NextToken__"),
+		TravelMode:    types.SearchTextTravelMode("Car"),
 		Key:           ptr.String("__Key__"),
 	}
 	body := &bytes.Buffer{}
@@ -553,6 +562,7 @@ func TestSerdeCheckSnapshot_Suggest(t *testing.T) {
 		Language:      ptr.String("__Language__"),
 		PoliticalView: ptr.String("__PoliticalView__"),
 		IntendedUse:   types.SuggestIntendedUse("SingleUse"),
+		TravelMode:    types.SuggestTravelMode("Car"),
 		Key:           ptr.String("__Key__"),
 	}
 	body := &bytes.Buffer{}
@@ -671,10 +681,16 @@ func TestSerdeUpdateSnapshot_Geocode(t *testing.T) {
 			types.GeocodeAdditionalFeature("TimeZone"),
 			types.GeocodeAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.GeocodeIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
+		Language:       ptr.String("__Language__"),
+		PoliticalView:  ptr.String("__PoliticalView__"),
+		IntendedUse:    types.GeocodeIntendedUse("SingleUse"),
+		Key:            ptr.String("__Key__"),
+		PostalCodeMode: types.PostalCodeMode("MergeAllSpannedLocalities"),
+		AddressTranslations: []types.AddressTranslationComponent{
+			types.AddressTranslationComponent("District"),
+			types.AddressTranslationComponent("District"),
+		},
+		AddressNamesMode: types.GeocodeAddressNamesMode("Matched"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -706,10 +722,11 @@ func TestSerdeUpdateSnapshot_GetPlace(t *testing.T) {
 			types.GetPlaceAdditionalFeature("TimeZone"),
 			types.GetPlaceAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.GetPlaceIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
+		Language:         ptr.String("__Language__"),
+		PoliticalView:    ptr.String("__PoliticalView__"),
+		IntendedUse:      types.GetPlaceIntendedUse("SingleUse"),
+		Key:              ptr.String("__Key__"),
+		AddressNamesMode: types.GetPlaceAddressNamesMode("Administrative"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -752,11 +769,12 @@ func TestSerdeUpdateSnapshot_ReverseGeocode(t *testing.T) {
 			types.ReverseGeocodeAdditionalFeature("TimeZone"),
 			types.ReverseGeocodeAdditionalFeature("TimeZone"),
 		},
-		Language:      ptr.String("__Language__"),
-		PoliticalView: ptr.String("__PoliticalView__"),
-		IntendedUse:   types.ReverseGeocodeIntendedUse("SingleUse"),
-		Key:           ptr.String("__Key__"),
-		Heading:       1.0,
+		Language:         ptr.String("__Language__"),
+		PoliticalView:    ptr.String("__PoliticalView__"),
+		IntendedUse:      types.ReverseGeocodeIntendedUse("SingleUse"),
+		Key:              ptr.String("__Key__"),
+		Heading:          1.0,
+		AddressNamesMode: types.ReverseGeocodeAddressNamesMode("Administrative"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -890,6 +908,7 @@ func TestSerdeUpdateSnapshot_SearchText(t *testing.T) {
 		PoliticalView: ptr.String("__PoliticalView__"),
 		IntendedUse:   types.SearchTextIntendedUse("SingleUse"),
 		NextToken:     ptr.String("__NextToken__"),
+		TravelMode:    types.SearchTextTravelMode("Car"),
 		Key:           ptr.String("__Key__"),
 	}
 	body := &bytes.Buffer{}
@@ -948,6 +967,7 @@ func TestSerdeUpdateSnapshot_Suggest(t *testing.T) {
 		Language:      ptr.String("__Language__"),
 		PoliticalView: ptr.String("__PoliticalView__"),
 		IntendedUse:   types.SuggestIntendedUse("SingleUse"),
+		TravelMode:    types.SuggestTravelMode("Car"),
 		Key:           ptr.String("__Key__"),
 	}
 	body := &bytes.Buffer{}
