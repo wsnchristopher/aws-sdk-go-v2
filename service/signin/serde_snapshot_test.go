@@ -216,6 +216,34 @@ func TestSerdeCheckSnapshot_CreateOAuth2Token(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_CreateOAuth2TokenWithIAM(t *testing.T) {
+	input := &CreateOAuth2TokenWithIAMInput{
+		GrantType: ptr.String("__GrantType__"),
+		Resource:  ptr.String("__Resource__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateOAuth2TokenWithIAM"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_DeleteConsoleAuthorizationConfiguration(t *testing.T) {
 	input := &DeleteConsoleAuthorizationConfigurationInput{
 		TargetId: ptr.String("__TargetId__"),
@@ -323,6 +351,34 @@ func TestSerdeCheckSnapshot_GetResourcePolicy(t *testing.T) {
 	}
 }
 
+func TestSerdeCheckSnapshot_IntrospectOAuth2TokenWithIAM(t *testing.T) {
+	input := &IntrospectOAuth2TokenWithIAMInput{
+		Token:         ptr.String("__Token__"),
+		TokenTypeHint: ptr.String("__TokenTypeHint__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.IntrospectOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "IntrospectOAuth2TokenWithIAM"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeCheckSnapshot_ListResourcePermissionStatements(t *testing.T) {
 	input := &ListResourcePermissionStatementsInput{
 		MaxResults: ptr.Int32(1),
@@ -411,6 +467,33 @@ func TestSerdeCheckSnapshot_PutResourcePermissionStatement(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestSerdeCheckSnapshot_RevokeOAuth2TokenWithIAM(t *testing.T) {
+	input := &RevokeOAuth2TokenWithIAMInput{
+		Token: ptr.String("__Token__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.RevokeOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "RevokeOAuth2TokenWithIAM"); err != nil {
+		t.Fatal(err)
+	}
+}
 func TestSerdeUpdateSnapshot_CreateOAuth2Token(t *testing.T) {
 	input := &CreateOAuth2TokenInput{
 		TokenInput: &types.CreateOAuth2TokenRequestBody{
@@ -441,6 +524,34 @@ func TestSerdeUpdateSnapshot_CreateOAuth2Token(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateOAuth2Token"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_CreateOAuth2TokenWithIAM(t *testing.T) {
+	input := &CreateOAuth2TokenWithIAMInput{
+		GrantType: ptr.String("__GrantType__"),
+		Resource:  ptr.String("__Resource__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateOAuth2TokenWithIAM"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -552,6 +663,34 @@ func TestSerdeUpdateSnapshot_GetResourcePolicy(t *testing.T) {
 	}
 }
 
+func TestSerdeUpdateSnapshot_IntrospectOAuth2TokenWithIAM(t *testing.T) {
+	input := &IntrospectOAuth2TokenWithIAMInput{
+		Token:         ptr.String("__Token__"),
+		TokenTypeHint: ptr.String("__TokenTypeHint__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.IntrospectOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "IntrospectOAuth2TokenWithIAM"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestSerdeUpdateSnapshot_ListResourcePermissionStatements(t *testing.T) {
 	input := &ListResourcePermissionStatementsInput{
 		MaxResults: ptr.Int32(1),
@@ -637,6 +776,33 @@ func TestSerdeUpdateSnapshot_PutResourcePermissionStatement(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PutResourcePermissionStatement"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSerdeUpdateSnapshot_RevokeOAuth2TokenWithIAM(t *testing.T) {
+	input := &RevokeOAuth2TokenWithIAMInput{
+		Token: ptr.String("__Token__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.RevokeOAuth2TokenWithIAM(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "RevokeOAuth2TokenWithIAM"); err != nil {
 		t.Fatal(err)
 	}
 }

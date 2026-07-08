@@ -1,0 +1,8 @@
+{
+    "id": "c6c2357e-5603-450d-803d-5d45ed38a016",
+    "type": "feature",
+    "description": "Adds support for OAuth 2.0 token operations in AWS Sign-In, CreateOAuth2TokenWithIAM (client credentials flow), IntrospectOAuth2TokenWithIAM (token inspection), and RevokeOAuth2TokenWithIAM (token revocation).",
+    "modules": [
+        "service/signin"
+    ]
+}
