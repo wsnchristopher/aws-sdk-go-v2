@@ -1,3 +1,12 @@
+# Release (2026-07-08.2)
+
+## General Highlights
+* **Dependency Update**: Updated to the latest SDK module versions
+
+## Module Highlights
+* `github.com/aws/aws-sdk-go-v2/service/signin`: [v1.4.0](service/signin/CHANGELOG.md#v140-2026-07-082)
+  * **Feature**: Adds support for OAuth 2.0 token operations in AWS Sign-In, CreateOAuth2TokenWithIAM (client credentials flow), IntrospectOAuth2TokenWithIAM (token inspection), and RevokeOAuth2TokenWithIAM (token revocation).
+
 # Release (2026-07-08)
 
 ## Module Highlights

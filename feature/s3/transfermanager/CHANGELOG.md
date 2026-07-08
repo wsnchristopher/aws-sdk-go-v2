@@ -1,3 +1,7 @@
+# v0.3.1 (2026-07-08.2)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v0.3.0 (2026-07-08)
 
 * **Feature**: Add RequestChecksumCalculation config.
