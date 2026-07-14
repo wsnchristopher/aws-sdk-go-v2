@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/UpdateIngressPoint
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.UpdateIngressPoint
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"IngressPointConfiguration":{"SmtpPassword":"__IngressPointConfigurationMemberSmtpPassword__"},"IngressPointId":"__IngressPointId__","IngressPointName":"__IngressPointName__","RuleSetId":"__RuleSetId__","StatusToUpdate":"ACTIVE","TlsPolicy":"REQUIRED","TrafficPolicyId":"__TrafficPolicyId__"}
+§nIngressPointIdr__IngressPointId__pIngressPointNamet__IngressPointName__nStatusToUpdatefACTIVEiRuleSetIdm__RuleSetId__oTrafficPolicyIds__TrafficPolicyId__xIngressPointConfiguration¡lSmtpPasswordx/__IngressPointConfigurationMemberSmtpPassword__iTlsPolicyhREQUIRED

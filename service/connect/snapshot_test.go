@@ -3362,6 +3362,18 @@ func TestCheckSnapshot_SearchRoutingProfiles(t *testing.T) {
 	}
 }
 
+func TestCheckSnapshot_SearchRules(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.SearchRules(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return testSnapshot(stack, "SearchRules")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckSnapshot_SearchSecurityProfiles(t *testing.T) {
 	svc := New(Options{})
 	_, err := svc.SearchSecurityProfiles(context.Background(), nil, func(o *Options) {
@@ -7890,6 +7902,18 @@ func TestUpdateSnapshot_SearchRoutingProfiles(t *testing.T) {
 	_, err := svc.SearchRoutingProfiles(context.Background(), nil, func(o *Options) {
 		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
 			return updateSnapshot(stack, "SearchRoutingProfiles")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateSnapshot_SearchRules(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.SearchRules(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return updateSnapshot(stack, "SearchRules")
 		})
 	})
 	if _, ok := err.(snapshotOK); !ok && err != nil {

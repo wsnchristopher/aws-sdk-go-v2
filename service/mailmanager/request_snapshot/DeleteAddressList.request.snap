@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/DeleteAddressList
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.DeleteAddressList
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AddressListId":"__AddressListId__"}
+¡mAddressListIdq__AddressListId__

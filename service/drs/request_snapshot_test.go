@@ -255,6 +255,7 @@ func TestCheckRequestSnapshot_CreateLaunchConfigurationTemplate(t *testing.T) {
 		ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 		PostLaunchEnabled:        ptr.Bool(true),
 		LaunchIntoSourceInstance: ptr.Bool(true),
+		RecoveryMode:             types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1628,6 +1629,7 @@ func TestCheckRequestSnapshot_UpdateLaunchConfiguration(t *testing.T) {
 		LaunchIntoInstanceProperties: &types.LaunchIntoInstanceProperties{
 			LaunchIntoEC2InstanceID: ptr.String("__LaunchIntoEC2InstanceID__"),
 		},
+		RecoveryMode: types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1665,6 +1667,7 @@ func TestCheckRequestSnapshot_UpdateLaunchConfigurationTemplate(t *testing.T) {
 		ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 		PostLaunchEnabled:        ptr.Bool(true),
 		LaunchIntoSourceInstance: ptr.Bool(true),
+		RecoveryMode:             types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1905,6 +1908,7 @@ func TestUpdateRequestSnapshot_CreateLaunchConfigurationTemplate(t *testing.T) {
 		ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 		PostLaunchEnabled:        ptr.Bool(true),
 		LaunchIntoSourceInstance: ptr.Bool(true),
+		RecoveryMode:             types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -3278,6 +3282,7 @@ func TestUpdateRequestSnapshot_UpdateLaunchConfiguration(t *testing.T) {
 		LaunchIntoInstanceProperties: &types.LaunchIntoInstanceProperties{
 			LaunchIntoEC2InstanceID: ptr.String("__LaunchIntoEC2InstanceID__"),
 		},
+		RecoveryMode: types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -3315,6 +3320,7 @@ func TestUpdateRequestSnapshot_UpdateLaunchConfigurationTemplate(t *testing.T) {
 		ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 		PostLaunchEnabled:        ptr.Bool(true),
 		LaunchIntoSourceInstance: ptr.Bool(true),
+		RecoveryMode:             types.RecoveryMode("FAST"),
 	}
 	body := &bytes.Buffer{}
 	method := ""

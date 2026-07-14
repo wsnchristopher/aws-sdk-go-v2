@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/ListAddressListImportJobs
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.ListAddressListImportJobs
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AddressListId":"__AddressListId__","NextToken":"__NextToken__","PageSize":1}
+£hPageSizemAddressListIdq__AddressListId__iNextTokenm__NextToken__

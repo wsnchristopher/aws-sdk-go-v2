@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/ListRuleSets
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.ListRuleSets
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"NextToken":"__NextToken__","PageSize":1}
+¢iNextTokenm__NextToken__hPageSize

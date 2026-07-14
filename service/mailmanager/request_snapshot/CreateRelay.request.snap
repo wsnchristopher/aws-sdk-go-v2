@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/CreateRelay
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.CreateRelay
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Authentication":{"SecretArn":"__RelayAuthenticationMemberSecretArn__"},"ClientToken":"__ClientToken__","RelayName":"__RelayName__","ServerName":"__ServerName__","ServerPort":1,"Tags":[{"Key":"__Key__","Value":"__Value__"},{"Key":"__Key__","Value":"__Value__"}]}
+¦dTags‚¢cKeyg__Key__eValuei__Value__¢eValuei__Value__cKeyg__Key__kClientTokeno__ClientToken__iRelayNamem__RelayName__jServerNamen__ServerName__jServerPortnAuthentication¡iSecretArnx&__RelayAuthenticationMemberSecretArn__

@@ -5544,6 +5544,10 @@ func TestCheckResponseSnapshot_DescribeRule(t *testing.T) {
 				EventSourceName:          types.EventSourceName("OnPostCallAnalysisAvailable"),
 				IntegrationAssociationId: ptr.String("__IntegrationAssociationId__"),
 			},
+			RuleCapabilityTiers: []types.RuleCapabilityTier{
+				types.RuleCapabilityTier("GenerativeAI"),
+				types.RuleCapabilityTier("GenerativeAI"),
+			},
 			Function: ptr.String("__Function__"),
 			Actions: []types.RuleAction{
 				{
@@ -10092,6 +10096,10 @@ func TestCheckResponseSnapshot_ListRules(t *testing.T) {
 				RuleArn:         ptr.String("__RuleArn__"),
 				EventSourceName: types.EventSourceName("OnPostCallAnalysisAvailable"),
 				PublishStatus:   types.RulePublishStatus("DRAFT"),
+				RuleCapabilityTiers: []types.RuleCapabilityTier{
+					types.RuleCapabilityTier("GenerativeAI"),
+					types.RuleCapabilityTier("GenerativeAI"),
+				},
 				ActionSummaries: []types.ActionSummary{
 					{
 						ActionType: types.ActionType("CREATE_TASK"),
@@ -10109,6 +10117,10 @@ func TestCheckResponseSnapshot_ListRules(t *testing.T) {
 				RuleArn:         ptr.String("__RuleArn__"),
 				EventSourceName: types.EventSourceName("OnPostCallAnalysisAvailable"),
 				PublishStatus:   types.RulePublishStatus("DRAFT"),
+				RuleCapabilityTiers: []types.RuleCapabilityTier{
+					types.RuleCapabilityTier("GenerativeAI"),
+					types.RuleCapabilityTier("GenerativeAI"),
+				},
 				ActionSummaries: []types.ActionSummary{
 					{
 						ActionType: types.ActionType("CREATE_TASK"),
@@ -12633,6 +12645,86 @@ func TestCheckResponseSnapshot_SearchRoutingProfiles(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "SearchRoutingProfiles.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_SearchRules(t *testing.T) {
+	want := &SearchRulesOutput{
+		Rules: []types.RuleSearchSummary{
+			{
+				Name:    ptr.String("__Name__"),
+				RuleId:  ptr.String("__RuleId__"),
+				RuleArn: ptr.String("__RuleArn__"),
+				TriggerEventSource: &types.RuleTriggerEventSource{
+					EventSourceName:          types.EventSourceName("OnPostCallAnalysisAvailable"),
+					IntegrationAssociationId: ptr.String("__IntegrationAssociationId__"),
+				},
+				ActionSummaries: []types.ActionSummary{
+					{
+						ActionType: types.ActionType("CREATE_TASK"),
+					},
+					{
+						ActionType: types.ActionType("CREATE_TASK"),
+					},
+				},
+				RuleCapabilityTiers: []types.RuleCapabilityTier{
+					types.RuleCapabilityTier("GenerativeAI"),
+					types.RuleCapabilityTier("GenerativeAI"),
+				},
+				PublishStatus:   types.RulePublishStatus("DRAFT"),
+				CreatedTime:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				LastUpdatedTime: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				LastUpdatedBy:   ptr.String("__LastUpdatedBy__"),
+				Tags: map[string]string{
+					"key0": "__Value__",
+				},
+			},
+			{
+				Name:    ptr.String("__Name__"),
+				RuleId:  ptr.String("__RuleId__"),
+				RuleArn: ptr.String("__RuleArn__"),
+				TriggerEventSource: &types.RuleTriggerEventSource{
+					EventSourceName:          types.EventSourceName("OnPostCallAnalysisAvailable"),
+					IntegrationAssociationId: ptr.String("__IntegrationAssociationId__"),
+				},
+				ActionSummaries: []types.ActionSummary{
+					{
+						ActionType: types.ActionType("CREATE_TASK"),
+					},
+					{
+						ActionType: types.ActionType("CREATE_TASK"),
+					},
+				},
+				RuleCapabilityTiers: []types.RuleCapabilityTier{
+					types.RuleCapabilityTier("GenerativeAI"),
+					types.RuleCapabilityTier("GenerativeAI"),
+				},
+				PublishStatus:   types.RulePublishStatus("DRAFT"),
+				CreatedTime:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				LastUpdatedTime: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				LastUpdatedBy:   ptr.String("__LastUpdatedBy__"),
+				Tags: map[string]string{
+					"key0": "__Value__",
+				},
+			},
+		},
+		ApproximateTotalCount: ptr.Int64(1),
+		NextToken:             ptr.String("__NextToken__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("SearchRules.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.SearchRules(context.Background(), &SearchRulesInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "SearchRules.response", err)
 	}
 }
 

@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/UpdateTrafficPolicy
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.UpdateTrafficPolicy
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"DefaultAction":"ALLOW","MaxMessageSizeBytes":1,"PolicyStatements":[{"Action":"ALLOW","Conditions":[{"StringExpression":{"Evaluate":{"Attribute":"RECIPIENT"},"Operator":"EQUALS","Values":["__Member__","__Member__"]}},{"StringExpression":{"Evaluate":{"Attribute":"RECIPIENT"},"Operator":"EQUALS","Values":["__Member__","__Member__"]}}]},{"Action":"ALLOW","Conditions":[{"StringExpression":{"Evaluate":{"Attribute":"RECIPIENT"},"Operator":"EQUALS","Values":["__Member__","__Member__"]}},{"StringExpression":{"Evaluate":{"Attribute":"RECIPIENT"},"Operator":"EQUALS","Values":["__Member__","__Member__"]}}]}],"TrafficPolicyId":"__TrafficPolicyId__","TrafficPolicyName":"__TrafficPolicyName__"}
+¥oTrafficPolicyIds__TrafficPolicyId__qTrafficPolicyNameu__TrafficPolicyName__pPolicyStatements‚¢fActioneALLOWjConditions‚¡pStringExpression£hEvaluate¡iAttributeiRECIPIENThOperatorfEQUALSfValues‚j__Member__j__Member__¡pStringExpression£hEvaluate¡iAttributeiRECIPIENThOperatorfEQUALSfValues‚j__Member__j__Member__¢jConditions‚¡pStringExpression£fValues‚j__Member__j__Member__hEvaluate¡iAttributeiRECIPIENThOperatorfEQUALS¡pStringExpression£hEvaluate¡iAttributeiRECIPIENThOperatorfEQUALSfValues‚j__Member__j__Member__fActioneALLOWmDefaultActioneALLOWsMaxMessageSizeBytes

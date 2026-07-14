@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/CreateArchive
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.CreateArchive
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ArchiveName":"__ArchiveName__","ClientToken":"__ClientToken__","KmsKeyArn":"__KmsKeyArn__","Retention":{"RetentionPeriod":"THREE_MONTHS"},"Tags":[{"Key":"__Key__","Value":"__Value__"},{"Key":"__Key__","Value":"__Value__"}]}
+¥iRetention¡oRetentionPeriodlTHREE_MONTHSiKmsKeyArnm__KmsKeyArn__dTags‚¢cKeyg__Key__eValuei__Value__¢cKeyg__Key__eValuei__Value__kClientTokeno__ClientToken__kArchiveNameo__ArchiveName__

@@ -394,11 +394,13 @@ func TestCheckResponseSnapshot_DescribeBroker(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
+		PendingStorageSize: ptr.Int32(1),
 		PubliclyAccessible: ptr.Bool(true),
 		SecurityGroups: []string{
 			"__Member__",
 			"__Member__",
 		},
+		StorageSize: ptr.Int32(1),
 		StorageType: types.BrokerStorageType("EBS"),
 		SubnetIds: []string{
 			"__Member__",
@@ -1009,6 +1011,7 @@ func TestCheckResponseSnapshot_UpdateBroker(t *testing.T) {
 			DataReplicationRole: ptr.String("__DataReplicationRole__"),
 		},
 		PendingDataReplicationMode: types.DataReplicationMode("NONE"),
+		StorageSize:                ptr.Int32(1),
 	}
 	status, header, body, err := serdeRespReadSnapshot("UpdateBroker.response")
 	if errors.Is(err, fs.ErrNotExist) {

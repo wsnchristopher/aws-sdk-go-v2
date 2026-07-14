@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/ListMembersOfAddressList
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.ListMembersOfAddressList
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AddressListId":"__AddressListId__","Filter":{"AddressPrefix":"__AddressPrefix__"},"NextToken":"__NextToken__","PageSize":1}
+¤mAddressListIdq__AddressListId__fFilter¡mAddressPrefixq__AddressPrefix__iNextTokenm__NextToken__hPageSize

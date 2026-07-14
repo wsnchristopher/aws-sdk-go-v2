@@ -440,6 +440,7 @@ func TestCheckResponseSnapshot_CreateLaunchConfigurationTemplate(t *testing.T) {
 			ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 			PostLaunchEnabled:        ptr.Bool(true),
 			LaunchIntoSourceInstance: ptr.Bool(true),
+			RecoveryMode:             types.RecoveryMode("FAST"),
 		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("CreateLaunchConfigurationTemplate.response")
@@ -1108,6 +1109,7 @@ func TestCheckResponseSnapshot_DescribeLaunchConfigurationTemplates(t *testing.T
 				ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 				PostLaunchEnabled:        ptr.Bool(true),
 				LaunchIntoSourceInstance: ptr.Bool(true),
+				RecoveryMode:             types.RecoveryMode("FAST"),
 			},
 			{
 				LaunchConfigurationTemplateID: ptr.String("__LaunchConfigurationTemplateID__"),
@@ -1125,6 +1127,7 @@ func TestCheckResponseSnapshot_DescribeLaunchConfigurationTemplates(t *testing.T
 				ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 				PostLaunchEnabled:        ptr.Bool(true),
 				LaunchIntoSourceInstance: ptr.Bool(true),
+				RecoveryMode:             types.RecoveryMode("FAST"),
 			},
 		},
 		NextToken: ptr.String("__NextToken__"),
@@ -2151,6 +2154,7 @@ func TestCheckResponseSnapshot_GetLaunchConfiguration(t *testing.T) {
 		LaunchIntoInstanceProperties: &types.LaunchIntoInstanceProperties{
 			LaunchIntoEC2InstanceID: ptr.String("__LaunchIntoEC2InstanceID__"),
 		},
+		RecoveryMode: types.RecoveryMode("FAST"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetLaunchConfiguration.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -3742,6 +3746,7 @@ func TestCheckResponseSnapshot_UpdateLaunchConfiguration(t *testing.T) {
 		LaunchIntoInstanceProperties: &types.LaunchIntoInstanceProperties{
 			LaunchIntoEC2InstanceID: ptr.String("__LaunchIntoEC2InstanceID__"),
 		},
+		RecoveryMode: types.RecoveryMode("FAST"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("UpdateLaunchConfiguration.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -3778,6 +3783,7 @@ func TestCheckResponseSnapshot_UpdateLaunchConfigurationTemplate(t *testing.T) {
 			ExportBucketArn:          ptr.String("__ExportBucketArn__"),
 			PostLaunchEnabled:        ptr.Bool(true),
 			LaunchIntoSourceInstance: ptr.Bool(true),
+			RecoveryMode:             types.RecoveryMode("FAST"),
 		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("UpdateLaunchConfigurationTemplate.response")

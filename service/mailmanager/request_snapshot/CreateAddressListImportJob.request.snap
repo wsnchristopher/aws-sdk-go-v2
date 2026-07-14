@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/CreateAddressListImportJob
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.CreateAddressListImportJob
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AddressListId":"__AddressListId__","ClientToken":"__ClientToken__","ImportDataFormat":{"ImportDataType":"CSV"},"Name":"__Name__"}
+¤kClientTokeno__ClientToken__mAddressListIdq__AddressListId__dNameh__Name__pImportDataFormat¡nImportDataTypecCSV

@@ -230,6 +230,7 @@ func TestCheckRequestSnapshot_CreateBroker(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
+		StorageSize: ptr.Int32(1),
 		StorageType: types.BrokerStorageType("EBS"),
 		SubnetIds: []string{
 			"__Member__",
@@ -936,6 +937,7 @@ func TestCheckRequestSnapshot_UpdateBroker(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
+		StorageSize:         ptr.Int32(1),
 		DataReplicationMode: types.DataReplicationMode("NONE"),
 	}
 	body := &bytes.Buffer{}
@@ -1072,6 +1074,7 @@ func TestUpdateRequestSnapshot_CreateBroker(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
+		StorageSize: ptr.Int32(1),
 		StorageType: types.BrokerStorageType("EBS"),
 		SubnetIds: []string{
 			"__Member__",
@@ -1778,6 +1781,7 @@ func TestUpdateRequestSnapshot_UpdateBroker(t *testing.T) {
 			"__Member__",
 			"__Member__",
 		},
+		StorageSize:         ptr.Int32(1),
 		DataReplicationMode: types.DataReplicationMode("NONE"),
 	}
 	body := &bytes.Buffer{}

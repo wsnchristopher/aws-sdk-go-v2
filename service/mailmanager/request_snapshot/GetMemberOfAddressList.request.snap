@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetMemberOfAddressList
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetMemberOfAddressList
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Address":"__Address__","AddressListId":"__AddressListId__"}
+¢mAddressListIdq__AddressListId__gAddressk__Address__

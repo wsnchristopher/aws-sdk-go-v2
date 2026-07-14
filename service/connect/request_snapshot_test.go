@@ -11712,6 +11712,96 @@ func TestCheckRequestSnapshot_SearchRoutingProfiles(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_SearchRules(t *testing.T) {
+	input := &SearchRulesInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+		SearchCriteria: &types.RulesSearchCriteria{
+			OrConditions: []types.RulesSearchCriteria{
+				{},
+				{},
+			},
+			AndConditions: []types.RulesSearchCriteria{
+				{},
+				{},
+			},
+			StringCondition: &types.StringCondition{
+				FieldName:      ptr.String("__FieldName__"),
+				Value:          ptr.String("__Value__"),
+				ComparisonType: types.StringComparisonType("STARTS_WITH"),
+			},
+		},
+		SearchFilter: &types.RulesSearchFilter{
+			AttributeFilter: &types.RuleAttributeFilter{
+				OrConditions: []types.RuleAttributeAndCondition{
+					{
+						TagConditions: []types.TagCondition{
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+						},
+					},
+					{
+						TagConditions: []types.TagCondition{
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+						},
+					},
+				},
+				AndCondition: &types.RuleAttributeAndCondition{
+					TagConditions: []types.TagCondition{
+						{
+							TagKey:   ptr.String("__TagKey__"),
+							TagValue: ptr.String("__TagValue__"),
+						},
+						{
+							TagKey:   ptr.String("__TagKey__"),
+							TagValue: ptr.String("__TagValue__"),
+						},
+					},
+				},
+				TagCondition: &types.TagCondition{
+					TagKey:   ptr.String("__TagKey__"),
+					TagValue: ptr.String("__TagValue__"),
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.SearchRules(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "SearchRules"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_SearchSecurityProfiles(t *testing.T) {
 	input := &SearchSecurityProfilesInput{
 		InstanceId: ptr.String("__InstanceId__"),
@@ -28865,6 +28955,96 @@ func TestUpdateRequestSnapshot_SearchRoutingProfiles(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "SearchRoutingProfiles"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_SearchRules(t *testing.T) {
+	input := &SearchRulesInput{
+		InstanceId: ptr.String("__InstanceId__"),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+		SearchCriteria: &types.RulesSearchCriteria{
+			OrConditions: []types.RulesSearchCriteria{
+				{},
+				{},
+			},
+			AndConditions: []types.RulesSearchCriteria{
+				{},
+				{},
+			},
+			StringCondition: &types.StringCondition{
+				FieldName:      ptr.String("__FieldName__"),
+				Value:          ptr.String("__Value__"),
+				ComparisonType: types.StringComparisonType("STARTS_WITH"),
+			},
+		},
+		SearchFilter: &types.RulesSearchFilter{
+			AttributeFilter: &types.RuleAttributeFilter{
+				OrConditions: []types.RuleAttributeAndCondition{
+					{
+						TagConditions: []types.TagCondition{
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+						},
+					},
+					{
+						TagConditions: []types.TagCondition{
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+							{
+								TagKey:   ptr.String("__TagKey__"),
+								TagValue: ptr.String("__TagValue__"),
+							},
+						},
+					},
+				},
+				AndCondition: &types.RuleAttributeAndCondition{
+					TagConditions: []types.TagCondition{
+						{
+							TagKey:   ptr.String("__TagKey__"),
+							TagValue: ptr.String("__TagValue__"),
+						},
+						{
+							TagKey:   ptr.String("__TagKey__"),
+							TagValue: ptr.String("__TagValue__"),
+						},
+					},
+				},
+				TagCondition: &types.TagCondition{
+					TagKey:   ptr.String("__TagKey__"),
+					TagValue: ptr.String("__TagValue__"),
+				},
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.SearchRules(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "SearchRules"); err != nil {
 		t.Fatal(err)
 	}
 }

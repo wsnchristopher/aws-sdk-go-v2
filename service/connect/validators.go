@@ -5450,6 +5450,26 @@ func (m *validateOpSearchRoutingProfiles) HandleInitialize(ctx context.Context, 
 	return next.HandleInitialize(ctx, in)
 }
 
+type validateOpSearchRules struct {
+}
+
+func (*validateOpSearchRules) ID() string {
+	return "OperationInputValidation"
+}
+
+func (m *validateOpSearchRules) HandleInitialize(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
+	out middleware.InitializeOutput, metadata middleware.Metadata, err error,
+) {
+	input, ok := in.Parameters.(*SearchRulesInput)
+	if !ok {
+		return out, metadata, fmt.Errorf("unknown input parameters type %T", in.Parameters)
+	}
+	if err := validateOpSearchRulesInput(input); err != nil {
+		return out, metadata, err
+	}
+	return next.HandleInitialize(ctx, in)
+}
+
 type validateOpSearchSecurityProfiles struct {
 }
 
@@ -8556,6 +8576,10 @@ func addOpSearchResourceTagsValidationMiddleware(stack *middleware.Stack) error 
 
 func addOpSearchRoutingProfilesValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpSearchRoutingProfiles{}, middleware.After)
+}
+
+func addOpSearchRulesValidationMiddleware(stack *middleware.Stack) error {
+	return stack.Initialize.Add(&validateOpSearchRules{}, middleware.After)
 }
 
 func addOpSearchSecurityProfilesValidationMiddleware(stack *middleware.Stack) error {
@@ -17938,6 +17962,21 @@ func validateOpSearchRoutingProfilesInput(v *SearchRoutingProfilesInput) error {
 		return nil
 	}
 	invalidParams := smithy.InvalidParamsError{Context: "SearchRoutingProfilesInput"}
+	if v.InstanceId == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("InstanceId"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateOpSearchRulesInput(v *SearchRulesInput) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "SearchRulesInput"}
 	if v.InstanceId == nil {
 		invalidParams.Add(smithy.NewErrParamRequired("InstanceId"))
 	}

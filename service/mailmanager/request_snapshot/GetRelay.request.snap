@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetRelay
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetRelay
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"RelayId":"__RelayId__"}
+¡gRelayIdk__RelayId__

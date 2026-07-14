@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetRuleSet
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetRuleSet
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"RuleSetId":"__RuleSetId__"}
+¡iRuleSetIdm__RuleSetId__

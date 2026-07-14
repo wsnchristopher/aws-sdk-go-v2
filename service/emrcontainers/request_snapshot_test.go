@@ -346,7 +346,8 @@ func TestCheckRequestSnapshot_CreateManagedEndpoint(t *testing.T) {
 					LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 				},
 				S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-					LogUri: ptr.String("__LogUri__"),
+					LogUri:           ptr.String("__LogUri__"),
+					EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 				},
 				ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 					RotationSize:   ptr.String("__RotationSize__"),
@@ -358,6 +359,7 @@ func TestCheckRequestSnapshot_CreateManagedEndpoint(t *testing.T) {
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
+		SessionIdleTimeoutInMinutes: 1,
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -462,6 +464,7 @@ func TestCheckRequestSnapshot_CreateVirtualCluster(t *testing.T) {
 			"key0": "__Value__",
 		},
 		SecurityConfigurationId: ptr.String("__SecurityConfigurationId__"),
+		SessionEnabled:          ptr.Bool(true),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -992,7 +995,8 @@ func TestCheckRequestSnapshot_StartJobRun(t *testing.T) {
 					LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 				},
 				S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-					LogUri: ptr.String("__LogUri__"),
+					LogUri:           ptr.String("__LogUri__"),
+					EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 				},
 				ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 					RotationSize:   ptr.String("__RotationSize__"),
@@ -1257,7 +1261,8 @@ func TestUpdateRequestSnapshot_CreateManagedEndpoint(t *testing.T) {
 					LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 				},
 				S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-					LogUri: ptr.String("__LogUri__"),
+					LogUri:           ptr.String("__LogUri__"),
+					EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 				},
 				ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 					RotationSize:   ptr.String("__RotationSize__"),
@@ -1269,6 +1274,7 @@ func TestUpdateRequestSnapshot_CreateManagedEndpoint(t *testing.T) {
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
+		SessionIdleTimeoutInMinutes: 1,
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1373,6 +1379,7 @@ func TestUpdateRequestSnapshot_CreateVirtualCluster(t *testing.T) {
 			"key0": "__Value__",
 		},
 		SecurityConfigurationId: ptr.String("__SecurityConfigurationId__"),
+		SessionEnabled:          ptr.Bool(true),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1903,7 +1910,8 @@ func TestUpdateRequestSnapshot_StartJobRun(t *testing.T) {
 					LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 				},
 				S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-					LogUri: ptr.String("__LogUri__"),
+					LogUri:           ptr.String("__LogUri__"),
+					EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 				},
 				ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 					RotationSize:   ptr.String("__RotationSize__"),

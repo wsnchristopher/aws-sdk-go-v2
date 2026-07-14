@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetIngressPoint
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetIngressPoint
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"IncludeTrustStoreContents":"EXCLUDE","IngressPointId":"__IngressPointId__"}
+¢xIncludeTrustStoreContentsgEXCLUDEnIngressPointIdr__IngressPointId__

@@ -3,4 +3,4 @@ POST /
 Content-Type: application/x-amz-json-1.1
 X-Amz-Target: StarlingDoveService.DeleteServiceLinkedConfigurationRecorder
 
-{"ServicePrincipal":"__ServicePrincipal__"}
+{"Arn":"__Arn__","ServicePrincipal":"__ServicePrincipal__"}

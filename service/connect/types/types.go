@@ -9550,6 +9550,10 @@ type Rule struct {
 	// This member is required.
 	TriggerEventSource *RuleTriggerEventSource
 
+	// The list of capability tiers associated with the rule. Used for categorizing
+	// rules by capability (for example, GenerativeAI ).
+	RuleCapabilityTiers []RuleCapabilityTier
+
 	// The tags used to organize, track, or control access for this resource. For
 	// example, { "Tags": {"key1":"value1", "key2":"value2"} }.
 	Tags map[string]string
@@ -9617,6 +9621,38 @@ type RuleAction struct {
 	noSmithyDocumentSerde
 }
 
+// A list of conditions which would be applied together with an AND condition.
+type RuleAttributeAndCondition struct {
+
+	// A list of tag conditions that need to be applied with AND condition.
+	TagConditions []TagCondition
+
+	noSmithyDocumentSerde
+}
+
+// An object that can be used to specify tag conditions inside the SearchFilter .
+// This accepts an OR of AND (List of List) input where:
+//
+//   - The top level list specifies conditions that need to be applied with OR
+//     operator.
+//
+//   - The inner list specifies conditions that need to be applied with AND
+//     operator.
+type RuleAttributeFilter struct {
+
+	// A list of conditions which would be applied together with an AND condition.
+	AndCondition *RuleAttributeAndCondition
+
+	// A list of conditions which would be applied together with an OR condition.
+	OrConditions []RuleAttributeAndCondition
+
+	// A leaf node condition which can be used to specify a tag condition, for
+	// example, HAVE BPO = 123 .
+	TagCondition *TagCondition
+
+	noSmithyDocumentSerde
+}
+
 // The rules configuration for conversational analytics. Controls whether Contact
 // Lens rules are evaluated against the analytics output.
 type RulesConfiguration struct {
@@ -9624,6 +9660,94 @@ type RulesConfiguration struct {
 	// Controls whether Contact Lens rules are evaluated for the contact. Valid
 	// values: Enable | Disable .
 	Behavior Behavior
+
+	noSmithyDocumentSerde
+}
+
+// A summary of information about a rule, returned as part of the response to a
+// SearchRules operation.
+type RuleSearchSummary struct {
+
+	// A list of ActionTypes associated with a rule.
+	//
+	// This member is required.
+	ActionSummaries []ActionSummary
+
+	// The timestamp for when the rule was created.
+	//
+	// This member is required.
+	CreatedTime *time.Time
+
+	// The Amazon Resource Name (ARN) of the user who last updated the rule.
+	//
+	// This member is required.
+	LastUpdatedBy *string
+
+	// The timestamp for when the rule was last updated.
+	//
+	// This member is required.
+	LastUpdatedTime *time.Time
+
+	// The name of the rule.
+	//
+	// This member is required.
+	Name *string
+
+	// The publish status of the rule.
+	//
+	// This member is required.
+	PublishStatus RulePublishStatus
+
+	// The Amazon Resource Name (ARN) of the rule.
+	//
+	// This member is required.
+	RuleArn *string
+
+	// A unique identifier for the rule.
+	//
+	// This member is required.
+	RuleId *string
+
+	// The event source to trigger the rule.
+	//
+	// This member is required.
+	TriggerEventSource *RuleTriggerEventSource
+
+	// The list of capability tiers associated with the rule. Used for categorizing
+	// rules by capability (for example, GenerativeAI ).
+	RuleCapabilityTiers []RuleCapabilityTier
+
+	// The tags used to organize, track, or control access for this resource. For
+	// example, { "Tags": {"key1":"value1", "key2":"value2"} }.
+	Tags map[string]string
+
+	noSmithyDocumentSerde
+}
+
+// The search criteria to be used to return rules.
+type RulesSearchCriteria struct {
+
+	// A list of conditions which would be applied together with an AND condition.
+	AndConditions []RulesSearchCriteria
+
+	// A list of conditions which would be applied together with an OR condition.
+	OrConditions []RulesSearchCriteria
+
+	// A leaf node condition which can be used to specify a string condition.
+	//
+	// The currently supported values for FieldName are Name , PublishStatus ,
+	// EventSourceName , RuleId , IntegrationAssociationId , ActionSummaries , and
+	// RuleCapabilityTiers .
+	StringCondition *StringCondition
+
+	noSmithyDocumentSerde
+}
+
+// Filters to be applied to search results.
+type RulesSearchFilter struct {
+
+	// An object that can be used to specify tag conditions inside the SearchFilter .
+	AttributeFilter *RuleAttributeFilter
 
 	noSmithyDocumentSerde
 }
@@ -9670,6 +9794,10 @@ type RuleSummary struct {
 	//
 	// This member is required.
 	RuleId *string
+
+	// The list of capability tiers associated with the rule. Used for categorizing
+	// rules by capability (for example, GenerativeAI ).
+	RuleCapabilityTiers []RuleCapabilityTier
 
 	noSmithyDocumentSerde
 }

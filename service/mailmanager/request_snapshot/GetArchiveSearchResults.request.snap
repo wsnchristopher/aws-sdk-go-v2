@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetArchiveSearchResults
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetArchiveSearchResults
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"SearchId":"__SearchId__"}
+¡hSearchIdl__SearchId__

@@ -332,7 +332,8 @@ func TestCheckResponseSnapshot_DescribeJobRun(t *testing.T) {
 						LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 					},
 					S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-						LogUri: ptr.String("__LogUri__"),
+						LogUri:           ptr.String("__LogUri__"),
+						EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 					},
 					ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 						RotationSize:   ptr.String("__RotationSize__"),
@@ -530,7 +531,8 @@ func TestCheckResponseSnapshot_DescribeManagedEndpoint(t *testing.T) {
 						LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 					},
 					S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-						LogUri: ptr.String("__LogUri__"),
+						LogUri:           ptr.String("__LogUri__"),
+						EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 					},
 					ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 						RotationSize:   ptr.String("__RotationSize__"),
@@ -539,6 +541,7 @@ func TestCheckResponseSnapshot_DescribeManagedEndpoint(t *testing.T) {
 				},
 			},
 			ServerUrl:     ptr.String("__ServerUrl__"),
+			AuthProxyUrl:  ptr.String("__AuthProxyUrl__"),
 			CreatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 			SecurityGroup: ptr.String("__SecurityGroup__"),
 			SubnetIds: []string{
@@ -642,6 +645,7 @@ func TestCheckResponseSnapshot_DescribeVirtualCluster(t *testing.T) {
 				"key0": "__Value__",
 			},
 			SecurityConfigurationId: ptr.String("__SecurityConfigurationId__"),
+			SessionEnabled:          ptr.Bool(true),
 		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("DescribeVirtualCluster.response")
@@ -665,6 +669,9 @@ func TestCheckResponseSnapshot_GetManagedEndpointSessionCredentials(t *testing.T
 	want := &GetManagedEndpointSessionCredentialsOutput{
 		Id: ptr.String("__Id__"),
 		Credentials: &types.CredentialsMemberToken{
+			Value: "__CredentialsMemberToken__",
+		},
+		EndpointCredentials: &types.CredentialsMemberToken{
 			Value: "__CredentialsMemberToken__",
 		},
 		ExpiresAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
@@ -732,7 +739,8 @@ func TestCheckResponseSnapshot_ListJobRuns(t *testing.T) {
 							LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 						},
 						S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-							LogUri: ptr.String("__LogUri__"),
+							LogUri:           ptr.String("__LogUri__"),
+							EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 						},
 						ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 							RotationSize:   ptr.String("__RotationSize__"),
@@ -812,7 +820,8 @@ func TestCheckResponseSnapshot_ListJobRuns(t *testing.T) {
 							LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 						},
 						S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-							LogUri: ptr.String("__LogUri__"),
+							LogUri:           ptr.String("__LogUri__"),
+							EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 						},
 						ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 							RotationSize:   ptr.String("__RotationSize__"),
@@ -1089,7 +1098,8 @@ func TestCheckResponseSnapshot_ListManagedEndpoints(t *testing.T) {
 							LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 						},
 						S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-							LogUri: ptr.String("__LogUri__"),
+							LogUri:           ptr.String("__LogUri__"),
+							EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 						},
 						ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 							RotationSize:   ptr.String("__RotationSize__"),
@@ -1098,6 +1108,7 @@ func TestCheckResponseSnapshot_ListManagedEndpoints(t *testing.T) {
 					},
 				},
 				ServerUrl:     ptr.String("__ServerUrl__"),
+				AuthProxyUrl:  ptr.String("__AuthProxyUrl__"),
 				CreatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 				SecurityGroup: ptr.String("__SecurityGroup__"),
 				SubnetIds: []string{
@@ -1158,7 +1169,8 @@ func TestCheckResponseSnapshot_ListManagedEndpoints(t *testing.T) {
 							LogStreamNamePrefix: ptr.String("__LogStreamNamePrefix__"),
 						},
 						S3MonitoringConfiguration: &types.S3MonitoringConfiguration{
-							LogUri: ptr.String("__LogUri__"),
+							LogUri:           ptr.String("__LogUri__"),
+							EncryptionKeyArn: ptr.String("__EncryptionKeyArn__"),
 						},
 						ContainerLogRotationConfiguration: &types.ContainerLogRotationConfiguration{
 							RotationSize:   ptr.String("__RotationSize__"),
@@ -1167,6 +1179,7 @@ func TestCheckResponseSnapshot_ListManagedEndpoints(t *testing.T) {
 					},
 				},
 				ServerUrl:     ptr.String("__ServerUrl__"),
+				AuthProxyUrl:  ptr.String("__AuthProxyUrl__"),
 				CreatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 				SecurityGroup: ptr.String("__SecurityGroup__"),
 				SubnetIds: []string{
@@ -1330,6 +1343,7 @@ func TestCheckResponseSnapshot_ListVirtualClusters(t *testing.T) {
 					"key0": "__Value__",
 				},
 				SecurityConfigurationId: ptr.String("__SecurityConfigurationId__"),
+				SessionEnabled:          ptr.Bool(true),
 			},
 			{
 				Id:    ptr.String("__Id__"),
@@ -1351,6 +1365,7 @@ func TestCheckResponseSnapshot_ListVirtualClusters(t *testing.T) {
 					"key0": "__Value__",
 				},
 				SecurityConfigurationId: ptr.String("__SecurityConfigurationId__"),
+				SessionEnabled:          ptr.Bool(true),
 			},
 		},
 		NextToken: ptr.String("__NextToken__"),

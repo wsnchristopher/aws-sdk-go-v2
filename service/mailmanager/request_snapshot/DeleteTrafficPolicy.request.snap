@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/DeleteTrafficPolicy
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.DeleteTrafficPolicy
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"TrafficPolicyId":"__TrafficPolicyId__"}
+¡oTrafficPolicyIds__TrafficPolicyId__

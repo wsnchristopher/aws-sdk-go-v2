@@ -502,6 +502,25 @@ func (DateRangeUnit) Values() []DateRangeUnit {
 	}
 }
 
+type DiscoveryType string
+
+// Enum values for DiscoveryType
+const (
+	DiscoveryTypeManaged    DiscoveryType = "Managed"
+	DiscoveryTypeSelfHosted DiscoveryType = "SelfHosted"
+)
+
+// Values returns all known values for DiscoveryType. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (DiscoveryType) Values() []DiscoveryType {
+	return []DiscoveryType{
+		"Managed",
+		"SelfHosted",
+	}
+}
+
 type EnablementStatus string
 
 // Enum values for EnablementStatus
@@ -1424,6 +1443,10 @@ const (
 	ResourceGroupByFieldResourceType           ResourceGroupByField = "ResourceType"
 	ResourceGroupByFieldResourceName           ResourceGroupByField = "ResourceName"
 	ResourceGroupByFieldFindingType            ResourceGroupByField = "FindingsSummary.FindingType"
+	ResourceGroupByFieldResourceSubCategory    ResourceGroupByField = "ResourceSubCategory"
+	ResourceGroupByFieldDiscoveryType          ResourceGroupByField = "DiscoveryType"
+	ResourceGroupByFieldHostResourceType       ResourceGroupByField = "ResourceInfo.AIDetails.HostResourceType"
+	ResourceGroupByFieldCanonicalId            ResourceGroupByField = "ResourceInfo.AIDetails.CanonicalId"
 )
 
 // Values returns all known values for ResourceGroupByField. Note that this can be
@@ -1444,6 +1467,10 @@ func (ResourceGroupByField) Values() []ResourceGroupByField {
 		"ResourceType",
 		"ResourceName",
 		"FindingsSummary.FindingType",
+		"ResourceSubCategory",
+		"DiscoveryType",
+		"ResourceInfo.AIDetails.HostResourceType",
+		"ResourceInfo.AIDetails.CanonicalId",
 	}
 }
 
@@ -1487,15 +1514,23 @@ type ResourcesNumberField string
 
 // Enum values for ResourcesNumberField
 const (
-	ResourcesNumberFieldTotalFindings         ResourcesNumberField = "FindingsSummary.TotalFindings"
-	ResourcesNumberFieldSeverityOther         ResourcesNumberField = "FindingsSummary.Severities.Other"
-	ResourcesNumberFieldSeverityFatal         ResourcesNumberField = "FindingsSummary.Severities.Fatal"
-	ResourcesNumberFieldSeverityCritical      ResourcesNumberField = "FindingsSummary.Severities.Critical"
-	ResourcesNumberFieldSeverityHigh          ResourcesNumberField = "FindingsSummary.Severities.High"
-	ResourcesNumberFieldSeverityMedium        ResourcesNumberField = "FindingsSummary.Severities.Medium"
-	ResourcesNumberFieldSeverityLow           ResourcesNumberField = "FindingsSummary.Severities.Low"
-	ResourcesNumberFieldSeverityInformational ResourcesNumberField = "FindingsSummary.Severities.Informational"
-	ResourcesNumberFieldSeverityUnknown       ResourcesNumberField = "FindingsSummary.Severities.Unknown"
+	ResourcesNumberFieldTotalFindings                                  ResourcesNumberField = "FindingsSummary.TotalFindings"
+	ResourcesNumberFieldSeverityOther                                  ResourcesNumberField = "FindingsSummary.Severities.Other"
+	ResourcesNumberFieldSeverityFatal                                  ResourcesNumberField = "FindingsSummary.Severities.Fatal"
+	ResourcesNumberFieldSeverityCritical                               ResourcesNumberField = "FindingsSummary.Severities.Critical"
+	ResourcesNumberFieldSeverityHigh                                   ResourcesNumberField = "FindingsSummary.Severities.High"
+	ResourcesNumberFieldSeverityMedium                                 ResourcesNumberField = "FindingsSummary.Severities.Medium"
+	ResourcesNumberFieldSeverityLow                                    ResourcesNumberField = "FindingsSummary.Severities.Low"
+	ResourcesNumberFieldSeverityInformational                          ResourcesNumberField = "FindingsSummary.Severities.Informational"
+	ResourcesNumberFieldSeverityUnknown                                ResourcesNumberField = "FindingsSummary.Severities.Unknown"
+	ResourcesNumberFieldSelfHostedAiModelResourceCount                 ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIModelResourceCount"
+	ResourcesNumberFieldSelfHostedAiAgentResourceCount                 ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIAgentResourceCount"
+	ResourcesNumberFieldSelfHostedAiModelServingResourceCount          ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIModelServingResourceCount"
+	ResourcesNumberFieldSelfHostedAiExternalEndpointResourceCount      ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIExternalEndpointResourceCount"
+	ResourcesNumberFieldSelfHostedAiDevelopmentResourceCount           ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIDevelopmentResourceCount"
+	ResourcesNumberFieldSelfHostedAiAgentFrameworkResourceCount        ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIAgentFrameworkResourceCount"
+	ResourcesNumberFieldSelfHostedAiAgentToolsAndIdentityResourceCount ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedAIAgentToolsAndIdentityResourceCount"
+	ResourcesNumberFieldSelfHostedTotalAiResourceCount                 ResourcesNumberField = "ResourceInfo.AIDetails.SelfHostedTotalAIResourceCount"
 )
 
 // Values returns all known values for ResourcesNumberField. Note that this can be
@@ -1513,6 +1548,14 @@ func (ResourcesNumberField) Values() []ResourcesNumberField {
 		"FindingsSummary.Severities.Low",
 		"FindingsSummary.Severities.Informational",
 		"FindingsSummary.Severities.Unknown",
+		"ResourceInfo.AIDetails.SelfHostedAIModelResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIAgentResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIModelServingResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIExternalEndpointResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIDevelopmentResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIAgentFrameworkResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedAIAgentToolsAndIdentityResourceCount",
+		"ResourceInfo.AIDetails.SelfHostedTotalAIResourceCount",
 	}
 }
 
@@ -1535,6 +1578,11 @@ const (
 	ResourcesStringFieldResourceName           ResourcesStringField = "ResourceName"
 	ResourcesStringFieldFindingType            ResourcesStringField = "FindingsSummary.FindingType"
 	ResourcesStringFieldProductName            ResourcesStringField = "FindingsSummary.ProductName"
+	ResourcesStringFieldResourceSubCategory    ResourcesStringField = "ResourceSubCategory"
+	ResourcesStringFieldDiscoveryType          ResourcesStringField = "DiscoveryType"
+	ResourcesStringFieldHostResourceGuid       ResourcesStringField = "ResourceInfo.AIDetails.HostResourceGuid"
+	ResourcesStringFieldHostResourceType       ResourcesStringField = "ResourceInfo.AIDetails.HostResourceType"
+	ResourcesStringFieldCanonicalId            ResourcesStringField = "ResourceInfo.AIDetails.CanonicalId"
 )
 
 // Values returns all known values for ResourcesStringField. Note that this can be
@@ -1558,6 +1606,11 @@ func (ResourcesStringField) Values() []ResourcesStringField {
 		"ResourceName",
 		"FindingsSummary.FindingType",
 		"FindingsSummary.ProductName",
+		"ResourceSubCategory",
+		"DiscoveryType",
+		"ResourceInfo.AIDetails.HostResourceGuid",
+		"ResourceInfo.AIDetails.HostResourceType",
+		"ResourceInfo.AIDetails.CanonicalId",
 	}
 }
 
@@ -1589,6 +1642,43 @@ func (ResourcesTrendsStringField) Values() []ResourcesTrendsStringField {
 		"resource_region",
 		"resource_owner_id",
 		"resource_owner_organization_id",
+	}
+}
+
+type ResourceSubCategory string
+
+// Enum values for ResourceSubCategory
+const (
+	ResourceSubCategoryModel                    ResourceSubCategory = "Model"
+	ResourceSubCategoryModelServing             ResourceSubCategory = "ModelServing"
+	ResourceSubCategoryAgent                    ResourceSubCategory = "Agent"
+	ResourceSubCategoryAgentFramework           ResourceSubCategory = "AgentFramework"
+	ResourceSubCategoryAgentToolsAndIdentity    ResourceSubCategory = "AgentToolsAndIdentity"
+	ResourceSubCategorySafetyAndGuardrail       ResourceSubCategory = "SafetyAndGuardrail"
+	ResourceSubCategoryKnowledgeAndData         ResourceSubCategory = "KnowledgeAndData"
+	ResourceSubCategoryOrchestrationAndPipeline ResourceSubCategory = "OrchestrationAndPipeline"
+	ResourceSubCategoryExternalEndpoint         ResourceSubCategory = "ExternalEndpoint"
+	ResourceSubCategoryDevelopment              ResourceSubCategory = "Development"
+	ResourceSubCategoryOther                    ResourceSubCategory = "Other"
+)
+
+// Values returns all known values for ResourceSubCategory. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (ResourceSubCategory) Values() []ResourceSubCategory {
+	return []ResourceSubCategory{
+		"Model",
+		"ModelServing",
+		"Agent",
+		"AgentFramework",
+		"AgentToolsAndIdentity",
+		"SafetyAndGuardrail",
+		"KnowledgeAndData",
+		"OrchestrationAndPipeline",
+		"ExternalEndpoint",
+		"Development",
+		"Other",
 	}
 }
 

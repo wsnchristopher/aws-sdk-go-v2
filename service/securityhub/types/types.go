@@ -272,6 +272,71 @@ type AggregatorV2 struct {
 	noSmithyDocumentSerde
 }
 
+// Contains information about self-hosted AI resources and their host resources.
+// The fields that are present depend on the role of the resource.
+//
+// On a self-hosted AI resource (a resource with a SelfHosted::AI:: resource type,
+// such as SelfHosted::AI::Model or SelfHosted::AI::Agent ), the HostResourceGuid
+// and HostResourceType fields link the resource to its host. The CanonicalId
+// field identifies what the resource is, enabling aggregation of identical
+// resources across multiple hosts.
+//
+// On a host resource (such as an Amazon EC2 instance), the
+// SelfHostedAI*ResourceCount fields contain the count for each ResourceSubCategory
+// and the total count of self-hosted AI resources detected on the host.
+type AIDetails struct {
+
+	// The canonical identifier for the AI resource, independent of where it is
+	// deployed. Multiple occurrences of the same resource on different hosts share the
+	// same CanonicalId . For model resources, the value follows the format model/ ,
+	// such as model/pkg:huggingface/meta-llama/llama-3-8b . Present only on
+	// self-hosted AI resources.
+	CanonicalId *string
+
+	// The identifier of the host resource that hosts the self-hosted AI resource.
+	// Present only on self-hosted AI resources.
+	HostResourceGuid *string
+
+	// The ResourceType of the host resource that hosts the self-hosted AI resource,
+	// such as AWS::EC2::Instance . Present only on self-hosted AI resources.
+	HostResourceType *string
+
+	// The number of self-hosted AI resources of ResourceSubCategory AgentFramework
+	// detected on the host resource. Present only on host resources.
+	SelfHostedAIAgentFrameworkResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory Agent detected on
+	// the host resource. Present only on host resources.
+	SelfHostedAIAgentResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory
+	// AgentToolsAndIdentity detected on the host resource. Present only on host
+	// resources.
+	SelfHostedAIAgentToolsAndIdentityResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory Development
+	// detected on the host resource. Present only on host resources.
+	SelfHostedAIDevelopmentResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory ExternalEndpoint
+	// detected on the host resource. Present only on host resources.
+	SelfHostedAIExternalEndpointResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory Model detected on
+	// the host resource. Present only on host resources.
+	SelfHostedAIModelResourceCount *int32
+
+	// The number of self-hosted AI resources of ResourceSubCategory ModelServing
+	// detected on the host resource. Present only on host resources.
+	SelfHostedAIModelServingResourceCount *int32
+
+	// The total number of all self-hosted AI resources detected on the host resource.
+	// Present only on host resources.
+	SelfHostedTotalAIResourceCount *int32
+
+	noSmithyDocumentSerde
+}
+
 //	Information about an enabled security standard in which a security control is
 //
 // enabled.
@@ -14179,7 +14244,8 @@ type AwsXrayEncryptionConfigDetails struct {
 // The detailed Azure configuration for a connector.
 type AzureDetail struct {
 
-	// The ARN of the AWS Config connector used to establish the connection to Azure.
+	// The ARN of the multi-cloud configuration connector used to establish the
+	// connection to Azure.
 	//
 	// This member is required.
 	AWSConfigConnectorArn *string
@@ -14200,7 +14266,8 @@ type AzureDetail struct {
 // The configuration for connecting to an Azure environment.
 type AzureProviderConfiguration struct {
 
-	// The ARN of the AWS Config connector used to establish the connection to Azure.
+	// The ARN of the multi-cloud configuration connector used to establish the
+	// connection to Azure.
 	//
 	// This member is required.
 	AWSConfigConnectorArn *string
@@ -17794,6 +17861,16 @@ type ResourceGroupByRule struct {
 	noSmithyDocumentSerde
 }
 
+// Additional details about a resource that are specific to its category. For
+// AI/ML resources and their host resources, this structure contains AIDetails .
+type ResourceInfo struct {
+
+	// Details that are specific to self-hosted AI resources and their host resources.
+	AIDetails *AIDetails
+
+	noSmithyDocumentSerde
+}
+
 // Information about the owner of a resource, including the account and
 // organization that the resource belongs to.
 type ResourceOwner struct {
@@ -17868,6 +17945,12 @@ type ResourceResult struct {
 	// The name of the Amazon Web Services account that's associated with the resource.
 	AccountName *string
 
+	// Specifies how the resource was discovered. If the value is Managed , the
+	// resource is natively provided by a cloud service provider. If the value is
+	// SelfHosted , the resource is hosted on customer-managed infrastructure, such as
+	// a compute instance or container image.
+	DiscoveryType DiscoveryType
+
 	// An aggregated view of security findings associated with a resource.
 	FindingsSummary []ResourceFindingsSummary
 
@@ -17884,6 +17967,10 @@ type ResourceResult struct {
 
 	// The global identifier used to identify a resource.
 	ResourceGuid *string
+
+	// Additional resource-type-specific details. For self-hosted AI resources and
+	// their host resources, contains an AIDetails structure.
+	ResourceInfo *ResourceInfo
 
 	// The name of the resource.
 	ResourceName *string
@@ -17907,6 +17994,10 @@ type ResourceResult struct {
 	// resources, this is the Azure region (for example, westus2 ). This field is
 	// always included.
 	ResourceRegion *string
+
+	// The AI/ML sub-grouping of the resource. Present only when ResourceCategory is
+	// AI/ML .
+	ResourceSubCategory ResourceSubCategory
 
 	// The key-value pairs associated with a resource.
 	ResourceTags []ResourceTag

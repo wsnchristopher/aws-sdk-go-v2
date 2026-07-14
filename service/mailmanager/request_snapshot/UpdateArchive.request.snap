@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/UpdateArchive
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.UpdateArchive
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ArchiveId":"__ArchiveId__","ArchiveName":"__ArchiveName__","Retention":{"RetentionPeriod":"THREE_MONTHS"}}
+£iArchiveIdm__ArchiveId__kArchiveNameo__ArchiveName__iRetention¡oRetentionPeriodlTHREE_MONTHS

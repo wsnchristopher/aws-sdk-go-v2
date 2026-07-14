@@ -527,6 +527,7 @@ const (
 	LastUpdateStatusReasonCodeFunctionErrorTooManyExtensions       LastUpdateStatusReasonCode = "FunctionError.TooManyExtensions"
 	LastUpdateStatusReasonCodeFunctionErrorInitResourceExhausted   LastUpdateStatusReasonCode = "FunctionError.InitResourceExhausted"
 	LastUpdateStatusReasonCodeDisallowedByVpcEncryptionControl     LastUpdateStatusReasonCode = "DisallowedByVpcEncryptionControl"
+	LastUpdateStatusReasonCodeDependencyError                      LastUpdateStatusReasonCode = "DependencyError"
 )
 
 // Values returns all known values for LastUpdateStatusReasonCode. Note that this
@@ -570,6 +571,7 @@ func (LastUpdateStatusReasonCode) Values() []LastUpdateStatusReasonCode {
 		"FunctionError.TooManyExtensions",
 		"FunctionError.InitResourceExhausted",
 		"DisallowedByVpcEncryptionControl",
+		"DependencyError",
 	}
 }
 
@@ -1092,6 +1094,7 @@ const (
 	StateReasonCodeFunctionErrorInitResourceExhausted   StateReasonCode = "FunctionError.InitResourceExhausted"
 	StateReasonCodeDisallowedByVpcEncryptionControl     StateReasonCode = "DisallowedByVpcEncryptionControl"
 	StateReasonCodeDrainingDurableExecutions            StateReasonCode = "DrainingDurableExecutions"
+	StateReasonCodeDependencyError                      StateReasonCode = "DependencyError"
 )
 
 // Values returns all known values for StateReasonCode. Note that this can be
@@ -1139,6 +1142,7 @@ func (StateReasonCode) Values() []StateReasonCode {
 		"FunctionError.InitResourceExhausted",
 		"DisallowedByVpcEncryptionControl",
 		"DrainingDurableExecutions",
+		"DependencyError",
 	}
 }
 

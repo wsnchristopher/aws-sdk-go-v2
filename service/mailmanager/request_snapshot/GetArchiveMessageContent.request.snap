@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/GetArchiveMessageContent
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.GetArchiveMessageContent
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ArchivedMessageId":"__ArchivedMessageId__"}
+¡qArchivedMessageIdu__ArchivedMessageId__

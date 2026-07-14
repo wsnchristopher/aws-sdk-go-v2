@@ -283,6 +283,7 @@
         "api_op_SearchQuickConnects.go",
         "api_op_SearchResourceTags.go",
         "api_op_SearchRoutingProfiles.go",
+        "api_op_SearchRules.go",
         "api_op_SearchSecurityProfiles.go",
         "api_op_SearchTestCases.go",
         "api_op_SearchUserHierarchyGroups.go",

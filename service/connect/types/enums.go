@@ -3916,6 +3916,23 @@ func (RoutingCriteriaStepStatus) Values() []RoutingCriteriaStepStatus {
 	}
 }
 
+type RuleCapabilityTier string
+
+// Enum values for RuleCapabilityTier
+const (
+	RuleCapabilityTierGenerativeAI RuleCapabilityTier = "GenerativeAI"
+)
+
+// Values returns all known values for RuleCapabilityTier. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (RuleCapabilityTier) Values() []RuleCapabilityTier {
+	return []RuleCapabilityTier{
+		"GenerativeAI",
+	}
+}
+
 type RulePublishStatus string
 
 // Enum values for RulePublishStatus

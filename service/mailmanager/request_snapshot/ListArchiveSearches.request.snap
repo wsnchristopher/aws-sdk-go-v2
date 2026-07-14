@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/ListArchiveSearches
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.ListArchiveSearches
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ArchiveId":"__ArchiveId__","NextToken":"__NextToken__","PageSize":1}
+£iArchiveIdm__ArchiveId__iNextTokenm__NextToken__hPageSize

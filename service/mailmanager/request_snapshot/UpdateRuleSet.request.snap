@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/UpdateRuleSet
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.UpdateRuleSet
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Rules":[{"Actions":[{"Drop":{}},{"Drop":{}}],"Conditions":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}],"Name":"__Name__","Unless":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}]},{"Actions":[{"Drop":{}},{"Drop":{}}],"Conditions":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}],"Name":"__Name__","Unless":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}]}],"RuleSetId":"__RuleSetId__","RuleSetName":"__RuleSetName__"}
+£iRuleSetIdm__RuleSetId__kRuleSetNameo__RuleSetName__eRules‚¤dNameh__Name__jConditions‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEfUnless‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEgActions‚¡dDrop ¡dDrop ¤fUnless‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEgActions‚¡dDrop ¡dDrop dNameh__Name__jConditions‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE

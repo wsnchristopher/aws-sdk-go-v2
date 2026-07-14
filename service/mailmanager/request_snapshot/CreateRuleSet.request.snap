@@ -1,6 +1,7 @@
-POST /
+POST /service/MailManagerSvc/operation/CreateRuleSet
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: MailManagerSvc.CreateRuleSet
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ClientToken":"__ClientToken__","Rules":[{"Actions":[{"Drop":{}},{"Drop":{}}],"Conditions":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}],"Name":"__Name__","Unless":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}]},{"Actions":[{"Drop":{}},{"Drop":{}}],"Conditions":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}],"Name":"__Name__","Unless":[{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}},{"BooleanExpression":{"Evaluate":{"Attribute":"READ_RECEIPT_REQUESTED"},"Operator":"IS_TRUE"}}]}],"RuleSetName":"__RuleSetName__","Tags":[{"Key":"__Key__","Value":"__Value__"},{"Key":"__Key__","Value":"__Value__"}]}
+¤eRules‚¤dNameh__Name__jConditions‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEfUnless‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEgActions‚¡dDrop ¡dDrop ¤dNameh__Name__jConditions‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEfUnless‚¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUE¡qBooleanExpression¢hEvaluate¡iAttributevREAD_RECEIPT_REQUESTEDhOperatorgIS_TRUEgActions‚¡dDrop ¡dDrop dTags‚¢cKeyg__Key__eValuei__Value__¢eValuei__Value__cKeyg__Key__kClientTokeno__ClientToken__kRuleSetNameo__RuleSetName__

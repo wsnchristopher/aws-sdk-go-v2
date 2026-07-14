@@ -20196,6 +20196,168 @@ func awsRestjson1_deserializeDocumentAggregatorV2List(v *[]types.AggregatorV2, v
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentAIDetails(v **types.AIDetails, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.AIDetails
+	if *v == nil {
+		sv = &types.AIDetails{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "CanonicalId":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected NonEmptyString to be of type string, got %T instead", value)
+				}
+				sv.CanonicalId = ptr.String(jtv)
+			}
+
+		case "HostResourceGuid":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected NonEmptyString to be of type string, got %T instead", value)
+				}
+				sv.HostResourceGuid = ptr.String(jtv)
+			}
+
+		case "HostResourceType":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected NonEmptyString to be of type string, got %T instead", value)
+				}
+				sv.HostResourceType = ptr.String(jtv)
+			}
+
+		case "SelfHostedAIAgentFrameworkResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIAgentFrameworkResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIAgentResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIAgentResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIAgentToolsAndIdentityResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIAgentToolsAndIdentityResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIDevelopmentResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIDevelopmentResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIExternalEndpointResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIExternalEndpointResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIModelResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIModelResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedAIModelServingResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedAIModelServingResourceCount = ptr.Int32(int32(i64))
+			}
+
+		case "SelfHostedTotalAIResourceCount":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected Integer to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.SelfHostedTotalAIResourceCount = ptr.Int32(int32(i64))
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentAssociatedStandard(v **types.AssociatedStandard, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -73641,6 +73803,42 @@ func awsRestjson1_deserializeDocumentResourceFindingsSummaryList(v *[]types.Reso
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentResourceInfo(v **types.ResourceInfo, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.ResourceInfo
+	if *v == nil {
+		sv = &types.ResourceInfo{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "AIDetails":
+			if err := awsRestjson1_deserializeDocumentAIDetails(&sv.AIDetails, value); err != nil {
+				return err
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentResourceInUseException(v **types.ResourceInUseException, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -73934,6 +74132,15 @@ func awsRestjson1_deserializeDocumentResourceResult(v **types.ResourceResult, va
 				sv.AccountName = ptr.String(jtv)
 			}
 
+		case "DiscoveryType":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected DiscoveryType to be of type string, got %T instead", value)
+				}
+				sv.DiscoveryType = types.DiscoveryType(jtv)
+			}
+
 		case "FindingsSummary":
 			if err := awsRestjson1_deserializeDocumentResourceFindingsSummaryList(&sv.FindingsSummary, value); err != nil {
 				return err
@@ -74007,6 +74214,11 @@ func awsRestjson1_deserializeDocumentResourceResult(v **types.ResourceResult, va
 				sv.ResourceId = ptr.String(jtv)
 			}
 
+		case "ResourceInfo":
+			if err := awsRestjson1_deserializeDocumentResourceInfo(&sv.ResourceInfo, value); err != nil {
+				return err
+			}
+
 		case "ResourceName":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -74050,6 +74262,15 @@ func awsRestjson1_deserializeDocumentResourceResult(v **types.ResourceResult, va
 					return fmt.Errorf("expected NonEmptyString to be of type string, got %T instead", value)
 				}
 				sv.ResourceRegion = ptr.String(jtv)
+			}
+
+		case "ResourceSubCategory":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected ResourceSubCategory to be of type string, got %T instead", value)
+				}
+				sv.ResourceSubCategory = types.ResourceSubCategory(jtv)
 			}
 
 		case "ResourceTags":
