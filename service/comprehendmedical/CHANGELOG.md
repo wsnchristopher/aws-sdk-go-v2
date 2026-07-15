@@ -1,3 +1,7 @@
+# v1.35.0 (2026-07-15)
+
+* **Feature**: Enable schema-based serialization.
+
 # v1.34.1 (2026-07-13)
 
 * No change notes available for this release.

@@ -1,3 +1,25 @@
+# Release (2026-07-15)
+
+## Module Highlights
+* `github.com/aws/aws-sdk-go-v2/service/bedrockagentcorecontrol`: [v1.48.0](service/bedrockagentcorecontrol/CHANGELOG.md#v1480-2026-07-15)
+  * **Feature**: Fix HarnessEndpointArn pattern to match the actual service-emitted ARN format ('harness-endpoint' instead of 'endpoint'). Add additionalParams to Gemini model configuration for passing provider-specific parameters through to the model unchanged.
+* `github.com/aws/aws-sdk-go-v2/service/comprehendmedical`: [v1.35.0](service/comprehendmedical/CHANGELOG.md#v1350-2026-07-15)
+  * **Feature**: Enable schema-based serialization.
+* `github.com/aws/aws-sdk-go-v2/service/computeoptimizer`: [v1.56.0](service/computeoptimizer/CHANGELOG.md#v1560-2026-07-15)
+  * **Feature**: Enable schema-based serialization.
+* `github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2`: [v1.57.0](service/elasticloadbalancingv2/CHANGELOG.md#v1570-2026-07-15)
+  * **Feature**: This release adds support for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.
+* `github.com/aws/aws-sdk-go-v2/service/healthlake`: [v1.41.0](service/healthlake/CHANGELOG.md#v1410-2026-07-15)
+  * **Feature**: AWS HealthLake now offers data transformation in Preview to convert CSV and C-CDA data to FHIR R4. Customers can maintain reusable mapping profiles, run sync or async jobs with provenance tracking and drift detection, and use an AI agent to build and edit mapping logic from natural language.
+* `github.com/aws/aws-sdk-go-v2/service/marketplaceentitlementservice`: [v1.40.0](service/marketplaceentitlementservice/CHANGELOG.md#v1400-2026-07-15)
+  * **Feature**: Enable schema-based serialization.
+* `github.com/aws/aws-sdk-go-v2/service/paymentcryptographydata`: [v1.29.0](service/paymentcryptographydata/CHANGELOG.md#v1290-2026-07-15)
+  * **Feature**: Adds support for UnionPay session key derivation to the GenerateAuthRequestCryptogram, VerifyAuthRequestCryptogram, GenerateMac, and VerifyMac APIs.
+* `github.com/aws/aws-sdk-go-v2/service/rds`: [v1.121.0](service/rds/CHANGELOG.md#v11210-2026-07-15)
+  * **Feature**: Adds support for modifying EngineLifecycleSupport on DB instances and DB clusters through ModifyDBInstance and ModifyDBCluster.
+* `github.com/aws/aws-sdk-go-v2/service/snowball`: [v1.39.0](service/snowball/CHANGELOG.md#v1390-2026-07-15)
+  * **Feature**: Enable schema-based serialization.
+
 # Release (2026-07-14)
 
 ## Module Highlights

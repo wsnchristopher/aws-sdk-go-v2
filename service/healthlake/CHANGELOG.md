@@ -1,3 +1,7 @@
+# v1.41.0 (2026-07-15)
+
+* **Feature**: AWS HealthLake now offers data transformation in Preview to convert CSV and C-CDA data to FHIR R4. Customers can maintain reusable mapping profiles, run sync or async jobs with provenance tracking and drift detection, and use an AI agent to build and edit mapping logic from natural language.
+
 # v1.40.1 (2026-07-13)
 
 * No change notes available for this release.

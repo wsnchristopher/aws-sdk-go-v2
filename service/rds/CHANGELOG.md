@@ -1,3 +1,7 @@
+# v1.121.0 (2026-07-15)
+
+* **Feature**: Adds support for modifying EngineLifecycleSupport on DB instances and DB clusters through ModifyDBInstance and ModifyDBCluster.
+
 # v1.120.1 (2026-07-13)
 
 * No change notes available for this release.

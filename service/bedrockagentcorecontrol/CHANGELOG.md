@@ -1,3 +1,7 @@
+# v1.48.0 (2026-07-15)
+
+* **Feature**: Fix HarnessEndpointArn pattern to match the actual service-emitted ARN format ('harness-endpoint' instead of 'endpoint'). Add additionalParams to Gemini model configuration for passing provider-specific parameters through to the model unchanged.
+
 # v1.47.1 (2026-07-13)
 
 * No change notes available for this release.

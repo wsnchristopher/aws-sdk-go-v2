@@ -1,3 +1,7 @@
+# v1.29.0 (2026-07-15)
+
+* **Feature**: Adds support for UnionPay session key derivation to the GenerateAuthRequestCryptogram, VerifyAuthRequestCryptogram, GenerateMac, and VerifyMac APIs.
+
 # v1.28.1 (2026-07-13)
 
 * No change notes available for this release.

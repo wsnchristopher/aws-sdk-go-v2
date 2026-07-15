@@ -1,8 +1,0 @@
-{
-    "id": "42f40112-9a7d-457d-bf1f-11880dd86f2b",
-    "type": "feature",
-    "description": "Adds support for UnionPay session key derivation to the GenerateAuthRequestCryptogram, VerifyAuthRequestCryptogram, GenerateMac, and VerifyMac APIs.",
-    "modules": [
-        "service/paymentcryptographydata"
-    ]
-}
