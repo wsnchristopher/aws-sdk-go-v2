@@ -16726,6 +16726,11 @@ func awsAwsquery_serializeOpDocumentModifyDBClusterInput(v *ModifyDBClusterInput
 		objectKey.Boolean(*v.EnablePerformanceInsights)
 	}
 
+	if v.EngineLifecycleSupport != nil {
+		objectKey := object.Key("EngineLifecycleSupport")
+		objectKey.String(*v.EngineLifecycleSupport)
+	}
+
 	if v.EngineMode != nil {
 		objectKey := object.Key("EngineMode")
 		objectKey.String(*v.EngineMode)
@@ -17065,6 +17070,11 @@ func awsAwsquery_serializeOpDocumentModifyDBInstanceInput(v *ModifyDBInstanceInp
 	if v.Engine != nil {
 		objectKey := object.Key("Engine")
 		objectKey.String(*v.Engine)
+	}
+
+	if v.EngineLifecycleSupport != nil {
+		objectKey := object.Key("EngineLifecycleSupport")
+		objectKey.String(*v.EngineLifecycleSupport)
 	}
 
 	if v.EngineVersion != nil {

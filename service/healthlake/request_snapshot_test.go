@@ -183,6 +183,45 @@ func serdeNewClient() *Client {
 func serdeBodyEqual(got, expected []byte) bool {
 	return bytes.Equal(got, expected)
 }
+func TestCheckRequestSnapshot_CreateDataTransformationProfile(t *testing.T) {
+	input := &CreateDataTransformationProfileInput{
+		SourceFormat: types.SourceFormat("CCDA"),
+		Source: &types.CreateDataTransformationProfileSourceMemberStarterProfile{
+			Value: types.StarterProfileSource{
+				StarterProfileName: ptr.String("__StarterProfileName__"),
+			},
+		},
+		KmsKeyId:           ptr.String("__KmsKeyId__"),
+		ProfileDescription: ptr.String("__ProfileDescription__"),
+		ProfileName:        ptr.String("__ProfileName__"),
+		Tags: map[string]string{
+			"key0": "__Value__",
+		},
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_CreateFHIRDatastore(t *testing.T) {
 	input := &CreateFHIRDatastoreInput{
 		DatastoreName:        ptr.String("__DatastoreName__"),
@@ -249,6 +288,33 @@ func TestCheckRequestSnapshot_CreateFHIRDatastore(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_DeleteDataTransformationProfile(t *testing.T) {
+	input := &DeleteDataTransformationProfileInput{
+		ProfileId: ptr.String("__ProfileId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_DeleteFHIRDatastore(t *testing.T) {
 	input := &DeleteFHIRDatastoreInput{
 		DatastoreId: ptr.String("__DatastoreId__"),
@@ -272,6 +338,33 @@ func TestCheckRequestSnapshot_DeleteFHIRDatastore(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteFHIRDatastore"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_DescribeDataTransformationJob(t *testing.T) {
+	input := &DescribeDataTransformationJobInput{
+		JobId: ptr.String("__JobId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DescribeDataTransformationJob(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeDataTransformationJob"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -355,6 +448,124 @@ func TestCheckRequestSnapshot_DescribeFHIRImportJob(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeFHIRImportJob"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_GetDataTransformationProfile(t *testing.T) {
+	input := &GetDataTransformationProfileInput{
+		ProfileId:      ptr.String("__ProfileId__"),
+		ProfileVersion: ptr.Int32(1),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_ListDataTransformationJobs(t *testing.T) {
+	input := &ListDataTransformationJobsInput{
+		MaxResults:      ptr.Int32(1),
+		NextToken:       ptr.String("__NextToken__"),
+		JobStatus:       types.TransformationJobStatus("SUBMITTED"),
+		JobName:         ptr.String("__JobName__"),
+		SubmittedAfter:  ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		SubmittedBefore: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationJobs(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationJobs"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_ListDataTransformationProfiles(t *testing.T) {
+	input := &ListDataTransformationProfilesInput{
+		SourceFormat: types.SourceFormat("CCDA"),
+		MaxResults:   ptr.Int32(1),
+		NextToken:    ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationProfiles(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationProfiles"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_ListDataTransformationProfileVersions(t *testing.T) {
+	input := &ListDataTransformationProfileVersionsInput{
+		ProfileId:  ptr.String("__ProfileId__"),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationProfileVersions(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationProfileVersions"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -486,6 +697,78 @@ func TestCheckRequestSnapshot_ListTagsForResource(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_PublishDataTransformationProfile(t *testing.T) {
+	input := &PublishDataTransformationProfileInput{
+		ProfileId:           ptr.String("__ProfileId__"),
+		SourceFormat:        types.SourceFormat("CCDA"),
+		FromExistingVersion: ptr.Int32(1),
+		ChangeDescription:   ptr.String("__ChangeDescription__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PublishDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PublishDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_StartDataTransformationJob(t *testing.T) {
+	input := &StartDataTransformationJobInput{
+		InputDataConfig: &types.TransformationInputDataConfig{
+			S3Uri:        ptr.String("__S3Uri__"),
+			SourceFormat: types.SourceFormat("CCDA"),
+		},
+		OutputDataConfig: &types.TransformationOutputDataConfig{
+			S3Configuration: &types.DataTransformationS3Configuration{
+				S3Uri:    ptr.String("__S3Uri__"),
+				KmsKeyId: ptr.String("__KmsKeyId__"),
+			},
+		},
+		DataAccessRoleArn:     ptr.String("__DataAccessRoleArn__"),
+		ClientToken:           ptr.String("__ClientToken__"),
+		JobName:               ptr.String("__JobName__"),
+		ProfileId:             ptr.String("__ProfileId__"),
+		DriftDetectionEnabled: ptr.Bool(true),
+		ProvenanceEnabled:     ptr.Bool(true),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.StartDataTransformationJob(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "StartDataTransformationJob"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_StartFHIRExportJob(t *testing.T) {
 	input := &StartFHIRExportJobInput{
 		JobName: ptr.String("__JobName__"),
@@ -534,10 +817,13 @@ func TestCheckRequestSnapshot_StartFHIRImportJob(t *testing.T) {
 				KmsKeyId: ptr.String("__KmsKeyId__"),
 			},
 		},
-		DatastoreId:       ptr.String("__DatastoreId__"),
-		DataAccessRoleArn: ptr.String("__DataAccessRoleArn__"),
-		ClientToken:       ptr.String("__ClientToken__"),
-		ValidationLevel:   types.ValidationLevel("strict"),
+		DatastoreId:           ptr.String("__DatastoreId__"),
+		DataAccessRoleArn:     ptr.String("__DataAccessRoleArn__"),
+		ClientToken:           ptr.String("__ClientToken__"),
+		ValidationLevel:       types.ValidationLevel("strict"),
+		ProfileId:             ptr.String("__ProfileId__"),
+		InputFormat:           ptr.String("__InputFormat__"),
+		DriftDetectionEnabled: true,
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -630,15 +916,46 @@ func TestCheckRequestSnapshot_UntagResource(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_UpdateDataTransformationProfile(t *testing.T) {
+	input := &UpdateDataTransformationProfileInput{
+		ProfileId: ptr.String("__ProfileId__"),
+		ProfileMapping: map[string]string{
+			"key0": "__Value__",
+		},
+		ChangeDescription: ptr.String("__ChangeDescription__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_UpdateFHIRDatastore(t *testing.T) {
 	input := &UpdateFHIRDatastoreInput{
 		DatastoreId:   ptr.String("__DatastoreId__"),
 		DatastoreName: ptr.String("__DatastoreName__"),
-		NlpConfiguration: &types.NlpConfiguration{
-			Status: types.NlpStatus("ENABLED"),
-		},
 		AnalyticsConfiguration: &types.AnalyticsConfiguration{
 			Status: types.AnalyticsStatus("ENABLED"),
+		},
+		NlpConfiguration: &types.NlpConfiguration{
+			Status: types.NlpStatus("ENABLED"),
 		},
 		ProfileConfiguration: &types.ProfileConfiguration{
 			DefaultProfiles: []string{
@@ -675,6 +992,78 @@ func TestCheckRequestSnapshot_UpdateFHIRDatastore(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestCheckRequestSnapshot_UpdateProfileWithAgent(t *testing.T) {
+	input := &UpdateProfileWithAgentInput{
+		ProfileId:    ptr.String("__ProfileId__"),
+		SourceFormat: types.SourceFormat("CCDA"),
+		InputMessage: &types.AgentInputMessage{
+			Body: ptr.String("__Body__"),
+			Type: types.AgentInputMessageType("normal"),
+		},
+		ConversationId: ptr.String("__ConversationId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateProfileWithAgent(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateProfileWithAgent"); err != nil {
+		t.Fatal(err)
+	}
+}
+func TestUpdateRequestSnapshot_CreateDataTransformationProfile(t *testing.T) {
+	input := &CreateDataTransformationProfileInput{
+		SourceFormat: types.SourceFormat("CCDA"),
+		Source: &types.CreateDataTransformationProfileSourceMemberStarterProfile{
+			Value: types.StarterProfileSource{
+				StarterProfileName: ptr.String("__StarterProfileName__"),
+			},
+		},
+		KmsKeyId:           ptr.String("__KmsKeyId__"),
+		ProfileDescription: ptr.String("__ProfileDescription__"),
+		ProfileName:        ptr.String("__ProfileName__"),
+		Tags: map[string]string{
+			"key0": "__Value__",
+		},
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_CreateFHIRDatastore(t *testing.T) {
 	input := &CreateFHIRDatastoreInput{
 		DatastoreName:        ptr.String("__DatastoreName__"),
@@ -741,6 +1130,33 @@ func TestUpdateRequestSnapshot_CreateFHIRDatastore(t *testing.T) {
 	}
 }
 
+func TestUpdateRequestSnapshot_DeleteDataTransformationProfile(t *testing.T) {
+	input := &DeleteDataTransformationProfileInput{
+		ProfileId: ptr.String("__ProfileId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_DeleteFHIRDatastore(t *testing.T) {
 	input := &DeleteFHIRDatastoreInput{
 		DatastoreId: ptr.String("__DatastoreId__"),
@@ -764,6 +1180,33 @@ func TestUpdateRequestSnapshot_DeleteFHIRDatastore(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteFHIRDatastore"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_DescribeDataTransformationJob(t *testing.T) {
+	input := &DescribeDataTransformationJobInput{
+		JobId: ptr.String("__JobId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DescribeDataTransformationJob(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeDataTransformationJob"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -847,6 +1290,124 @@ func TestUpdateRequestSnapshot_DescribeFHIRImportJob(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeFHIRImportJob"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_GetDataTransformationProfile(t *testing.T) {
+	input := &GetDataTransformationProfileInput{
+		ProfileId:      ptr.String("__ProfileId__"),
+		ProfileVersion: ptr.Int32(1),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.GetDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "GetDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_ListDataTransformationJobs(t *testing.T) {
+	input := &ListDataTransformationJobsInput{
+		MaxResults:      ptr.Int32(1),
+		NextToken:       ptr.String("__NextToken__"),
+		JobStatus:       types.TransformationJobStatus("SUBMITTED"),
+		JobName:         ptr.String("__JobName__"),
+		SubmittedAfter:  ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		SubmittedBefore: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationJobs(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationJobs"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_ListDataTransformationProfiles(t *testing.T) {
+	input := &ListDataTransformationProfilesInput{
+		SourceFormat: types.SourceFormat("CCDA"),
+		MaxResults:   ptr.Int32(1),
+		NextToken:    ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationProfiles(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationProfiles"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_ListDataTransformationProfileVersions(t *testing.T) {
+	input := &ListDataTransformationProfileVersionsInput{
+		ProfileId:  ptr.String("__ProfileId__"),
+		MaxResults: ptr.Int32(1),
+		NextToken:  ptr.String("__NextToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListDataTransformationProfileVersions(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListDataTransformationProfileVersions"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -978,6 +1539,78 @@ func TestUpdateRequestSnapshot_ListTagsForResource(t *testing.T) {
 	}
 }
 
+func TestUpdateRequestSnapshot_PublishDataTransformationProfile(t *testing.T) {
+	input := &PublishDataTransformationProfileInput{
+		ProfileId:           ptr.String("__ProfileId__"),
+		SourceFormat:        types.SourceFormat("CCDA"),
+		FromExistingVersion: ptr.Int32(1),
+		ChangeDescription:   ptr.String("__ChangeDescription__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.PublishDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "PublishDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_StartDataTransformationJob(t *testing.T) {
+	input := &StartDataTransformationJobInput{
+		InputDataConfig: &types.TransformationInputDataConfig{
+			S3Uri:        ptr.String("__S3Uri__"),
+			SourceFormat: types.SourceFormat("CCDA"),
+		},
+		OutputDataConfig: &types.TransformationOutputDataConfig{
+			S3Configuration: &types.DataTransformationS3Configuration{
+				S3Uri:    ptr.String("__S3Uri__"),
+				KmsKeyId: ptr.String("__KmsKeyId__"),
+			},
+		},
+		DataAccessRoleArn:     ptr.String("__DataAccessRoleArn__"),
+		ClientToken:           ptr.String("__ClientToken__"),
+		JobName:               ptr.String("__JobName__"),
+		ProfileId:             ptr.String("__ProfileId__"),
+		DriftDetectionEnabled: ptr.Bool(true),
+		ProvenanceEnabled:     ptr.Bool(true),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.StartDataTransformationJob(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "StartDataTransformationJob"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_StartFHIRExportJob(t *testing.T) {
 	input := &StartFHIRExportJobInput{
 		JobName: ptr.String("__JobName__"),
@@ -1026,10 +1659,13 @@ func TestUpdateRequestSnapshot_StartFHIRImportJob(t *testing.T) {
 				KmsKeyId: ptr.String("__KmsKeyId__"),
 			},
 		},
-		DatastoreId:       ptr.String("__DatastoreId__"),
-		DataAccessRoleArn: ptr.String("__DataAccessRoleArn__"),
-		ClientToken:       ptr.String("__ClientToken__"),
-		ValidationLevel:   types.ValidationLevel("strict"),
+		DatastoreId:           ptr.String("__DatastoreId__"),
+		DataAccessRoleArn:     ptr.String("__DataAccessRoleArn__"),
+		ClientToken:           ptr.String("__ClientToken__"),
+		ValidationLevel:       types.ValidationLevel("strict"),
+		ProfileId:             ptr.String("__ProfileId__"),
+		InputFormat:           ptr.String("__InputFormat__"),
+		DriftDetectionEnabled: true,
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1122,15 +1758,46 @@ func TestUpdateRequestSnapshot_UntagResource(t *testing.T) {
 	}
 }
 
+func TestUpdateRequestSnapshot_UpdateDataTransformationProfile(t *testing.T) {
+	input := &UpdateDataTransformationProfileInput{
+		ProfileId: ptr.String("__ProfileId__"),
+		ProfileMapping: map[string]string{
+			"key0": "__Value__",
+		},
+		ChangeDescription: ptr.String("__ChangeDescription__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateDataTransformationProfile(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateDataTransformationProfile"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_UpdateFHIRDatastore(t *testing.T) {
 	input := &UpdateFHIRDatastoreInput{
 		DatastoreId:   ptr.String("__DatastoreId__"),
 		DatastoreName: ptr.String("__DatastoreName__"),
-		NlpConfiguration: &types.NlpConfiguration{
-			Status: types.NlpStatus("ENABLED"),
-		},
 		AnalyticsConfiguration: &types.AnalyticsConfiguration{
 			Status: types.AnalyticsStatus("ENABLED"),
+		},
+		NlpConfiguration: &types.NlpConfiguration{
+			Status: types.NlpStatus("ENABLED"),
 		},
 		ProfileConfiguration: &types.ProfileConfiguration{
 			DefaultProfiles: []string{
@@ -1164,6 +1831,39 @@ func TestUpdateRequestSnapshot_UpdateFHIRDatastore(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateFHIRDatastore"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_UpdateProfileWithAgent(t *testing.T) {
+	input := &UpdateProfileWithAgentInput{
+		ProfileId:    ptr.String("__ProfileId__"),
+		SourceFormat: types.SourceFormat("CCDA"),
+		InputMessage: &types.AgentInputMessage{
+			Body: ptr.String("__Body__"),
+			Type: types.AgentInputMessageType("normal"),
+		},
+		ConversationId: ptr.String("__ConversationId__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.UpdateProfileWithAgent(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateProfileWithAgent"); err != nil {
 		t.Fatal(err)
 	}
 }

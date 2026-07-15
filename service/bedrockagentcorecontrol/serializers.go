@@ -16923,6 +16923,13 @@ func awsRestjson1_serializeDocumentHarnessGeminiModelConfig(v *types.HarnessGemi
 	object := value.Object()
 	defer object.Close()
 
+	if v.AdditionalParams != nil {
+		ok := object.Key("additionalParams")
+		if err := awsRestjson1_serializeDocumentDocument(v.AdditionalParams, ok); err != nil {
+			return err
+		}
+	}
+
 	if v.ApiKeyArn != nil {
 		ok := object.Key("apiKeyArn")
 		ok.String(*v.ApiKeyArn)

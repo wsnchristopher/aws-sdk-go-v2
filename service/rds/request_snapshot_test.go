@@ -4934,6 +4934,7 @@ func TestCheckRequestSnapshot_ModifyDBCluster(t *testing.T) {
 		EnableLimitlessDatabase:            ptr.Bool(true),
 		CACertificateIdentifier:            ptr.String("__CACertificateIdentifier__"),
 		MasterUserAuthenticationType:       types.MasterUserAuthenticationType("password"),
+		EngineLifecycleSupport:             ptr.String("__EngineLifecycleSupport__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -5230,6 +5231,7 @@ func TestCheckRequestSnapshot_ModifyDBInstance(t *testing.T) {
 			},
 		},
 		MasterUserAuthenticationType: types.MasterUserAuthenticationType("password"),
+		EngineLifecycleSupport:       ptr.String("__EngineLifecycleSupport__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -12295,6 +12297,7 @@ func TestUpdateRequestSnapshot_ModifyDBCluster(t *testing.T) {
 		EnableLimitlessDatabase:            ptr.Bool(true),
 		CACertificateIdentifier:            ptr.String("__CACertificateIdentifier__"),
 		MasterUserAuthenticationType:       types.MasterUserAuthenticationType("password"),
+		EngineLifecycleSupport:             ptr.String("__EngineLifecycleSupport__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -12591,6 +12594,7 @@ func TestUpdateRequestSnapshot_ModifyDBInstance(t *testing.T) {
 			},
 		},
 		MasterUserAuthenticationType: types.MasterUserAuthenticationType("password"),
+		EngineLifecycleSupport:       ptr.String("__EngineLifecycleSupport__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""

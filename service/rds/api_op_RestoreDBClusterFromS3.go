@@ -213,7 +213,7 @@ type RestoreDBClusterFromS3Input struct {
 	// [IAM Database Authentication]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.IAMDBAuth.html
 	EnableIAMDatabaseAuthentication *bool
 
-	// The life cycle type for this DB cluster.
+	// The lifecycle type for this DB cluster.
 	//
 	// By default, this value is set to open-source-rds-extended-support , which
 	// enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard

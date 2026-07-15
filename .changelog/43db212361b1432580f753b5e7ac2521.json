@@ -1,0 +1,8 @@
+{
+    "id": "43db2123-61b1-4325-80f7-53b5e7ac2521",
+    "type": "feature",
+    "description": "Adds support for modifying EngineLifecycleSupport on DB instances and DB clusters through ModifyDBInstance and ModifyDBCluster.",
+    "modules": [
+        "service/rds"
+    ]
+}

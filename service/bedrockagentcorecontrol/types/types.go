@@ -3322,6 +3322,10 @@ type HarnessGeminiModelConfig struct {
 	// This member is required.
 	ModelId *string
 
+	// Provider-specific parameters passed through to the Gemini model provider
+	// unchanged.
+	AdditionalParams document.Interface
+
 	// The maximum number of tokens to allow in the generated response per model call.
 	MaxTokens *int32
 

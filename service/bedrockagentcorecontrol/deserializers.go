@@ -30252,6 +30252,9 @@ func awsRestjson1_deserializeOpErrorUpdatePolicy(response *smithyhttp.Response, 
 	case strings.EqualFold("ResourceNotFoundException", errorCode):
 		return awsRestjson1_deserializeErrorResourceNotFoundException(response, errorBody)
 
+	case strings.EqualFold("ServiceQuotaExceededException", errorCode):
+		return awsRestjson1_deserializeErrorServiceQuotaExceededException(response, errorBody)
+
 	case strings.EqualFold("ThrottlingException", errorCode):
 		return awsRestjson1_deserializeErrorThrottlingException(response, errorBody)
 
@@ -40597,6 +40600,11 @@ func awsRestjson1_deserializeDocumentHarnessGeminiModelConfig(v **types.HarnessG
 
 	for key, value := range shape {
 		switch key {
+		case "additionalParams":
+			if err := awsRestjson1_deserializeDocumentDocument(&sv.AdditionalParams, value); err != nil {
+				return err
+			}
+
 		case "apiKeyArn":
 			if value != nil {
 				jtv, ok := value.(string)

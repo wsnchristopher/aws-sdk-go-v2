@@ -664,6 +664,7 @@ func TestCheckRequestSnapshot_CreateRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -730,6 +731,7 @@ func TestCheckRequestSnapshot_CreateRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -2314,6 +2316,7 @@ func TestCheckRequestSnapshot_ModifyRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -2380,6 +2383,7 @@ func TestCheckRequestSnapshot_ModifyRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -3513,6 +3517,7 @@ func TestUpdateRequestSnapshot_CreateRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -3579,6 +3584,7 @@ func TestUpdateRequestSnapshot_CreateRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -5163,6 +5169,7 @@ func TestUpdateRequestSnapshot_ModifyRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",
@@ -5229,6 +5236,7 @@ func TestUpdateRequestSnapshot_ModifyRule(t *testing.T) {
 						"__Member__",
 						"__Member__",
 					},
+					IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 				},
 				RegexValues: []string{
 					"__Member__",

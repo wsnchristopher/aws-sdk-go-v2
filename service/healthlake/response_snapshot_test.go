@@ -107,6 +107,32 @@ func serdeRespClient(status int, header http.Header, body []byte) *Client {
 		},
 	})
 }
+func TestCheckResponseSnapshot_CreateDataTransformationProfile(t *testing.T) {
+	want := &CreateDataTransformationProfileOutput{
+		ProfileId:     ptr.String("__ProfileId__"),
+		Version:       ptr.Int32(1),
+		SourceFormat:  types.SourceFormat("CCDA"),
+		TargetFormat:  types.TargetFormat("FHIR_R4"),
+		ProfileName:   ptr.String("__ProfileName__"),
+		LastUpdatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("CreateDataTransformationProfile.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "CreateDataTransformationProfile.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_CreateFHIRDatastore(t *testing.T) {
 	want := &CreateFHIRDatastoreOutput{
 		DatastoreId:       ptr.String("__DatastoreId__"),
@@ -131,6 +157,29 @@ func TestCheckResponseSnapshot_CreateFHIRDatastore(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_DeleteDataTransformationProfile(t *testing.T) {
+	want := &DeleteDataTransformationProfileOutput{
+		ProfileId:    ptr.String("__ProfileId__"),
+		ProfileName:  ptr.String("__ProfileName__"),
+		DeletionTime: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("DeleteDataTransformationProfile.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.DeleteDataTransformationProfile(context.Background(), &DeleteDataTransformationProfileInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "DeleteDataTransformationProfile.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_DeleteFHIRDatastore(t *testing.T) {
 	want := &DeleteFHIRDatastoreOutput{
 		DatastoreId:       ptr.String("__DatastoreId__"),
@@ -152,6 +201,56 @@ func TestCheckResponseSnapshot_DeleteFHIRDatastore(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "DeleteFHIRDatastore.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_DescribeDataTransformationJob(t *testing.T) {
+	want := &DescribeDataTransformationJobOutput{
+		TransformationJobProperties: &types.TransformationJobProperties{
+			JobId:     ptr.String("__JobId__"),
+			JobStatus: types.TransformationJobStatus("SUBMITTED"),
+			InputDataConfig: &types.TransformationInputDataConfig{
+				S3Uri:        ptr.String("__S3Uri__"),
+				SourceFormat: types.SourceFormat("CCDA"),
+			},
+			OutputDataConfig: &types.TransformationOutputDataConfig{
+				S3Configuration: &types.DataTransformationS3Configuration{
+					S3Uri:    ptr.String("__S3Uri__"),
+					KmsKeyId: ptr.String("__KmsKeyId__"),
+				},
+			},
+			DataAccessRoleArn:     ptr.String("__DataAccessRoleArn__"),
+			SubmitTime:            ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			JobName:               ptr.String("__JobName__"),
+			ProfileId:             ptr.String("__ProfileId__"),
+			ProfileName:           ptr.String("__ProfileName__"),
+			ProfileVersion:        ptr.Int32(1),
+			EndTime:               ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			DriftDetectionEnabled: ptr.Bool(true),
+			ProvenanceEnabled:     ptr.Bool(true),
+			Message:               ptr.String("__Message__"),
+			JobProgressReport: &types.TransformationJobProgressReport{
+				TotalFilesScanned:       ptr.Int64(1),
+				TotalFilesConverted:     ptr.Int64(1),
+				TotalFilesFailed:        ptr.Int64(1),
+				TotalResourcesGenerated: ptr.Int64(1),
+			},
+		},
+	}
+	status, header, body, err := serdeRespReadSnapshot("DescribeDataTransformationJob.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.DescribeDataTransformationJob(context.Background(), &DescribeDataTransformationJobInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "DescribeDataTransformationJob.response", err)
 	}
 }
 
@@ -270,14 +369,23 @@ func TestCheckResponseSnapshot_DescribeFHIRImportJob(t *testing.T) {
 				},
 			},
 			JobProgressReport: &types.JobProgressReport{
-				TotalNumberOfScannedFiles:               ptr.Int64(1),
-				TotalSizeOfScannedFilesInMB:             ptr.Float64(1.0),
-				TotalNumberOfImportedFiles:              ptr.Int64(1),
-				TotalNumberOfResourcesScanned:           ptr.Int64(1),
-				TotalNumberOfResourcesImported:          ptr.Int64(1),
-				TotalNumberOfResourcesWithCustomerError: ptr.Int64(1),
-				TotalNumberOfFilesReadWithCustomerError: ptr.Int64(1),
-				Throughput:                              ptr.Float64(1.0),
+				TotalNumberOfScannedFiles:                      ptr.Int64(1),
+				TotalSizeOfScannedFilesInMB:                    ptr.Float64(1.0),
+				TotalNumberOfImportedFiles:                     ptr.Int64(1),
+				TotalNumberOfResourcesScanned:                  ptr.Int64(1),
+				TotalNumberOfResourcesImported:                 ptr.Int64(1),
+				TotalNumberOfResourcesWithCustomerError:        ptr.Int64(1),
+				TotalNumberOfFilesReadWithCustomerError:        ptr.Int64(1),
+				TotalNumberOfScannedNonFhirFiles:               ptr.Int64(1),
+				TotalSizeOfScannedNonFhirFilesInMB:             ptr.Float64(1.0),
+				TotalNumberOfImportedNonFhirFiles:              ptr.Int64(1),
+				TotalNumberOfNonFhirResourcesScanned:           ptr.Int64(1),
+				TotalNumberOfNonFhirResourcesImported:          ptr.Int64(1),
+				TotalNumberOfNonFhirResourcesWithCustomerError: ptr.Int64(1),
+				TotalNumberOfNonFhirFilesReadWithCustomerError: ptr.Int64(1),
+				Throughput:              ptr.Float64(1.0),
+				TotalFilesConverted:     ptr.Int64(1),
+				TotalResourcesGenerated: ptr.Int64(1),
 			},
 			DataAccessRoleArn: ptr.String("__DataAccessRoleArn__"),
 			Message:           ptr.String("__Message__"),
@@ -298,6 +406,158 @@ func TestCheckResponseSnapshot_DescribeFHIRImportJob(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "DescribeFHIRImportJob.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_GetDataTransformationProfile(t *testing.T) {
+	want := &GetDataTransformationProfileOutput{
+		ProfileId:    ptr.String("__ProfileId__"),
+		Version:      ptr.Int32(1),
+		SourceFormat: types.SourceFormat("CCDA"),
+		TargetFormat: types.TargetFormat("FHIR_R4"),
+		ProfileMapping: map[string]string{
+			"key0": "__Value__",
+		},
+		ProfileName:        ptr.String("__ProfileName__"),
+		ProfileDescription: ptr.String("__ProfileDescription__"),
+		ChangeDescription:  ptr.String("__ChangeDescription__"),
+		LastUpdatedAt:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("GetDataTransformationProfile.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.GetDataTransformationProfile(context.Background(), &GetDataTransformationProfileInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "GetDataTransformationProfile.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_ListDataTransformationJobs(t *testing.T) {
+	want := &ListDataTransformationJobsOutput{
+		Items: []types.TransformationJobSummary{
+			{
+				JobId:        ptr.String("__JobId__"),
+				JobStatus:    types.TransformationJobStatus("SUBMITTED"),
+				SubmitTime:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				JobName:      ptr.String("__JobName__"),
+				EndTime:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				SourceFormat: types.SourceFormat("CCDA"),
+			},
+			{
+				JobId:        ptr.String("__JobId__"),
+				JobStatus:    types.TransformationJobStatus("SUBMITTED"),
+				SubmitTime:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				JobName:      ptr.String("__JobName__"),
+				EndTime:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				SourceFormat: types.SourceFormat("CCDA"),
+			},
+		},
+		NextToken: ptr.String("__NextToken__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ListDataTransformationJobs.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.ListDataTransformationJobs(context.Background(), &ListDataTransformationJobsInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "ListDataTransformationJobs.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_ListDataTransformationProfileVersions(t *testing.T) {
+	want := &ListDataTransformationProfileVersionsOutput{
+		Items: []types.DataTransformationProfileVersionSummary{
+			{
+				ProfileId:         ptr.String("__ProfileId__"),
+				Version:           ptr.Int32(1),
+				SourceFormat:      types.SourceFormat("CCDA"),
+				TargetFormat:      types.TargetFormat("FHIR_R4"),
+				ProfileName:       ptr.String("__ProfileName__"),
+				ChangeDescription: ptr.String("__ChangeDescription__"),
+				LastUpdatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			},
+			{
+				ProfileId:         ptr.String("__ProfileId__"),
+				Version:           ptr.Int32(1),
+				SourceFormat:      types.SourceFormat("CCDA"),
+				TargetFormat:      types.TargetFormat("FHIR_R4"),
+				ProfileName:       ptr.String("__ProfileName__"),
+				ChangeDescription: ptr.String("__ChangeDescription__"),
+				LastUpdatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			},
+		},
+		NextToken: ptr.String("__NextToken__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ListDataTransformationProfileVersions.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.ListDataTransformationProfileVersions(context.Background(), &ListDataTransformationProfileVersionsInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "ListDataTransformationProfileVersions.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_ListDataTransformationProfiles(t *testing.T) {
+	want := &ListDataTransformationProfilesOutput{
+		Items: []types.DataTransformationProfileSummary{
+			{
+				ProfileId:          ptr.String("__ProfileId__"),
+				Version:            ptr.Int32(1),
+				SourceFormat:       types.SourceFormat("CCDA"),
+				TargetFormat:       types.TargetFormat("FHIR_R4"),
+				ProfileName:        ptr.String("__ProfileName__"),
+				ProfileDescription: ptr.String("__ProfileDescription__"),
+				LastUpdatedAt:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			},
+			{
+				ProfileId:          ptr.String("__ProfileId__"),
+				Version:            ptr.Int32(1),
+				SourceFormat:       types.SourceFormat("CCDA"),
+				TargetFormat:       types.TargetFormat("FHIR_R4"),
+				ProfileName:        ptr.String("__ProfileName__"),
+				ProfileDescription: ptr.String("__ProfileDescription__"),
+				LastUpdatedAt:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			},
+		},
+		NextToken: ptr.String("__NextToken__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ListDataTransformationProfiles.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.ListDataTransformationProfiles(context.Background(), &ListDataTransformationProfilesInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "ListDataTransformationProfiles.response", err)
 	}
 }
 
@@ -479,14 +739,23 @@ func TestCheckResponseSnapshot_ListFHIRImportJobs(t *testing.T) {
 					},
 				},
 				JobProgressReport: &types.JobProgressReport{
-					TotalNumberOfScannedFiles:               ptr.Int64(1),
-					TotalSizeOfScannedFilesInMB:             ptr.Float64(1.0),
-					TotalNumberOfImportedFiles:              ptr.Int64(1),
-					TotalNumberOfResourcesScanned:           ptr.Int64(1),
-					TotalNumberOfResourcesImported:          ptr.Int64(1),
-					TotalNumberOfResourcesWithCustomerError: ptr.Int64(1),
-					TotalNumberOfFilesReadWithCustomerError: ptr.Int64(1),
-					Throughput:                              ptr.Float64(1.0),
+					TotalNumberOfScannedFiles:                      ptr.Int64(1),
+					TotalSizeOfScannedFilesInMB:                    ptr.Float64(1.0),
+					TotalNumberOfImportedFiles:                     ptr.Int64(1),
+					TotalNumberOfResourcesScanned:                  ptr.Int64(1),
+					TotalNumberOfResourcesImported:                 ptr.Int64(1),
+					TotalNumberOfResourcesWithCustomerError:        ptr.Int64(1),
+					TotalNumberOfFilesReadWithCustomerError:        ptr.Int64(1),
+					TotalNumberOfScannedNonFhirFiles:               ptr.Int64(1),
+					TotalSizeOfScannedNonFhirFilesInMB:             ptr.Float64(1.0),
+					TotalNumberOfImportedNonFhirFiles:              ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesScanned:           ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesImported:          ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesWithCustomerError: ptr.Int64(1),
+					TotalNumberOfNonFhirFilesReadWithCustomerError: ptr.Int64(1),
+					Throughput:              ptr.Float64(1.0),
+					TotalFilesConverted:     ptr.Int64(1),
+					TotalResourcesGenerated: ptr.Int64(1),
 				},
 				DataAccessRoleArn: ptr.String("__DataAccessRoleArn__"),
 				Message:           ptr.String("__Message__"),
@@ -509,14 +778,23 @@ func TestCheckResponseSnapshot_ListFHIRImportJobs(t *testing.T) {
 					},
 				},
 				JobProgressReport: &types.JobProgressReport{
-					TotalNumberOfScannedFiles:               ptr.Int64(1),
-					TotalSizeOfScannedFilesInMB:             ptr.Float64(1.0),
-					TotalNumberOfImportedFiles:              ptr.Int64(1),
-					TotalNumberOfResourcesScanned:           ptr.Int64(1),
-					TotalNumberOfResourcesImported:          ptr.Int64(1),
-					TotalNumberOfResourcesWithCustomerError: ptr.Int64(1),
-					TotalNumberOfFilesReadWithCustomerError: ptr.Int64(1),
-					Throughput:                              ptr.Float64(1.0),
+					TotalNumberOfScannedFiles:                      ptr.Int64(1),
+					TotalSizeOfScannedFilesInMB:                    ptr.Float64(1.0),
+					TotalNumberOfImportedFiles:                     ptr.Int64(1),
+					TotalNumberOfResourcesScanned:                  ptr.Int64(1),
+					TotalNumberOfResourcesImported:                 ptr.Int64(1),
+					TotalNumberOfResourcesWithCustomerError:        ptr.Int64(1),
+					TotalNumberOfFilesReadWithCustomerError:        ptr.Int64(1),
+					TotalNumberOfScannedNonFhirFiles:               ptr.Int64(1),
+					TotalSizeOfScannedNonFhirFilesInMB:             ptr.Float64(1.0),
+					TotalNumberOfImportedNonFhirFiles:              ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesScanned:           ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesImported:          ptr.Int64(1),
+					TotalNumberOfNonFhirResourcesWithCustomerError: ptr.Int64(1),
+					TotalNumberOfNonFhirFilesReadWithCustomerError: ptr.Int64(1),
+					Throughput:              ptr.Float64(1.0),
+					TotalFilesConverted:     ptr.Int64(1),
+					TotalResourcesGenerated: ptr.Int64(1),
 				},
 				DataAccessRoleArn: ptr.String("__DataAccessRoleArn__"),
 				Message:           ptr.String("__Message__"),
@@ -569,6 +847,54 @@ func TestCheckResponseSnapshot_ListTagsForResource(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "ListTagsForResource.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_PublishDataTransformationProfile(t *testing.T) {
+	want := &PublishDataTransformationProfileOutput{
+		ProfileId:     ptr.String("__ProfileId__"),
+		Version:       ptr.Int32(1),
+		SourceFormat:  types.SourceFormat("CCDA"),
+		TargetFormat:  types.TargetFormat("FHIR_R4"),
+		ProfileName:   ptr.String("__ProfileName__"),
+		LastUpdatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("PublishDataTransformationProfile.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.PublishDataTransformationProfile(context.Background(), &PublishDataTransformationProfileInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "PublishDataTransformationProfile.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_StartDataTransformationJob(t *testing.T) {
+	want := &StartDataTransformationJobOutput{
+		JobId:     ptr.String("__JobId__"),
+		JobStatus: types.TransformationJobStatus("SUBMITTED"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("StartDataTransformationJob.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.StartDataTransformationJob(context.Background(), &StartDataTransformationJobInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "StartDataTransformationJob.response", err)
 	}
 }
 
@@ -656,6 +982,31 @@ func TestCheckResponseSnapshot_UntagResource(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_UpdateDataTransformationProfile(t *testing.T) {
+	want := &UpdateDataTransformationProfileOutput{
+		ProfileId:     ptr.String("__ProfileId__"),
+		SourceFormat:  types.SourceFormat("CCDA"),
+		TargetFormat:  types.TargetFormat("FHIR_R4"),
+		ProfileName:   ptr.String("__ProfileName__"),
+		LastUpdatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("UpdateDataTransformationProfile.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.UpdateDataTransformationProfile(context.Background(), &UpdateDataTransformationProfileInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "UpdateDataTransformationProfile.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_UpdateFHIRDatastore(t *testing.T) {
 	want := &UpdateFHIRDatastoreOutput{
 		DatastoreProperties: &types.DatastoreProperties{
@@ -716,6 +1067,35 @@ func TestCheckResponseSnapshot_UpdateFHIRDatastore(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_UpdateProfileWithAgent(t *testing.T) {
+	want := &UpdateProfileWithAgentOutput{
+		AgentResponse: &types.AgentOutputMessage{
+			Body: ptr.String("__Body__"),
+			Type: types.AgentOutputMessageType("INITIAL_GREETING"),
+			OptionsList: []string{
+				"__Member__",
+				"__Member__",
+			},
+		},
+		ConversationId: ptr.String("__ConversationId__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("UpdateProfileWithAgent.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "UpdateProfileWithAgent.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_Error_AccessDeniedException(t *testing.T) {
 	want := &types.AccessDeniedException{
 		Message: ptr.String("__Message__"),
@@ -728,7 +1108,7 @@ func TestCheckResponseSnapshot_Error_AccessDeniedException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.CreateFHIRDatastore(context.Background(), &CreateFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -738,6 +1118,31 @@ func TestCheckResponseSnapshot_Error_AccessDeniedException(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "AccessDeniedException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_AgentMessageOutOfContextException(t *testing.T) {
+	want := &types.AgentMessageOutOfContextException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("AgentMessageOutOfContextException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.AgentMessageOutOfContextException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.AgentMessageOutOfContextException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "AgentMessageOutOfContextException.error", err)
 	}
 }
 
@@ -753,7 +1158,7 @@ func TestCheckResponseSnapshot_Error_ConflictException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.DeleteFHIRDatastore(context.Background(), &DeleteFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -763,6 +1168,56 @@ func TestCheckResponseSnapshot_Error_ConflictException(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "ConflictException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_ConversationNotFoundException(t *testing.T) {
+	want := &types.ConversationNotFoundException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ConversationNotFoundException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.ConversationNotFoundException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.ConversationNotFoundException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "ConversationNotFoundException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_FailedDependencyException(t *testing.T) {
+	want := &types.FailedDependencyException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("FailedDependencyException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.StartFHIRExportJob(context.Background(), &StartFHIRExportJobInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.FailedDependencyException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.FailedDependencyException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "FailedDependencyException.error", err)
 	}
 }
 
@@ -778,7 +1233,7 @@ func TestCheckResponseSnapshot_Error_InternalServerException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.CreateFHIRDatastore(context.Background(), &CreateFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -788,6 +1243,31 @@ func TestCheckResponseSnapshot_Error_InternalServerException(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "InternalServerException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_NotImplementedOperationException(t *testing.T) {
+	want := &types.NotImplementedOperationException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("NotImplementedOperationException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.NotImplementedOperationException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.NotImplementedOperationException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "NotImplementedOperationException.error", err)
 	}
 }
 
@@ -803,7 +1283,7 @@ func TestCheckResponseSnapshot_Error_ResourceNotFoundException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.DeleteFHIRDatastore(context.Background(), &DeleteFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -813,6 +1293,31 @@ func TestCheckResponseSnapshot_Error_ResourceNotFoundException(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "ResourceNotFoundException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_ServiceQuotaExceededException(t *testing.T) {
+	want := &types.ServiceQuotaExceededException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ServiceQuotaExceededException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.ServiceQuotaExceededException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.ServiceQuotaExceededException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "ServiceQuotaExceededException.error", err)
 	}
 }
 
@@ -828,7 +1333,7 @@ func TestCheckResponseSnapshot_Error_ThrottlingException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.CreateFHIRDatastore(context.Background(), &CreateFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -838,6 +1343,56 @@ func TestCheckResponseSnapshot_Error_ThrottlingException(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "ThrottlingException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_UnauthorizedException(t *testing.T) {
+	want := &types.UnauthorizedException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("UnauthorizedException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.UnauthorizedException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.UnauthorizedException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "UnauthorizedException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_UnsupportedMIMETypeException(t *testing.T) {
+	want := &types.UnsupportedMIMETypeException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("UnsupportedMIMETypeException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.UpdateProfileWithAgent(context.Background(), &UpdateProfileWithAgentInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.UnsupportedMIMETypeException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.UnsupportedMIMETypeException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "UnsupportedMIMETypeException.error", err)
 	}
 }
 
@@ -853,7 +1408,7 @@ func TestCheckResponseSnapshot_Error_ValidationException(t *testing.T) {
 		t.Fatal(err)
 	}
 	svc := serdeRespClient(status, header, body)
-	_, opErr := svc.CreateFHIRDatastore(context.Background(), &CreateFHIRDatastoreInput{})
+	_, opErr := svc.CreateDataTransformationProfile(context.Background(), &CreateDataTransformationProfileInput{})
 	if opErr == nil {
 		t.Fatal("expected error, got nil")
 	}

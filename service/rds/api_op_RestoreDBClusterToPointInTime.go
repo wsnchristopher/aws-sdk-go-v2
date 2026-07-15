@@ -241,7 +241,7 @@ type RestoreDBClusterToPointInTimeInput struct {
 	// Valid for Cluster Type: Aurora PostgreSQL clusters
 	EnableVPCNetworking *bool
 
-	// The life cycle type for this DB cluster.
+	// The lifecycle type for this DB cluster.
 	//
 	// By default, this value is set to open-source-rds-extended-support , which
 	// enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard

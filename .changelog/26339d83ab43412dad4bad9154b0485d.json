@@ -1,0 +1,8 @@
+{
+    "id": "26339d83-ab43-412d-ad4b-ad9154b0485d",
+    "type": "feature",
+    "description": "Fix HarnessEndpointArn pattern to match the actual service-emitted ARN format ('harness-endpoint' instead of 'endpoint'). Add additionalParams to Gemini model configuration for passing provider-specific parameters through to the model unchanged.",
+    "modules": [
+        "service/bedrockagentcorecontrol"
+    ]
+}

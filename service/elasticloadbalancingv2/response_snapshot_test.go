@@ -843,6 +843,7 @@ func TestCheckResponseSnapshot_CreateRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -909,6 +910,7 @@ func TestCheckResponseSnapshot_CreateRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -1208,6 +1210,7 @@ func TestCheckResponseSnapshot_CreateRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -1274,6 +1277,7 @@ func TestCheckResponseSnapshot_CreateRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -2593,6 +2597,7 @@ func TestCheckResponseSnapshot_DescribeRules(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -2659,6 +2664,7 @@ func TestCheckResponseSnapshot_DescribeRules(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -2958,6 +2964,7 @@ func TestCheckResponseSnapshot_DescribeRules(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -3024,6 +3031,7 @@ func TestCheckResponseSnapshot_DescribeRules(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -4342,6 +4350,7 @@ func TestCheckResponseSnapshot_ModifyRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -4408,6 +4417,7 @@ func TestCheckResponseSnapshot_ModifyRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -4707,6 +4717,7 @@ func TestCheckResponseSnapshot_ModifyRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -4773,6 +4784,7 @@ func TestCheckResponseSnapshot_ModifyRule(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -5333,6 +5345,7 @@ func TestCheckResponseSnapshot_SetRulePriorities(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -5399,6 +5412,7 @@ func TestCheckResponseSnapshot_SetRulePriorities(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -5698,6 +5712,7 @@ func TestCheckResponseSnapshot_SetRulePriorities(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
@@ -5764,6 +5779,7 @@ func TestCheckResponseSnapshot_SetRulePriorities(t *testing.T) {
 								"__Member__",
 								"__Member__",
 							},
+							IpAddressType: types.SourceIpAddressTypeEnum("ipv4"),
 						},
 						RegexValues: []string{
 							"__Member__",
