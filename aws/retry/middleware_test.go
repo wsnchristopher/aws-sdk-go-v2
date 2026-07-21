@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	awsmiddle "github.com/aws/aws-sdk-go-v2/aws/middleware"
 	"github.com/aws/aws-sdk-go-v2/aws/ratelimit"
 	"github.com/aws/aws-sdk-go-v2/internal/sdk"
 	"github.com/aws/smithy-go/middleware"
@@ -502,46 +503,75 @@ func (e errorCodeImplementer) ErrorCode() string {
 }
 
 func TestClockSkew(t *testing.T) {
+	restoreSleep := sdk.TestingUseNopSleep()
+	defer restoreSleep()
+
 	cases := map[string]struct {
-		skew        time.Duration
-		err         error
-		shouldRetry bool
+		clientSkew   time.Duration
+		observedSkew time.Duration
+		err          error
+		disabled     bool
+		shouldRetry  bool
 	}{
 		"no skew and any error no retry": {
-			skew:        time.Duration(0),
-			err:         fmt.Errorf("any error"),
-			shouldRetry: false,
+			clientSkew:   time.Duration(0),
+			observedSkew: time.Duration(0),
+			err:          fmt.Errorf("any error"),
+			shouldRetry:  false,
 		},
 		"no skew wrong error code no retry": {
-			skew:        time.Duration(0),
-			err:         errorCodeImplementer{"any"},
-			shouldRetry: false,
+			clientSkew:   time.Duration(0),
+			observedSkew: time.Duration(0),
+			err:          errorCodeImplementer{"any"},
+			shouldRetry:  false,
 		},
 		"skewed retryable error code does retry": {
-			skew:        5 * time.Minute,
-			err:         errorCodeImplementer{"SignatureDoesNotMatch"},
-			shouldRetry: true,
+			clientSkew:   0,
+			observedSkew: 5 * time.Minute,
+			err:          errorCodeImplementer{"SignatureDoesNotMatch"},
+			shouldRetry:  true,
 		},
 		"low skew retryable error code no retry": {
-			skew:        3 * time.Minute,
-			err:         errorCodeImplementer{"SignatureDoesNotMatch"},
-			shouldRetry: false,
+			clientSkew:   0,
+			observedSkew: 3 * time.Minute,
+			err:          errorCodeImplementer{"SignatureDoesNotMatch"},
+			shouldRetry:  false,
+		},
+		"stale offset retries when candidate diverges from server": {
+			clientSkew:   5 * time.Minute,
+			observedSkew: 0,
+			err:          errorCodeImplementer{"SignatureDoesNotMatch"},
+			shouldRetry:  true,
+		},
+		"matching offset does not retry": {
+			clientSkew:   5 * time.Minute,
+			observedSkew: 5 * time.Minute,
+			err:          errorCodeImplementer{"SignatureDoesNotMatch"},
+			shouldRetry:  false,
+		},
+		"disabled does not retry skew error": {
+			clientSkew:   0,
+			observedSkew: 5 * time.Minute,
+			err:          errorCodeImplementer{"SignatureDoesNotMatch"},
+			disabled:     true,
+			shouldRetry:  false,
 		},
 	}
 	for name, tt := range cases {
 		t.Run(name, func(t *testing.T) {
 			skew := &atomic.Int64{}
-			skew.Store(tt.skew.Nanoseconds())
+			skew.Store(tt.clientSkew.Nanoseconds())
 			am := NewAttemptMiddleware(NewStandard(func(s *StandardOptions) {
 			}), func(i any) any { return i }, func(m *Attempt) {
 				m.ClientSkew = skew
+				m.DisableClockSkewCorrection = tt.disabled
 			})
 			ctx := context.Background()
 			_, metadata, err := am.HandleFinalize(ctx, middleware.FinalizeInput{}, middleware.FinalizeHandlerFunc(
 				func(ctx context.Context, in middleware.FinalizeInput) (
 					out middleware.FinalizeOutput, metadata middleware.Metadata, err error,
 				) {
-					return out, metadata, tt.err
+					return out, observedSkewMetadata(t, tt.observedSkew), tt.err
 				}))
 			if err == nil {
 				t.Errorf("Exected return from next middleware, got none")
@@ -562,6 +592,34 @@ func TestClockSkew(t *testing.T) {
 			}
 		})
 	}
+}
+
+// observedSkewMetadata returns response metadata populated as the
+// RecordResponseTiming middleware would for a response whose Date header
+// implies the given skew, so the retry layer observes that skew.
+func observedSkewMetadata(t *testing.T, skew time.Duration) middleware.Metadata {
+	t.Helper()
+
+	responseAt := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	restore := sdk.TestingUseReferenceTime(responseAt)
+	defer restore()
+
+	dateStr := responseAt.Add(skew).UTC().Format(http.TimeFormat)
+	_, md, _ := awsmiddle.RecordResponseTiming{}.HandleDeserialize(
+		context.Background(),
+		middleware.DeserializeInput{},
+		middleware.DeserializeHandlerFunc(func(ctx context.Context, in middleware.DeserializeInput) (
+			out middleware.DeserializeOutput, m middleware.Metadata, err error,
+		) {
+			out.RawResponse = &smithyhttp.Response{Response: &http.Response{
+				StatusCode: 200,
+				Header:     http.Header{"Date": []string{dateStr}},
+			}}
+			return out, m, nil
+		}),
+	)
+
+	return md
 }
 
 // TestLegacyRetryDelayAttemptValue verifies that when the new retries flag is
