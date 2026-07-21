@@ -1,3 +1,9 @@
+# v1.44.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: Added support for the DeleteSecurityConfiguration API, which allows customers to delete security configurations in Amazon EMR on EKS. Also added authenticationConfiguration in securityConfigurationdata structure.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.43.0 (2026-07-14)
 
 * **Feature**: Introduced 5 new fields across 3 APIs as part of Spark Connect server launch for EMR on EKS. The fields added are sessionIdleTimeoutInMinutes, sessionEnabled, endpointToken, authProxyUrl and encryptionKeyArn.

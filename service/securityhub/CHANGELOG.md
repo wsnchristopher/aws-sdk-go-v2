@@ -1,3 +1,9 @@
+# v1.75.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Documentation**: Security Hub standard and control multicloud API documentation updates
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.74.0 (2026-07-14)
 
 * **Feature**: AWS Security Hub now provides an AI inventory, giving central security teams a continuously updated, organization-wide view of AI assets and their security posture

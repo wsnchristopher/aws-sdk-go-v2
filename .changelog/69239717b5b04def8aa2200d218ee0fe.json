@@ -1,8 +1,0 @@
-{
-    "id": "69239717-b5b0-4def-8aa2-200d218ee0fe",
-    "type": "feature",
-    "description": "GA date - July 21st 2026, remove Tags field from ListCodeSecurityIntegration and ListCodeSecurityScanConfiguration.",
-    "modules": [
-        "service/inspector2"
-    ]
-}

@@ -1,3 +1,8 @@
+# v1.63.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.62.0 (2026-07-20)
 
 * **Feature**: This change adds api support for configuring ad decision server timeouts and concurrency fields on MediaTailor playback configurations

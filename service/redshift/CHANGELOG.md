@@ -1,3 +1,9 @@
+# v1.65.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: Amazon Redshift - Added support for managing Query Editor V2 IAM Identity Center applications via new CreateQev2IdcApplication, DescribeQev2IdcApplications, ModifyQev2IdcApplication, and DeleteQev2IdcApplication API operations.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.64.2 (2026-07-16)
 
 * **Documentation**: Amazon Redshift - Added support for rg.large and rg.12xlarge node types in CreateCluster, ModifyCluster, and ResizeCluster API operations.

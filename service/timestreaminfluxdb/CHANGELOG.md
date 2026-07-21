@@ -1,3 +1,9 @@
+# v1.22.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: This release adds support for custom plugins in Amazon Timestream for InfluxDB. InfluxDB 3 Core and Enterprise DB parameter groups now accept a plugin repository URL and optional AWS Secrets Manager secret ARN, so the Processing Engine loads your Python plugins from a public or private repository.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.21.1 (2026-07-13)
 
 * No change notes available for this release.

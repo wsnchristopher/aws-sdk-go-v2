@@ -1,3 +1,8 @@
+# v1.260.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.259.0 (2026-07-16)
 
 * **Feature**: Release support for g7 instance type for SageMaker inference endpoints.

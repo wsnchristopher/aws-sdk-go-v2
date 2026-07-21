@@ -1,3 +1,9 @@
+# v1.42.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: update the workgroupArn to include EUSC partition, tests in THF Gamma and Prod no issue
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.41.1 (2026-07-13)
 
 * No change notes available for this release.

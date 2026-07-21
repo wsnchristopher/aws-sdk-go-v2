@@ -1,3 +1,9 @@
+# v1.13.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: Added the SendProcurementPortalValidation and VerifyProcurementPortalValidation APIs. You can use the AWS SDKs to self-service activate your Procurement Portal Preferences created on the Billing Preferences page with a one-time-passcode (OTP) delivered to your portal.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.12.1 (2026-07-13)
 
 * No change notes available for this release.

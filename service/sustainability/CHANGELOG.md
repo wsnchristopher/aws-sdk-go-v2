@@ -1,3 +1,8 @@
+# v1.4.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.3.0 (2026-07-16)
 
 * **Feature**: Adds support for retrieving estimated water allocation data.

@@ -1,8 +1,0 @@
-{
-    "id": "7cbb7697-8121-4903-ba53-d09148078151",
-    "type": "documentation",
-    "description": "Security Hub standard and control multicloud API documentation updates",
-    "modules": [
-        "service/securityhub"
-    ]
-}

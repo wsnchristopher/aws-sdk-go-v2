@@ -1,3 +1,8 @@
+# v1.49.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.48.0 (2026-07-16)
 
 * **Feature**: Adds support for returning the task UUID (universally unique identifier) in GetRunTask and ListRunTasks responses

@@ -1,3 +1,8 @@
+# v1.64.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.63.0 (2026-07-16)
 
 * **Feature**: Amazon EMR updates the Session object returned by GetSession API

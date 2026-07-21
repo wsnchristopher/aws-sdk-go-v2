@@ -1,8 +1,0 @@
-{
-    "id": "f4199420-90c3-4c95-b00e-b41bd5e63902",
-    "type": "feature",
-    "description": "Add support for real time matching with AWS Entity Resolution matching workflows with advanced rule sets.",
-    "modules": [
-        "service/entityresolution"
-    ]
-}

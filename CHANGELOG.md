@@ -1,3 +1,31 @@
+# Release (2026-07-21)
+
+## General Highlights
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
+## Module Highlights
+* `github.com/aws/aws-sdk-go-v2`: v1.43.0
+  * **Bug Fix**: Update Clock Skew logic to match internal specification
+* `github.com/aws/aws-sdk-go-v2/service/emrcontainers`: [v1.44.0](service/emrcontainers/CHANGELOG.md#v1440-2026-07-21)
+  * **Feature**: Added support for the DeleteSecurityConfiguration API, which allows customers to delete security configurations in Amazon EMR on EKS. Also added authenticationConfiguration in securityConfigurationdata structure.
+* `github.com/aws/aws-sdk-go-v2/service/entityresolution`: [v1.30.0](service/entityresolution/CHANGELOG.md#v1300-2026-07-21)
+  * **Feature**: Add support for real time matching with AWS Entity Resolution matching workflows with advanced rule sets.
+* `github.com/aws/aws-sdk-go-v2/service/inspector2`: [v1.53.0](service/inspector2/CHANGELOG.md#v1530-2026-07-21)
+  * **Feature**: GA date - July 21st 2026, remove Tags field from ListCodeSecurityIntegration and ListCodeSecurityScanConfiguration.
+* `github.com/aws/aws-sdk-go-v2/service/invoicing`: [v1.13.0](service/invoicing/CHANGELOG.md#v1130-2026-07-21)
+  * **Feature**: Added the SendProcurementPortalValidation and VerifyProcurementPortalValidation APIs. You can use the AWS SDKs to self-service activate your Procurement Portal Preferences created on the Billing Preferences page with a one-time-passcode (OTP) delivered to your portal.
+* `github.com/aws/aws-sdk-go-v2/service/redshift`: [v1.65.0](service/redshift/CHANGELOG.md#v1650-2026-07-21)
+  * **Feature**: Amazon Redshift - Added support for managing Query Editor V2 IAM Identity Center applications via new CreateQev2IdcApplication, DescribeQev2IdcApplications, ModifyQev2IdcApplication, and DeleteQev2IdcApplication API operations.
+* `github.com/aws/aws-sdk-go-v2/service/redshiftdata`: [v1.42.0](service/redshiftdata/CHANGELOG.md#v1420-2026-07-21)
+  * **Feature**: update the workgroupArn to include EUSC partition, tests in THF Gamma and Prod no issue
+* `github.com/aws/aws-sdk-go-v2/service/securityhub`: [v1.75.0](service/securityhub/CHANGELOG.md#v1750-2026-07-21)
+  * **Documentation**: Security Hub standard and control multicloud API documentation updates
+* `github.com/aws/aws-sdk-go-v2/service/ssm`: [v1.73.0](service/ssm/CHANGELOG.md#v1730-2026-07-21)
+  * **Feature**: Added a WarningMessage field to Automation along with corresponding public documentation.
+* `github.com/aws/aws-sdk-go-v2/service/timestreaminfluxdb`: [v1.22.0](service/timestreaminfluxdb/CHANGELOG.md#v1220-2026-07-21)
+  * **Feature**: This release adds support for custom plugins in Amazon Timestream for InfluxDB. InfluxDB 3 Core and Enterprise DB parameter groups now accept a plugin repository URL and optional AWS Secrets Manager secret ARN, so the Processing Engine loads your Python plugins from a public or private repository.
+
 # Release (2026-07-20)
 
 ## Module Highlights

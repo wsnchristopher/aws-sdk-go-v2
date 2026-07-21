@@ -1,3 +1,8 @@
+# v1.42.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.41.0 (2026-07-14)
 
 * **Feature**: Fast recovery of EC2 based drs workloads by skipping the conversion step

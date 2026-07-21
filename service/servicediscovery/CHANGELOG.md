@@ -1,3 +1,8 @@
+# v1.43.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.42.0 (2026-07-14)
 
 * **Feature**: Fixed Cloud Map endpoint resolution to correctly route to the dualstack endpoint when dualstack is enabled.

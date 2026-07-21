@@ -1,3 +1,9 @@
+# v1.30.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: Add support for real time matching with AWS Entity Resolution matching workflows with advanced rule sets.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.29.1 (2026-07-13)
 
 * No change notes available for this release.

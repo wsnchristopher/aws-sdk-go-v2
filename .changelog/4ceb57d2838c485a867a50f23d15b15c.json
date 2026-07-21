@@ -1,8 +1,0 @@
-{
-    "id": "4ceb57d2-838c-485a-867a-50f23d15b15c",
-    "type": "feature",
-    "description": "Added a WarningMessage field to Automation along with corresponding public documentation.",
-    "modules": [
-        "service/ssm"
-    ]
-}

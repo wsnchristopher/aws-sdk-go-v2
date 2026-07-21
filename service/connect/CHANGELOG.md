@@ -1,3 +1,8 @@
+# v1.184.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.183.0 (2026-07-14)
 
 * **Feature**: This release adds SearchRules API which can be used to search for rules within an Amazon Connect instance.

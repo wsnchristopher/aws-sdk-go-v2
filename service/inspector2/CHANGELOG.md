@@ -1,3 +1,9 @@
+# v1.53.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: GA date - July 21st 2026, remove Tags field from ListCodeSecurityIntegration and ListCodeSecurityScanConfiguration.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.52.1 (2026-07-13)
 
 * No change notes available for this release.

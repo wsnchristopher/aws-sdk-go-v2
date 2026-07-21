@@ -1,3 +1,9 @@
+# v1.73.0 (2026-07-21)
+
+* **Feature**: Add an option to clients to disable clock skew
+* **Feature**: Added a WarningMessage field to Automation along with corresponding public documentation.
+* **Dependency Update**: Updated to the latest SDK module versions
+
 # v1.72.0 (2026-07-14)
 
 * **Feature**: Update AWS Systems Manager Automation Targets to be correct max value.
