@@ -728,6 +728,34 @@ func TestCheckRequestSnapshot_PutProcurementPortalPreference(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_SendProcurementPortalValidation(t *testing.T) {
+	input := &SendProcurementPortalValidationInput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+		ClientToken:                    ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.SendProcurementPortalValidation(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "SendProcurementPortalValidation"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_TagResource(t *testing.T) {
 	input := &TagResourceInput{
 		ResourceArn: ptr.String("__ResourceArn__"),
@@ -864,6 +892,35 @@ func TestCheckRequestSnapshot_UpdateProcurementPortalPreferenceStatus(t *testing
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateProcurementPortalPreferenceStatus"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_VerifyProcurementPortalValidation(t *testing.T) {
+	input := &VerifyProcurementPortalValidationInput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+		Code:                           ptr.String("__Code__"),
+		ClientToken:                    ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.VerifyProcurementPortalValidation(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "VerifyProcurementPortalValidation"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -1412,6 +1469,34 @@ func TestUpdateRequestSnapshot_PutProcurementPortalPreference(t *testing.T) {
 	}
 }
 
+func TestUpdateRequestSnapshot_SendProcurementPortalValidation(t *testing.T) {
+	input := &SendProcurementPortalValidationInput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+		ClientToken:                    ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.SendProcurementPortalValidation(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "SendProcurementPortalValidation"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_TagResource(t *testing.T) {
 	input := &TagResourceInput{
 		ResourceArn: ptr.String("__ResourceArn__"),
@@ -1548,6 +1633,35 @@ func TestUpdateRequestSnapshot_UpdateProcurementPortalPreferenceStatus(t *testin
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "UpdateProcurementPortalPreferenceStatus"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_VerifyProcurementPortalValidation(t *testing.T) {
+	input := &VerifyProcurementPortalValidationInput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+		Code:                           ptr.String("__Code__"),
+		ClientToken:                    ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.VerifyProcurementPortalValidation(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "VerifyProcurementPortalValidation"); err != nil {
 		t.Fatal(err)
 	}
 }

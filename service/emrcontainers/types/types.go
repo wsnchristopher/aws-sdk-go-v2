@@ -7,6 +7,18 @@ import (
 	"time"
 )
 
+// Authentication configuration for the security configuration.
+type AuthenticationConfiguration struct {
+
+	// IAM configuration for authentication in the security configuration.
+	IamConfiguration *IAMConfiguration
+
+	// Identity Center configuration for authentication in the security configuration.
+	IdentityCenterConfiguration *IdentityCenterConfiguration
+
+	noSmithyDocumentSerde
+}
+
 // Authorization-related configuration inputs for the security configuration.
 type AuthorizationConfiguration struct {
 
@@ -239,6 +251,34 @@ type Endpoint struct {
 
 	// The ID of the endpoint's virtual cluster.
 	VirtualClusterId *string
+
+	noSmithyDocumentSerde
+}
+
+// IAM configuration for the security configuration.
+type IAMConfiguration struct {
+
+	// The ARN of the system role used by the security configuration.
+	SystemRole *string
+
+	noSmithyDocumentSerde
+}
+
+// Identity Center related configuration for the security configuration.
+type IdentityCenterConfiguration struct {
+
+	// The ARN of the EMR Identity Center application.
+	EmrIdentityCenterApplicationARN *string
+
+	// Determines whether Identity Center is enabled for the security configuration.
+	EnableIdentityCenter *bool
+
+	// Determines whether user assignment is required for the Identity Center
+	// application.
+	IdentityCenterApplicationAssignmentRequired *bool
+
+	// The ARN of the Identity Center instance.
+	IdentityCenterInstanceARN *string
 
 	noSmithyDocumentSerde
 }
@@ -587,6 +627,9 @@ type SecurityConfiguration struct {
 
 // Configurations related to the security configuration for the request.
 type SecurityConfigurationData struct {
+
+	// Authentication-related configuration input for the security configuration.
+	AuthenticationConfiguration *AuthenticationConfiguration
 
 	// Authorization-related configuration input for the security configuration.
 	AuthorizationConfiguration *AuthorizationConfiguration

@@ -227,6 +227,7 @@ type ProcurementPortalPreferenceStatus string
 // Enum values for ProcurementPortalPreferenceStatus
 const (
 	ProcurementPortalPreferenceStatusPendingVerification      ProcurementPortalPreferenceStatus = "PENDING_VERIFICATION"
+	ProcurementPortalPreferenceStatusValidated                ProcurementPortalPreferenceStatus = "VALIDATED"
 	ProcurementPortalPreferenceStatusTestInitialized          ProcurementPortalPreferenceStatus = "TEST_INITIALIZED"
 	ProcurementPortalPreferenceStatusTestInitializationFailed ProcurementPortalPreferenceStatus = "TEST_INITIALIZATION_FAILED"
 	ProcurementPortalPreferenceStatusTestFailed               ProcurementPortalPreferenceStatus = "TEST_FAILED"
@@ -242,6 +243,7 @@ const (
 func (ProcurementPortalPreferenceStatus) Values() []ProcurementPortalPreferenceStatus {
 	return []ProcurementPortalPreferenceStatus{
 		"PENDING_VERIFICATION",
+		"VALIDATED",
 		"TEST_INITIALIZED",
 		"TEST_INITIALIZATION_FAILED",
 		"TEST_FAILED",

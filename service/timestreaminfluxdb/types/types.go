@@ -578,6 +578,13 @@ type InfluxDBv3CoreParameters struct {
 	// Default: 20%
 	ParquetMemCacheSize PercentOrAbsoluteLong
 
+	// The Amazon Resource Name (ARN) of the Secrets Manager secret that holds your
+	// repository access token.
+	PluginRepositorySecretArn *string
+
+	// Specifies the URL of the repository that InfluxDB downloads plugins from.
+	PluginRepositoryUrl *string
+
 	// Specifies the interval to prefetch into the Parquet cache during compaction.
 	//
 	// Default: 3d
@@ -848,6 +855,13 @@ type InfluxDBv3EnterpriseParameters struct {
 	//
 	// Default: 20%
 	ParquetMemCacheSize PercentOrAbsoluteLong
+
+	// The Amazon Resource Name (ARN) of the Secrets Manager secret that holds your
+	// repository access token.
+	PluginRepositorySecretArn *string
+
+	// Specifies the URL of the repository that InfluxDB downloads plugins from.
+	PluginRepositoryUrl *string
 
 	// Specifies the interval to prefetch into the Parquet cache during compaction.
 	//

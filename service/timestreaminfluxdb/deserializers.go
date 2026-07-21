@@ -4084,6 +4084,24 @@ func awsAwsjson10_deserializeDocumentInfluxDBv3CoreParameters(v **types.InfluxDB
 				return err
 			}
 
+		case "pluginRepositorySecretArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected PluginRepositorySecretArn to be of type string, got %T instead", value)
+				}
+				sv.PluginRepositorySecretArn = ptr.String(jtv)
+			}
+
+		case "pluginRepositoryUrl":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.PluginRepositoryUrl = ptr.String(jtv)
+			}
+
 		case "preemptiveCacheAge":
 			if err := awsAwsjson10_deserializeDocumentDuration(&sv.PreemptiveCacheAge, value); err != nil {
 				return err
@@ -4592,6 +4610,24 @@ func awsAwsjson10_deserializeDocumentInfluxDBv3EnterpriseParameters(v **types.In
 		case "parquetMemCacheSize":
 			if err := awsAwsjson10_deserializeDocumentPercentOrAbsoluteLong(&sv.ParquetMemCacheSize, value); err != nil {
 				return err
+			}
+
+		case "pluginRepositorySecretArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected PluginRepositorySecretArn to be of type string, got %T instead", value)
+				}
+				sv.PluginRepositorySecretArn = ptr.String(jtv)
+			}
+
+		case "pluginRepositoryUrl":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.PluginRepositoryUrl = ptr.String(jtv)
 			}
 
 		case "preemptiveCacheAge":

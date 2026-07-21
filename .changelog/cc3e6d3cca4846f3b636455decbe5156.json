@@ -1,0 +1,8 @@
+{
+    "id": "cc3e6d3c-ca48-46f3-b636-455decbe5156",
+    "type": "feature",
+    "description": "update the workgroupArn to include EUSC partition, tests in THF Gamma and Prod no issue",
+    "modules": [
+        "service/redshiftdata"
+    ]
+}

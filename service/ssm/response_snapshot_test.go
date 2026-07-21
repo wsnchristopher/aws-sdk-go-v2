@@ -2244,6 +2244,7 @@ func TestCheckResponseSnapshot_DescribeAutomationExecutions(t *testing.T) {
 				CurrentStepName:             ptr.String("__CurrentStepName__"),
 				CurrentAction:               ptr.String("__CurrentAction__"),
 				FailureMessage:              ptr.String("__FailureMessage__"),
+				WarningMessage:              ptr.String("__WarningMessage__"),
 				TargetParameterName:         ptr.String("__TargetParameterName__"),
 				Targets: []types.Target{
 					{
@@ -2614,6 +2615,7 @@ func TestCheckResponseSnapshot_DescribeAutomationExecutions(t *testing.T) {
 				CurrentStepName:             ptr.String("__CurrentStepName__"),
 				CurrentAction:               ptr.String("__CurrentAction__"),
 				FailureMessage:              ptr.String("__FailureMessage__"),
+				WarningMessage:              ptr.String("__WarningMessage__"),
 				TargetParameterName:         ptr.String("__TargetParameterName__"),
 				Targets: []types.Target{
 					{
@@ -3008,6 +3010,7 @@ func TestCheckResponseSnapshot_DescribeAutomationStepExecutions(t *testing.T) {
 				},
 				Response:       ptr.String("__Response__"),
 				FailureMessage: ptr.String("__FailureMessage__"),
+				WarningMessage: ptr.String("__WarningMessage__"),
 				FailureDetails: &types.FailureDetails{
 					FailureStage: ptr.String("__FailureStage__"),
 					FailureType:  ptr.String("__FailureType__"),
@@ -3134,6 +3137,7 @@ func TestCheckResponseSnapshot_DescribeAutomationStepExecutions(t *testing.T) {
 				},
 				Response:       ptr.String("__Response__"),
 				FailureMessage: ptr.String("__FailureMessage__"),
+				WarningMessage: ptr.String("__WarningMessage__"),
 				FailureDetails: &types.FailureDetails{
 					FailureStage: ptr.String("__FailureStage__"),
 					FailureType:  ptr.String("__FailureType__"),
@@ -5040,6 +5044,7 @@ func TestCheckResponseSnapshot_GetAutomationExecution(t *testing.T) {
 					},
 					Response:       ptr.String("__Response__"),
 					FailureMessage: ptr.String("__FailureMessage__"),
+					WarningMessage: ptr.String("__WarningMessage__"),
 					FailureDetails: &types.FailureDetails{
 						FailureStage: ptr.String("__FailureStage__"),
 						FailureType:  ptr.String("__FailureType__"),
@@ -5166,6 +5171,7 @@ func TestCheckResponseSnapshot_GetAutomationExecution(t *testing.T) {
 					},
 					Response:       ptr.String("__Response__"),
 					FailureMessage: ptr.String("__FailureMessage__"),
+					WarningMessage: ptr.String("__WarningMessage__"),
 					FailureDetails: &types.FailureDetails{
 						FailureStage: ptr.String("__FailureStage__"),
 						FailureType:  ptr.String("__FailureType__"),
@@ -5286,6 +5292,7 @@ func TestCheckResponseSnapshot_GetAutomationExecution(t *testing.T) {
 				},
 			},
 			FailureMessage:              ptr.String("__FailureMessage__"),
+			WarningMessage:              ptr.String("__WarningMessage__"),
 			Mode:                        types.ExecutionMode("Auto"),
 			ParentAutomationExecutionId: ptr.String("__ParentAutomationExecutionId__"),
 			ExecutedBy:                  ptr.String("__ExecutedBy__"),

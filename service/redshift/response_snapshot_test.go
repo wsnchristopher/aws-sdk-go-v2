@@ -1520,6 +1520,44 @@ func TestCheckResponseSnapshot_CreateIntegration(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_CreateQev2IdcApplication(t *testing.T) {
+	want := &CreateQev2IdcApplicationOutput{
+		Qev2IdcApplication: &types.Qev2IdcApplication{
+			IdcInstanceArn:           ptr.String("__IdcInstanceArn__"),
+			Qev2IdcApplicationName:   ptr.String("__Qev2IdcApplicationName__"),
+			Qev2IdcApplicationArn:    ptr.String("__Qev2IdcApplicationArn__"),
+			IdcManagedApplicationArn: ptr.String("__IdcManagedApplicationArn__"),
+			IdcOnboardStatus:         ptr.String("__IdcOnboardStatus__"),
+			IdcDisplayName:           ptr.String("__IdcDisplayName__"),
+			Tags: []types.Tag{
+				{
+					Key:   ptr.String("__Key__"),
+					Value: ptr.String("__Value__"),
+				},
+				{
+					Key:   ptr.String("__Key__"),
+					Value: ptr.String("__Value__"),
+				},
+			},
+		},
+	}
+	status, header, body, err := serdeRespReadSnapshot("CreateQev2IdcApplication.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.CreateQev2IdcApplication(context.Background(), &CreateQev2IdcApplicationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "CreateQev2IdcApplication.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_CreateRedshiftIdcApplication(t *testing.T) {
 	want := &CreateRedshiftIdcApplicationOutput{
 		RedshiftIdcApplication: &types.RedshiftIdcApplication{
@@ -2499,6 +2537,25 @@ func TestCheckResponseSnapshot_DeletePartner(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "DeletePartner.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_DeleteQev2IdcApplication(t *testing.T) {
+	want := &DeleteQev2IdcApplicationOutput{}
+	status, header, body, err := serdeRespReadSnapshot("DeleteQev2IdcApplication.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.DeleteQev2IdcApplication(context.Background(), &DeleteQev2IdcApplicationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "DeleteQev2IdcApplication.response", err)
 	}
 }
 
@@ -5125,6 +5182,65 @@ func TestCheckResponseSnapshot_DescribePartners(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "DescribePartners.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_DescribeQev2IdcApplications(t *testing.T) {
+	want := &DescribeQev2IdcApplicationsOutput{
+		Qev2IdcApplications: []types.Qev2IdcApplication{
+			{
+				IdcInstanceArn:           ptr.String("__IdcInstanceArn__"),
+				Qev2IdcApplicationName:   ptr.String("__Qev2IdcApplicationName__"),
+				Qev2IdcApplicationArn:    ptr.String("__Qev2IdcApplicationArn__"),
+				IdcManagedApplicationArn: ptr.String("__IdcManagedApplicationArn__"),
+				IdcOnboardStatus:         ptr.String("__IdcOnboardStatus__"),
+				IdcDisplayName:           ptr.String("__IdcDisplayName__"),
+				Tags: []types.Tag{
+					{
+						Key:   ptr.String("__Key__"),
+						Value: ptr.String("__Value__"),
+					},
+					{
+						Key:   ptr.String("__Key__"),
+						Value: ptr.String("__Value__"),
+					},
+				},
+			},
+			{
+				IdcInstanceArn:           ptr.String("__IdcInstanceArn__"),
+				Qev2IdcApplicationName:   ptr.String("__Qev2IdcApplicationName__"),
+				Qev2IdcApplicationArn:    ptr.String("__Qev2IdcApplicationArn__"),
+				IdcManagedApplicationArn: ptr.String("__IdcManagedApplicationArn__"),
+				IdcOnboardStatus:         ptr.String("__IdcOnboardStatus__"),
+				IdcDisplayName:           ptr.String("__IdcDisplayName__"),
+				Tags: []types.Tag{
+					{
+						Key:   ptr.String("__Key__"),
+						Value: ptr.String("__Value__"),
+					},
+					{
+						Key:   ptr.String("__Key__"),
+						Value: ptr.String("__Value__"),
+					},
+				},
+			},
+		},
+		Marker: ptr.String("__Marker__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("DescribeQev2IdcApplications.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.DescribeQev2IdcApplications(context.Background(), &DescribeQev2IdcApplicationsInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "DescribeQev2IdcApplications.response", err)
 	}
 }
 
@@ -8877,6 +8993,44 @@ func TestCheckResponseSnapshot_ModifyLakehouseConfiguration(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "ModifyLakehouseConfiguration.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_ModifyQev2IdcApplication(t *testing.T) {
+	want := &ModifyQev2IdcApplicationOutput{
+		Qev2IdcApplication: &types.Qev2IdcApplication{
+			IdcInstanceArn:           ptr.String("__IdcInstanceArn__"),
+			Qev2IdcApplicationName:   ptr.String("__Qev2IdcApplicationName__"),
+			Qev2IdcApplicationArn:    ptr.String("__Qev2IdcApplicationArn__"),
+			IdcManagedApplicationArn: ptr.String("__IdcManagedApplicationArn__"),
+			IdcOnboardStatus:         ptr.String("__IdcOnboardStatus__"),
+			IdcDisplayName:           ptr.String("__IdcDisplayName__"),
+			Tags: []types.Tag{
+				{
+					Key:   ptr.String("__Key__"),
+					Value: ptr.String("__Value__"),
+				},
+				{
+					Key:   ptr.String("__Key__"),
+					Value: ptr.String("__Value__"),
+				},
+			},
+		},
+	}
+	status, header, body, err := serdeRespReadSnapshot("ModifyQev2IdcApplication.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.ModifyQev2IdcApplication(context.Background(), &ModifyQev2IdcApplicationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "ModifyQev2IdcApplication.response", err)
 	}
 }
 
@@ -13970,6 +14124,56 @@ func TestCheckResponseSnapshot_Error_PartnerNotFoundFault(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "PartnerNotFoundFault.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_Qev2IdcApplicationAlreadyExistsFault(t *testing.T) {
+	want := &types.Qev2IdcApplicationAlreadyExistsFault{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("Qev2IdcApplicationAlreadyExistsFault.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.CreateQev2IdcApplication(context.Background(), &CreateQev2IdcApplicationInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.Qev2IdcApplicationAlreadyExistsFault
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.Qev2IdcApplicationAlreadyExistsFault, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "Qev2IdcApplicationAlreadyExistsFault.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_Qev2IdcApplicationNotExistsFault(t *testing.T) {
+	want := &types.Qev2IdcApplicationNotExistsFault{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("Qev2IdcApplicationNotExistsFault.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.DeleteQev2IdcApplication(context.Background(), &DeleteQev2IdcApplicationInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.Qev2IdcApplicationNotExistsFault
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.Qev2IdcApplicationNotExistsFault, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "Qev2IdcApplicationNotExistsFault.error", err)
 	}
 }
 

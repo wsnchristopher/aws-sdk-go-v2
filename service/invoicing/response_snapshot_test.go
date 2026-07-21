@@ -1033,6 +1033,27 @@ func TestCheckResponseSnapshot_PutProcurementPortalPreference(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_SendProcurementPortalValidation(t *testing.T) {
+	want := &SendProcurementPortalValidationOutput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("SendProcurementPortalValidation.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.SendProcurementPortalValidation(context.Background(), &SendProcurementPortalValidationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "SendProcurementPortalValidation.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_TagResource(t *testing.T) {
 	want := &TagResourceOutput{}
 	status, header, body, err := serdeRespReadSnapshot("TagResource.response")
@@ -1110,6 +1131,27 @@ func TestCheckResponseSnapshot_UpdateProcurementPortalPreferenceStatus(t *testin
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "UpdateProcurementPortalPreferenceStatus.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_VerifyProcurementPortalValidation(t *testing.T) {
+	want := &VerifyProcurementPortalValidationOutput{
+		ProcurementPortalPreferenceArn: ptr.String("__ProcurementPortalPreferenceArn__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("VerifyProcurementPortalValidation.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.VerifyProcurementPortalValidation(context.Background(), &VerifyProcurementPortalValidationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "VerifyProcurementPortalValidation.response", err)
 	}
 }
 

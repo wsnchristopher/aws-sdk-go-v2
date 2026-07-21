@@ -1548,6 +1548,41 @@ type ProvisionedIdentifier struct {
 	noSmithyDocumentSerde
 }
 
+// Contains configuration and status information for an Amazon Redshift Query
+// Editor (QEV2) application that is registered with IAM Identity Center.
+type Qev2IdcApplication struct {
+
+	// The display name for the Amazon Redshift Query Editor (QEV2) IAM Identity
+	// Center application. It appears in the console.
+	IdcDisplayName *string
+
+	// The Amazon Resource Name (ARN) for the IAM Identity Center instance that the
+	// Amazon Redshift Query Editor (QEV2) application integrates with.
+	IdcInstanceArn *string
+
+	// The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2) IAM
+	// Identity Center managed application.
+	IdcManagedApplicationArn *string
+
+	// The onboarding status for the Amazon Redshift Query Editor (QEV2) IAM Identity
+	// Center application.
+	IdcOnboardStatus *string
+
+	// The Amazon Resource Name (ARN) for the Amazon Redshift Query Editor (QEV2)
+	// application that integrates with IAM Identity Center.
+	Qev2IdcApplicationArn *string
+
+	// The name of the Amazon Redshift Query Editor (QEV2) application in IAM Identity
+	// Center.
+	Qev2IdcApplicationName *string
+
+	// A list of tags associated with the application. Tags are key-value pairs that
+	// you can use to organize and identify your resources.
+	Tags []Tag
+
+	noSmithyDocumentSerde
+}
+
 // The S3 Access Grants scope.
 type ReadWriteAccess struct {
 

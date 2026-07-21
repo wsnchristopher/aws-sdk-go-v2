@@ -16933,11 +16933,6 @@ func awsRestjson1_deserializeDocumentCodeSecurityIntegrationSummary(v **types.Co
 				sv.StatusReason = ptr.String(jtv)
 			}
 
-		case "tags":
-			if err := awsRestjson1_deserializeDocumentTagMap(&sv.Tags, value); err != nil {
-				return err
-			}
-
 		case "type":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -17227,11 +17222,6 @@ func awsRestjson1_deserializeDocumentCodeSecurityScanConfigurationSummary(v **ty
 
 		case "scopeSettings":
 			if err := awsRestjson1_deserializeDocumentScopeSettings(&sv.ScopeSettings, value); err != nil {
-				return err
-			}
-
-		case "tags":
-			if err := awsRestjson1_deserializeDocumentTagMap(&sv.Tags, value); err != nil {
 				return err
 			}
 

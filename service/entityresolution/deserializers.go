@@ -11055,6 +11055,15 @@ func awsRestjson1_deserializeDocumentResolutionTechniques(v **types.ResolutionTe
 
 	for key, value := range shape {
 		switch key {
+		case "enableRealTimeMatching":
+			if value != nil {
+				jtv, ok := value.(bool)
+				if !ok {
+					return fmt.Errorf("expected Boolean to be of type *bool, got %T instead", value)
+				}
+				sv.EnableRealTimeMatching = ptr.Bool(jtv)
+			}
+
 		case "providerProperties":
 			if err := awsRestjson1_deserializeDocumentProviderProperties(&sv.ProviderProperties, value); err != nil {
 				return err

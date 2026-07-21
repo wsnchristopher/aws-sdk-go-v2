@@ -707,6 +707,77 @@ func awsRestjson1_serializeOpHttpBindingsDeleteManagedEndpointInput(v *DeleteMan
 	return nil
 }
 
+type awsRestjson1_serializeOpDeleteSecurityConfiguration struct {
+}
+
+func (*awsRestjson1_serializeOpDeleteSecurityConfiguration) ID() string {
+	return "OperationSerializer"
+}
+
+func (m *awsRestjson1_serializeOpDeleteSecurityConfiguration) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
+) {
+	_, span := tracing.StartSpan(ctx, "OperationSerializer")
+	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
+	defer endTimer()
+	defer span.End()
+	request, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
+	}
+
+	input, ok := in.Parameters.(*DeleteSecurityConfigurationInput)
+	_ = input
+	if !ok {
+		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+	}
+
+	opPath, opQuery := httpbinding.SplitURI("/securityconfigurations/{id}")
+	request.URL.Path = smithyhttp.JoinPath(request.URL.Path, opPath)
+	request.URL.RawQuery = smithyhttp.JoinRawQuery(request.URL.RawQuery, opQuery)
+	request.Method = "DELETE"
+	var restEncoder *httpbinding.Encoder
+	if request.URL.RawPath == "" {
+		restEncoder, err = httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	} else {
+		request.URL.RawPath = smithyhttp.JoinPath(request.URL.RawPath, opPath)
+		restEncoder, err = httpbinding.NewEncoderWithRawPath(request.URL.Path, request.URL.RawPath, request.URL.RawQuery, request.Header)
+	}
+
+	if err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	if err := awsRestjson1_serializeOpHttpBindingsDeleteSecurityConfigurationInput(input, restEncoder); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	if request.Request, err = restEncoder.Encode(request.Request); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+	in.Request = request
+
+	endTimer()
+	span.End()
+	return next.HandleSerialize(ctx, in)
+}
+func awsRestjson1_serializeOpHttpBindingsDeleteSecurityConfigurationInput(v *DeleteSecurityConfigurationInput, encoder *httpbinding.Encoder) error {
+	if v == nil {
+		return fmt.Errorf("unsupported serialization of nil %T", v)
+	}
+
+	if v.Id == nil || len(*v.Id) == 0 {
+		return &smithy.SerializationError{Err: fmt.Errorf("input member id must not be empty")}
+	}
+	if v.Id != nil {
+		if err := encoder.SetURI("id").String(*v.Id); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 type awsRestjson1_serializeOpDeleteVirtualCluster struct {
 }
 
@@ -2115,6 +2186,27 @@ func awsRestjson1_serializeOpHttpBindingsUntagResourceInput(v *UntagResourceInpu
 	return nil
 }
 
+func awsRestjson1_serializeDocumentAuthenticationConfiguration(v *types.AuthenticationConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.IamConfiguration != nil {
+		ok := object.Key("iamConfiguration")
+		if err := awsRestjson1_serializeDocumentIAMConfiguration(v.IamConfiguration, ok); err != nil {
+			return err
+		}
+	}
+
+	if v.IdentityCenterConfiguration != nil {
+		ok := object.Key("identityCenterConfiguration")
+		if err := awsRestjson1_serializeDocumentIdentityCenterConfiguration(v.IdentityCenterConfiguration, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func awsRestjson1_serializeDocumentAuthorizationConfiguration(v *types.AuthorizationConfiguration, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -2311,6 +2403,45 @@ func awsRestjson1_serializeDocumentEntryPointArguments(v []string, value smithyj
 		av := array.Value()
 		av.String(v[i])
 	}
+	return nil
+}
+
+func awsRestjson1_serializeDocumentIAMConfiguration(v *types.IAMConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.SystemRole != nil {
+		ok := object.Key("systemRole")
+		ok.String(*v.SystemRole)
+	}
+
+	return nil
+}
+
+func awsRestjson1_serializeDocumentIdentityCenterConfiguration(v *types.IdentityCenterConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.EmrIdentityCenterApplicationARN != nil {
+		ok := object.Key("emrIdentityCenterApplicationARN")
+		ok.String(*v.EmrIdentityCenterApplicationARN)
+	}
+
+	if v.EnableIdentityCenter != nil {
+		ok := object.Key("enableIdentityCenter")
+		ok.Boolean(*v.EnableIdentityCenter)
+	}
+
+	if v.IdentityCenterApplicationAssignmentRequired != nil {
+		ok := object.Key("identityCenterApplicationAssignmentRequired")
+		ok.Boolean(*v.IdentityCenterApplicationAssignmentRequired)
+	}
+
+	if v.IdentityCenterInstanceARN != nil {
+		ok := object.Key("identityCenterInstanceARN")
+		ok.String(*v.IdentityCenterInstanceARN)
+	}
+
 	return nil
 }
 
@@ -2600,6 +2731,13 @@ func awsRestjson1_serializeDocumentSecureNamespaceInfo(v *types.SecureNamespaceI
 func awsRestjson1_serializeDocumentSecurityConfigurationData(v *types.SecurityConfigurationData, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
+
+	if v.AuthenticationConfiguration != nil {
+		ok := object.Key("authenticationConfiguration")
+		if err := awsRestjson1_serializeDocumentAuthenticationConfiguration(v.AuthenticationConfiguration, ok); err != nil {
+			return err
+		}
+	}
 
 	if v.AuthorizationConfiguration != nil {
 		ok := object.Key("authorizationConfiguration")

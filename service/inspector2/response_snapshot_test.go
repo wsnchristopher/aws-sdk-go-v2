@@ -1395,17 +1395,17 @@ func TestCheckResponseSnapshot_GetClustersForImage(t *testing.T) {
 
 func TestCheckResponseSnapshot_GetCodeSecurityIntegration(t *testing.T) {
 	want := &GetCodeSecurityIntegrationOutput{
-		IntegrationArn: ptr.String("__IntegrationArn__"),
-		Name:           ptr.String("__Name__"),
-		Type:           types.IntegrationType("GITLAB_SELF_MANAGED"),
-		Status:         types.IntegrationStatus("PENDING"),
-		StatusReason:   ptr.String("__StatusReason__"),
-		CreatedOn:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-		LastUpdateOn:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		IntegrationArn:   ptr.String("__IntegrationArn__"),
+		Name:             ptr.String("__Name__"),
+		Type:             types.IntegrationType("GITLAB_SELF_MANAGED"),
+		Status:           types.IntegrationStatus("PENDING"),
+		StatusReason:     ptr.String("__StatusReason__"),
+		CreatedOn:        ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		LastUpdateOn:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		AuthorizationUrl: ptr.String("__AuthorizationUrl__"),
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
-		AuthorizationUrl: ptr.String("__AuthorizationUrl__"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetCodeSecurityIntegration.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -2795,9 +2795,6 @@ func TestCheckResponseSnapshot_ListCodeSecurityIntegrations(t *testing.T) {
 				StatusReason:   ptr.String("__StatusReason__"),
 				CreatedOn:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 				LastUpdateOn:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				Tags: map[string]string{
-					"key0": "__Value__",
-				},
 			},
 			{
 				IntegrationArn: ptr.String("__IntegrationArn__"),
@@ -2807,9 +2804,6 @@ func TestCheckResponseSnapshot_ListCodeSecurityIntegrations(t *testing.T) {
 				StatusReason:   ptr.String("__StatusReason__"),
 				CreatedOn:      ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 				LastUpdateOn:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				Tags: map[string]string{
-					"key0": "__Value__",
-				},
 			},
 		},
 		NextToken: ptr.String("__NextToken__"),
@@ -2884,9 +2878,6 @@ func TestCheckResponseSnapshot_ListCodeSecurityScanConfigurations(t *testing.T) 
 				ScopeSettings: &types.ScopeSettings{
 					ProjectSelectionScope: types.ProjectSelectionScope("ALL"),
 				},
-				Tags: map[string]string{
-					"key0": "__Value__",
-				},
 			},
 			{
 				ScanConfigurationArn:  ptr.String("__ScanConfigurationArn__"),
@@ -2904,9 +2895,6 @@ func TestCheckResponseSnapshot_ListCodeSecurityScanConfigurations(t *testing.T) 
 				},
 				ScopeSettings: &types.ScopeSettings{
 					ProjectSelectionScope: types.ProjectSelectionScope("ALL"),
-				},
-				Tags: map[string]string{
-					"key0": "__Value__",
 				},
 			},
 		},

@@ -418,6 +418,17 @@ func TestCheckRequestSnapshot_CreateSecurityConfiguration(t *testing.T) {
 					},
 				},
 			},
+			AuthenticationConfiguration: &types.AuthenticationConfiguration{
+				IdentityCenterConfiguration: &types.IdentityCenterConfiguration{
+					EnableIdentityCenter:                        ptr.Bool(true),
+					IdentityCenterApplicationAssignmentRequired: ptr.Bool(true),
+					IdentityCenterInstanceARN:                   ptr.String("__IdentityCenterInstanceARN__"),
+					EmrIdentityCenterApplicationARN:             ptr.String("__EmrIdentityCenterApplicationARN__"),
+				},
+				IamConfiguration: &types.IAMConfiguration{
+					SystemRole: ptr.String("__SystemRole__"),
+				},
+			},
 		},
 		Tags: map[string]string{
 			"key0": "__Value__",
@@ -540,6 +551,33 @@ func TestCheckRequestSnapshot_DeleteManagedEndpoint(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteManagedEndpoint"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_DeleteSecurityConfiguration(t *testing.T) {
+	input := &DeleteSecurityConfigurationInput{
+		Id: ptr.String("__Id__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteSecurityConfiguration(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSecurityConfiguration"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -1333,6 +1371,17 @@ func TestUpdateRequestSnapshot_CreateSecurityConfiguration(t *testing.T) {
 					},
 				},
 			},
+			AuthenticationConfiguration: &types.AuthenticationConfiguration{
+				IdentityCenterConfiguration: &types.IdentityCenterConfiguration{
+					EnableIdentityCenter:                        ptr.Bool(true),
+					IdentityCenterApplicationAssignmentRequired: ptr.Bool(true),
+					IdentityCenterInstanceARN:                   ptr.String("__IdentityCenterInstanceARN__"),
+					EmrIdentityCenterApplicationARN:             ptr.String("__EmrIdentityCenterApplicationARN__"),
+				},
+				IamConfiguration: &types.IAMConfiguration{
+					SystemRole: ptr.String("__SystemRole__"),
+				},
+			},
 		},
 		Tags: map[string]string{
 			"key0": "__Value__",
@@ -1455,6 +1504,33 @@ func TestUpdateRequestSnapshot_DeleteManagedEndpoint(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteManagedEndpoint"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_DeleteSecurityConfiguration(t *testing.T) {
+	input := &DeleteSecurityConfigurationInput{
+		Id: ptr.String("__Id__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteSecurityConfiguration(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteSecurityConfiguration"); err != nil {
 		t.Fatal(err)
 	}
 }

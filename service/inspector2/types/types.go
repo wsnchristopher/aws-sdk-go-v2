@@ -1637,9 +1637,6 @@ type CodeSecurityIntegrationSummary struct {
 	// This member is required.
 	Type IntegrationType
 
-	// The tags associated with the code security integration.
-	Tags map[string]string
-
 	noSmithyDocumentSerde
 }
 
@@ -1724,9 +1721,6 @@ type CodeSecurityScanConfigurationSummary struct {
 	// ScopeSetting parameter is ALL the scan configuration applies to all existing
 	// and future projects imported into Amazon Inspector.
 	ScopeSettings *ScopeSettings
-
-	// The tags associated with the scan configuration.
-	Tags map[string]string
 
 	noSmithyDocumentSerde
 }

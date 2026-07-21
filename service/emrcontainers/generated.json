@@ -15,6 +15,7 @@
         "api_op_CreateVirtualCluster.go",
         "api_op_DeleteJobTemplate.go",
         "api_op_DeleteManagedEndpoint.go",
+        "api_op_DeleteSecurityConfiguration.go",
         "api_op_DeleteVirtualCluster.go",
         "api_op_DescribeJobRun.go",
         "api_op_DescribeJobTemplate.go",

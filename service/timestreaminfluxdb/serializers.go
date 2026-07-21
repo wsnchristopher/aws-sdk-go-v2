@@ -1577,6 +1577,16 @@ func awsAwsjson10_serializeDocumentInfluxDBv3CoreParameters(v *types.InfluxDBv3C
 		}
 	}
 
+	if v.PluginRepositorySecretArn != nil {
+		ok := object.Key("pluginRepositorySecretArn")
+		ok.String(*v.PluginRepositorySecretArn)
+	}
+
+	if v.PluginRepositoryUrl != nil {
+		ok := object.Key("pluginRepositoryUrl")
+		ok.String(*v.PluginRepositoryUrl)
+	}
+
 	if v.PreemptiveCacheAge != nil {
 		ok := object.Key("preemptiveCacheAge")
 		if err := awsAwsjson10_serializeDocumentDuration(v.PreemptiveCacheAge, ok); err != nil {
@@ -1881,6 +1891,16 @@ func awsAwsjson10_serializeDocumentInfluxDBv3EnterpriseParameters(v *types.Influ
 		if err := awsAwsjson10_serializeDocumentPercentOrAbsoluteLong(v.ParquetMemCacheSize, ok); err != nil {
 			return err
 		}
+	}
+
+	if v.PluginRepositorySecretArn != nil {
+		ok := object.Key("pluginRepositorySecretArn")
+		ok.String(*v.PluginRepositorySecretArn)
+	}
+
+	if v.PluginRepositoryUrl != nil {
+		ok := object.Key("pluginRepositoryUrl")
+		ok.String(*v.PluginRepositoryUrl)
 	}
 
 	if v.PreemptiveCacheAge != nil {

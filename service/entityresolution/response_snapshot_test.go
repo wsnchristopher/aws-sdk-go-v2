@@ -457,6 +457,7 @@ func TestCheckResponseSnapshot_CreateMatchingWorkflow(t *testing.T) {
 					EnableTransitiveMatching: ptr.Bool(true),
 				},
 			},
+			EnableRealTimeMatching: ptr.Bool(true),
 			ProviderProperties: &types.ProviderProperties{
 				ProviderServiceArn:    ptr.String("__ProviderServiceArn__"),
 				ProviderConfiguration: nil,
@@ -1111,6 +1112,7 @@ func TestCheckResponseSnapshot_GetMatchingWorkflow(t *testing.T) {
 					EnableTransitiveMatching: ptr.Bool(true),
 				},
 			},
+			EnableRealTimeMatching: ptr.Bool(true),
 			ProviderProperties: &types.ProviderProperties{
 				ProviderServiceArn:    ptr.String("__ProviderServiceArn__"),
 				ProviderConfiguration: nil,
@@ -1984,6 +1986,7 @@ func TestCheckResponseSnapshot_UpdateMatchingWorkflow(t *testing.T) {
 					EnableTransitiveMatching: ptr.Bool(true),
 				},
 			},
+			EnableRealTimeMatching: ptr.Bool(true),
 			ProviderProperties: &types.ProviderProperties{
 				ProviderServiceArn:    ptr.String("__ProviderServiceArn__"),
 				ProviderConfiguration: nil,

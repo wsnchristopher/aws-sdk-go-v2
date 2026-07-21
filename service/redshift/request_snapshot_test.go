@@ -1024,6 +1024,45 @@ func TestCheckRequestSnapshot_CreateIntegration(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_CreateQev2IdcApplication(t *testing.T) {
+	input := &CreateQev2IdcApplicationInput{
+		IdcInstanceArn:         ptr.String("__IdcInstanceArn__"),
+		Qev2IdcApplicationName: ptr.String("__Qev2IdcApplicationName__"),
+		IdcDisplayName:         ptr.String("__IdcDisplayName__"),
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateQev2IdcApplication"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_CreateRedshiftIdcApplication(t *testing.T) {
 	input := &CreateRedshiftIdcApplicationInput{
 		IdcInstanceArn:             ptr.String("__IdcInstanceArn__"),
@@ -1710,6 +1749,33 @@ func TestCheckRequestSnapshot_DeletePartner(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeletePartner"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_DeleteQev2IdcApplication(t *testing.T) {
+	input := &DeleteQev2IdcApplicationInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteQev2IdcApplication"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -2911,6 +2977,35 @@ func TestCheckRequestSnapshot_DescribePartners(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribePartners"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_DescribeQev2IdcApplications(t *testing.T) {
+	input := &DescribeQev2IdcApplicationsInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+		MaxRecords:            ptr.Int32(1),
+		Marker:                ptr.String("__Marker__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DescribeQev2IdcApplications(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeQev2IdcApplications"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -4215,6 +4310,34 @@ func TestCheckRequestSnapshot_ModifyLakehouseConfiguration(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ModifyLakehouseConfiguration"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_ModifyQev2IdcApplication(t *testing.T) {
+	input := &ModifyQev2IdcApplicationInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+		IdcDisplayName:        ptr.String("__IdcDisplayName__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ModifyQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ModifyQev2IdcApplication"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -5820,6 +5943,45 @@ func TestUpdateRequestSnapshot_CreateIntegration(t *testing.T) {
 	}
 }
 
+func TestUpdateRequestSnapshot_CreateQev2IdcApplication(t *testing.T) {
+	input := &CreateQev2IdcApplicationInput{
+		IdcInstanceArn:         ptr.String("__IdcInstanceArn__"),
+		Qev2IdcApplicationName: ptr.String("__Qev2IdcApplicationName__"),
+		IdcDisplayName:         ptr.String("__IdcDisplayName__"),
+		Tags: []types.Tag{
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+			{
+				Key:   ptr.String("__Key__"),
+				Value: ptr.String("__Value__"),
+			},
+		},
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.CreateQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "CreateQev2IdcApplication"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUpdateRequestSnapshot_CreateRedshiftIdcApplication(t *testing.T) {
 	input := &CreateRedshiftIdcApplicationInput{
 		IdcInstanceArn:             ptr.String("__IdcInstanceArn__"),
@@ -6506,6 +6668,33 @@ func TestUpdateRequestSnapshot_DeletePartner(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeletePartner"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_DeleteQev2IdcApplication(t *testing.T) {
+	input := &DeleteQev2IdcApplicationInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DeleteQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DeleteQev2IdcApplication"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -7707,6 +7896,35 @@ func TestUpdateRequestSnapshot_DescribePartners(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribePartners"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_DescribeQev2IdcApplications(t *testing.T) {
+	input := &DescribeQev2IdcApplicationsInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+		MaxRecords:            ptr.Int32(1),
+		Marker:                ptr.String("__Marker__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.DescribeQev2IdcApplications(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "DescribeQev2IdcApplications"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -9011,6 +9229,34 @@ func TestUpdateRequestSnapshot_ModifyLakehouseConfiguration(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ModifyLakehouseConfiguration"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_ModifyQev2IdcApplication(t *testing.T) {
+	input := &ModifyQev2IdcApplicationInput{
+		Qev2IdcApplicationArn: ptr.String("__Qev2IdcApplicationArn__"),
+		IdcDisplayName:        ptr.String("__IdcDisplayName__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ModifyQev2IdcApplication(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ModifyQev2IdcApplication"); err != nil {
 		t.Fatal(err)
 	}
 }

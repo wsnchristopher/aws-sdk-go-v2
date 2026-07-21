@@ -266,6 +266,27 @@ func TestCheckResponseSnapshot_DeleteManagedEndpoint(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_DeleteSecurityConfiguration(t *testing.T) {
+	want := &DeleteSecurityConfigurationOutput{
+		Id: ptr.String("__Id__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("DeleteSecurityConfiguration.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.DeleteSecurityConfiguration(context.Background(), &DeleteSecurityConfigurationInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "DeleteSecurityConfiguration.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_DeleteVirtualCluster(t *testing.T) {
 	want := &DeleteVirtualClusterOutput{
 		Id: ptr.String("__Id__"),
@@ -598,6 +619,17 @@ func TestCheckResponseSnapshot_DescribeSecurityConfiguration(t *testing.T) {
 								PrivateCertificateSecretArn: ptr.String("__PrivateCertificateSecretArn__"),
 							},
 						},
+					},
+				},
+				AuthenticationConfiguration: &types.AuthenticationConfiguration{
+					IdentityCenterConfiguration: &types.IdentityCenterConfiguration{
+						EnableIdentityCenter:                        ptr.Bool(true),
+						IdentityCenterApplicationAssignmentRequired: ptr.Bool(true),
+						IdentityCenterInstanceARN:                   ptr.String("__IdentityCenterInstanceARN__"),
+						EmrIdentityCenterApplicationARN:             ptr.String("__EmrIdentityCenterApplicationARN__"),
+					},
+					IamConfiguration: &types.IAMConfiguration{
+						SystemRole: ptr.String("__SystemRole__"),
 					},
 				},
 			},
@@ -1241,6 +1273,17 @@ func TestCheckResponseSnapshot_ListSecurityConfigurations(t *testing.T) {
 							},
 						},
 					},
+					AuthenticationConfiguration: &types.AuthenticationConfiguration{
+						IdentityCenterConfiguration: &types.IdentityCenterConfiguration{
+							EnableIdentityCenter:                        ptr.Bool(true),
+							IdentityCenterApplicationAssignmentRequired: ptr.Bool(true),
+							IdentityCenterInstanceARN:                   ptr.String("__IdentityCenterInstanceARN__"),
+							EmrIdentityCenterApplicationARN:             ptr.String("__EmrIdentityCenterApplicationARN__"),
+						},
+						IamConfiguration: &types.IAMConfiguration{
+							SystemRole: ptr.String("__SystemRole__"),
+						},
+					},
 				},
 				Tags: map[string]string{
 					"key0": "__Value__",
@@ -1270,6 +1313,17 @@ func TestCheckResponseSnapshot_ListSecurityConfigurations(t *testing.T) {
 									PrivateCertificateSecretArn: ptr.String("__PrivateCertificateSecretArn__"),
 								},
 							},
+						},
+					},
+					AuthenticationConfiguration: &types.AuthenticationConfiguration{
+						IdentityCenterConfiguration: &types.IdentityCenterConfiguration{
+							EnableIdentityCenter:                        ptr.Bool(true),
+							IdentityCenterApplicationAssignmentRequired: ptr.Bool(true),
+							IdentityCenterInstanceARN:                   ptr.String("__IdentityCenterInstanceARN__"),
+							EmrIdentityCenterApplicationARN:             ptr.String("__EmrIdentityCenterApplicationARN__"),
+						},
+						IamConfiguration: &types.IAMConfiguration{
+							SystemRole: ptr.String("__SystemRole__"),
 						},
 					},
 				},

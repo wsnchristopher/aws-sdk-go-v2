@@ -66,6 +66,8 @@ type GenerateMatchIdInput struct {
 	// match IDs without checking existing matches, with updates processed
 	// asynchronously. Provides fastest response time but should only be used for
 	// records known to be unique.
+	//
+	// Advanced matching workflows don't support the processingType field.
 	ProcessingType types.ProcessingType
 
 	noSmithyDocumentSerde

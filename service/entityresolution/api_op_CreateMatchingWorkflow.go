@@ -13,8 +13,8 @@ import (
 // processing job. The workflow name must be unique. To modify an existing
 // workflow, use UpdateMatchingWorkflow .
 //
-// For workflows where resolutionType is ML_MATCHING or PROVIDER , incremental
-// processing is not supported.
+// For workflows where resolutionType is PROVIDER , incremental processing is not
+// supported.
 func (c *Client) CreateMatchingWorkflow(ctx context.Context, params *CreateMatchingWorkflowInput, optFns ...func(*Options)) (*CreateMatchingWorkflowOutput, error) {
 	if params == nil {
 		params = &CreateMatchingWorkflowInput{}
@@ -67,8 +67,8 @@ type CreateMatchingWorkflowInput struct {
 	// Optional. An object that defines the incremental run type. This object contains
 	// only the incrementalRunType field, which appears as "Automatic" in the console.
 	//
-	// For workflows where resolutionType is ML_MATCHING or PROVIDER , incremental
-	// processing is not supported.
+	// For workflows where resolutionType is PROVIDER , incremental processing is not
+	// supported.
 	IncrementalRunConfig *types.IncrementalRunConfig
 
 	// The tags used to organize, track, or control access for this resource.

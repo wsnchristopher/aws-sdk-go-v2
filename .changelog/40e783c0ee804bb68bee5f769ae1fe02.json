@@ -1,0 +1,8 @@
+{
+    "id": "40e783c0-ee80-4bb6-8bee-5f769ae1fe02",
+    "type": "feature",
+    "description": "Amazon Redshift - Added support for managing Query Editor V2 IAM Identity Center applications via new CreateQev2IdcApplication, DescribeQev2IdcApplications, ModifyQev2IdcApplication, and DeleteQev2IdcApplication API operations.",
+    "modules": [
+        "service/redshift"
+    ]
+}
