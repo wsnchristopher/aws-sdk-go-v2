@@ -1,3 +1,7 @@
+# v1.58.1 (2026-07-22)
+
+* **Documentation**: This adds CLI examples for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.
+
 # v1.58.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

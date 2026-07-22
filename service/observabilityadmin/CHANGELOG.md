@@ -1,3 +1,7 @@
+# v1.21.0 (2026-07-22)
+
+* **Feature**: Enablement for ALB and Bedrock Knowledge Base logs via Observability Admin Telemetry Rule for account and organization level
+
 # v1.20.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

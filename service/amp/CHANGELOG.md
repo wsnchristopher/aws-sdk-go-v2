@@ -1,3 +1,7 @@
+# v1.47.0 (2026-07-22)
+
+* **Feature**: Add CloudWatch dataset destinations for Amazon Managed Service for Prometheus collectors.
+
 # v1.46.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

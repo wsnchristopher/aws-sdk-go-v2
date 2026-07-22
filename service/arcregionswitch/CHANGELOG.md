@@ -1,3 +1,7 @@
+# v1.12.0 (2026-07-22)
+
+* **Feature**: Adds support for a client token in StartPlanExecution to make plan execution requests idempotent for safe retries.
+
 # v1.11.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

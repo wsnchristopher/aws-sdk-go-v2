@@ -1,8 +1,0 @@
-{
-    "id": "9e48aae7-ef5b-4461-a7c7-77fd654d2071",
-    "type": "feature",
-    "description": "Adds Qualifications Association APIs that enable partners to associate a subsidiary account's qualifications with a primary account. Once associated, qualifications are shared across all connected accounts and scorecards are consolidated. Partners can start and track association and disassociation.",
-    "modules": [
-        "service/partnercentralaccount"
-    ]
-}

@@ -1,3 +1,7 @@
+# v1.7.0 (2026-07-22)
+
+* **Feature**: Adds Qualifications Association APIs that enable partners to associate a subsidiary account's qualifications with a primary account. Once associated, qualifications are shared across all connected accounts and scorecards are consolidated. Partners can start and track association and disassociation.
+
 # v1.6.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

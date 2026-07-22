@@ -1,3 +1,25 @@
+# Release (2026-07-22)
+
+## Module Highlights
+* `github.com/aws/aws-sdk-go-v2/service/amp`: [v1.47.0](service/amp/CHANGELOG.md#v1470-2026-07-22)
+  * **Feature**: Add CloudWatch dataset destinations for Amazon Managed Service for Prometheus collectors.
+* `github.com/aws/aws-sdk-go-v2/service/arcregionswitch`: [v1.12.0](service/arcregionswitch/CHANGELOG.md#v1120-2026-07-22)
+  * **Feature**: Adds support for a client token in StartPlanExecution to make plan execution requests idempotent for safe retries.
+* `github.com/aws/aws-sdk-go-v2/service/cloudwatch`: [v1.65.0](service/cloudwatch/CHANGELOG.md#v1650-2026-07-22)
+  * **Feature**: Adds documented value constraints for CloudWatch Log Alarm scheduled query configuration fields, and makes LogGroupIdentifiers optional for log alarms.
+* `github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2`: [v1.58.1](service/elasticloadbalancingv2/CHANGELOG.md#v1581-2026-07-22)
+  * **Documentation**: This adds CLI examples for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.
+* `github.com/aws/aws-sdk-go-v2/service/guardduty`: [v1.85.0](service/guardduty/CHANGELOG.md#v1850-2026-07-22)
+  * **Feature**: Amazon GuardDuty now returns filter lifecycle metadata in GetFilter responses. The response includes createdAt and updatedAt timestamps and a version number that increments on each update, giving you visibility into when a filter was created and last modified.
+* `github.com/aws/aws-sdk-go-v2/service/observabilityadmin`: [v1.21.0](service/observabilityadmin/CHANGELOG.md#v1210-2026-07-22)
+  * **Feature**: Enablement for ALB and Bedrock Knowledge Base logs via Observability Admin Telemetry Rule for account and organization level
+* `github.com/aws/aws-sdk-go-v2/service/partnercentralaccount`: [v1.7.0](service/partnercentralaccount/CHANGELOG.md#v170-2026-07-22)
+  * **Feature**: Adds Qualifications Association APIs that enable partners to associate a subsidiary account's qualifications with a primary account. Once associated, qualifications are shared across all connected accounts and scorecards are consolidated. Partners can start and track association and disassociation.
+* `github.com/aws/aws-sdk-go-v2/service/pcs`: [v1.24.0](service/pcs/CHANGELOG.md#v1240-2026-07-22)
+  * **Feature**: AWS PCS Node Lifecycle Actions provides a structured way to run custom scripts at defined points in a compute node's lifecycle directly through the AWS PCS compute node group API.
+* `github.com/aws/aws-sdk-go-v2/service/sesv2`: [v1.66.0](service/sesv2/CHANGELOG.md#v1660-2026-07-22)
+  * **Feature**: Launching DEED and MREP in US GOV
+
 # Release (2026-07-21)
 
 ## General Highlights

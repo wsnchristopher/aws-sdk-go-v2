@@ -1,8 +1,0 @@
-{
-    "id": "073035b7-69be-4fdc-8bac-8325389fa0a2",
-    "type": "feature",
-    "description": "Launching DEED and MREP in US GOV",
-    "modules": [
-        "service/sesv2"
-    ]
-}

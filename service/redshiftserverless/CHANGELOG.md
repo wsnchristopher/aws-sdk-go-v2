@@ -1,3 +1,7 @@
+# v1.38.1 (2026-07-22)
+
+* No change notes available for this release.
+
 # v1.38.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

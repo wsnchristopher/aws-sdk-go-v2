@@ -1,3 +1,7 @@
+# v1.24.0 (2026-07-22)
+
+* **Feature**: AWS PCS Node Lifecycle Actions provides a structured way to run custom scripts at defined points in a compute node's lifecycle directly through the AWS PCS compute node group API.
+
 # v1.23.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

@@ -1,3 +1,7 @@
+# v1.65.0 (2026-07-22)
+
+* **Feature**: Adds documented value constraints for CloudWatch Log Alarm scheduled query configuration fields, and makes LogGroupIdentifiers optional for log alarms.
+
 # v1.64.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

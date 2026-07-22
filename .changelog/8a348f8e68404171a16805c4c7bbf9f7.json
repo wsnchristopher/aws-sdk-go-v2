@@ -1,8 +1,0 @@
-{
-    "id": "8a348f8e-6840-4171-a168-05c4c7bbf9f7",
-    "type": "feature",
-    "description": "Adds documented value constraints for CloudWatch Log Alarm scheduled query configuration fields, and makes LogGroupIdentifiers optional for log alarms.",
-    "modules": [
-        "service/cloudwatch"
-    ]
-}

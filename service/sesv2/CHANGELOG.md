@@ -1,3 +1,7 @@
+# v1.66.0 (2026-07-22)
+
+* **Feature**: Launching DEED and MREP in US GOV
+
 # v1.65.0 (2026-07-21)
 
 * **Feature**: Add an option to clients to disable clock skew

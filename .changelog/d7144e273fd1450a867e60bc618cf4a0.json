@@ -1,8 +1,0 @@
-{
-    "id": "d7144e27-3fd1-450a-867e-60bc618cf4a0",
-    "type": "documentation",
-    "description": "This adds CLI examples for the IpAddressType field on SourceIpConfig, enabling Network Load Balancer listener rules to match traffic based on whether the source IP is IPv4 or IPv6.",
-    "modules": [
-        "service/elasticloadbalancingv2"
-    ]
-}
