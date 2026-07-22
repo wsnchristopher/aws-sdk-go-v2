@@ -1,0 +1,8 @@
+{
+    "id": "1937c4c2-a70e-4977-9630-62419100457b",
+    "type": "feature",
+    "description": "Amazon GuardDuty now returns filter lifecycle metadata in GetFilter responses. The response includes createdAt and updatedAt timestamps and a version number that increments on each update, giving you visibility into when a filter was created and last modified.",
+    "modules": [
+        "service/guardduty"
+    ]
+}

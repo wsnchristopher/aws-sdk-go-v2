@@ -10,13 +10,13 @@ import (
 	smithyhttp "github.com/aws/smithy-go/transport/http"
 )
 
-// The CreateScraper operation creates a scraper to collect metrics. A scraper
-// pulls metrics from Prometheus-compatible sources and sends them to your Amazon
-// Managed Service for Prometheus workspace. You can configure scrapers to collect
-// metrics from Amazon EKS clusters, Amazon MSK clusters, or from VPC-based sources
-// that support DNS-based service discovery. Scrapers are flexible, and can be
-// configured to control what metrics are collected, the frequency of collection,
-// what transformations are applied to the metrics, and more.
+// Creates a scraper to collect metrics from Prometheus-compatible sources. The
+// scraper sends the collected metrics to Amazon Managed Service for Prometheus
+// workspaces or CloudWatch datasets. You can configure scrapers to collect metrics
+// from Amazon EKS clusters, Amazon MSK clusters, or from VPC-based sources that
+// support DNS-based service discovery. Scrapers are flexible. You can configure a
+// scraper to control which metrics to collect, the frequency of collection, which
+// transformations to apply to the metrics, and more.
 //
 // An IAM role will be created for you that Amazon Managed Service for Prometheus
 // uses to access the metrics in your source. You must configure this role with a
@@ -55,7 +55,9 @@ func (c *Client) CreateScraper(ctx context.Context, params *CreateScraperInput, 
 // Represents the input of a CreateScraper operation.
 type CreateScraperInput struct {
 
-	// The Amazon Managed Service for Prometheus workspace to send metrics to.
+	// The destination where the scraper sends the collected metrics. Valid
+	// destinations are Amazon Managed Service for Prometheus workspaces and CloudWatch
+	// datasets.
 	//
 	// This member is required.
 	Destination types.Destination

@@ -3327,6 +3327,13 @@ func serializeCBOR_StartPlanExecutionInput(v *StartPlanExecutionInput) (smithycb
 		}
 		vm["recoveryExecutionId"] = ser
 	}
+	if v.ClientToken != nil {
+		ser, err := serializeCBOR_String(*v.ClientToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["clientToken"] = ser
+	}
 	return vm, nil
 }
 

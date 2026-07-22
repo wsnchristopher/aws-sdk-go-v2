@@ -828,6 +828,7 @@ func TestCheckRequestSnapshot_StartPlanExecution(t *testing.T) {
 		Comment:             ptr.String("__Comment__"),
 		LatestVersion:       ptr.String("__LatestVersion__"),
 		RecoveryExecutionId: ptr.String("__RecoveryExecutionId__"),
+		ClientToken:         ptr.String("__ClientToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1821,6 +1822,7 @@ func TestUpdateRequestSnapshot_StartPlanExecution(t *testing.T) {
 		Comment:             ptr.String("__Comment__"),
 		LatestVersion:       ptr.String("__LatestVersion__"),
 		RecoveryExecutionId: ptr.String("__RecoveryExecutionId__"),
+		ClientToken:         ptr.String("__ClientToken__"),
 	}
 	body := &bytes.Buffer{}
 	method := ""

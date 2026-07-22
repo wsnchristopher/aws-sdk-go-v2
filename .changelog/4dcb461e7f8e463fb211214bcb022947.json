@@ -1,0 +1,8 @@
+{
+    "id": "4dcb461e-7f8e-463f-b211-214bcb022947",
+    "type": "feature",
+    "description": "Enablement for ALB and Bedrock Knowledge Base logs via Observability Admin Telemetry Rule for account and organization level",
+    "modules": [
+        "service/observabilityadmin"
+    ]
+}

@@ -94,6 +94,12 @@ type CreateComputeNodeGroupInput struct {
 	// specify a client token, the CLI and SDK automatically generate 1 for you.
 	ClientToken *string
 
+	// The lifecycle actions to run on compute nodes in the compute node group. Use
+	// lifecycle actions to run custom scripts at defined stages of a compute node's
+	// lifecycle, such as when a compute node finishes bootstrapping or becomes ready
+	// to accept jobs.
+	NodeLifecycleActions *types.NodeLifecycleActionsRequest
+
 	// Specifies how EC2 instances are purchased on your behalf. PCS supports
 	// On-Demand Instances, Spot Instances, Interruptible Capacity Reservations,
 	// On-Demand Capacity Reservations, and Amazon EC2 Capacity Blocks for ML. For more

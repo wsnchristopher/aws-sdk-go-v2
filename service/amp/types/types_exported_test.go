@@ -53,6 +53,9 @@ func ExampleDestination_outputUsage() {
 	case *types.DestinationMemberAmpConfiguration:
 		_ = v.Value // Value is types.AmpConfiguration
 
+	case *types.DestinationMemberCloudWatchConfiguration:
+		_ = v.Value // Value is types.CloudWatchConfiguration
+
 	case *types.UnknownUnionMember:
 		fmt.Println("unknown tag:", v.Tag)
 
@@ -62,6 +65,7 @@ func ExampleDestination_outputUsage() {
 	}
 }
 
+var _ *types.CloudWatchConfiguration
 var _ *types.AmpConfiguration
 
 func ExampleIgnoreNearExpected_outputUsage() {

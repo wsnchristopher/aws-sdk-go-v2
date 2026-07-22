@@ -4,6 +4,7 @@ package arcregionswitch
 
 import (
 	"context"
+	"fmt"
 	"github.com/aws/aws-sdk-go-v2/service/arcregionswitch/types"
 	"github.com/aws/smithy-go/middleware"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
@@ -47,6 +48,15 @@ type StartPlanExecutionInput struct {
 	//
 	// This member is required.
 	TargetRegion *string
+
+	// A unique, case-sensitive identifier to ensure that the operation completes no
+	// more than one time. If this token matches a previous request, the service
+	// ignores the request and returns the result of the original successful request.
+	// If you don't provide a client token, the service automatically generates one.
+	// For more information about idempotency, see [Making retries safe with idempotent APIs].
+	//
+	// [Making retries safe with idempotent APIs]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+	ClientToken *string
 
 	// An optional comment explaining why the plan execution is being started.
 	Comment *string
@@ -127,6 +137,9 @@ func (c *Client) addOperationStartPlanExecutionMiddlewares(stack *middleware.Sta
 	if err = addCredentialSource(stack, options); err != nil {
 		return err
 	}
+	if err = addIdempotencyToken_opStartPlanExecutionMiddleware(stack, options); err != nil {
+		return err
+	}
 	if err = addOpStartPlanExecutionValidationMiddleware(stack); err != nil {
 		return err
 	}
@@ -149,4 +162,37 @@ func (c *Client) addOperationStartPlanExecutionMiddlewares(stack *middleware.Sta
 		return err
 	}
 	return nil
+}
+
+type idempotencyToken_initializeOpStartPlanExecution struct {
+	tokenProvider IdempotencyTokenProvider
+}
+
+func (*idempotencyToken_initializeOpStartPlanExecution) ID() string {
+	return "OperationIdempotencyTokenAutoFill"
+}
+
+func (m *idempotencyToken_initializeOpStartPlanExecution) HandleInitialize(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
+	out middleware.InitializeOutput, metadata middleware.Metadata, err error,
+) {
+	if m.tokenProvider == nil {
+		return next.HandleInitialize(ctx, in)
+	}
+
+	input, ok := in.Parameters.(*StartPlanExecutionInput)
+	if !ok {
+		return out, metadata, fmt.Errorf("expected middleware input to be of type *StartPlanExecutionInput ")
+	}
+
+	if input.ClientToken == nil {
+		t, err := m.tokenProvider.GetIdempotencyToken()
+		if err != nil {
+			return out, metadata, err
+		}
+		input.ClientToken = &t
+	}
+	return next.HandleInitialize(ctx, in)
+}
+func addIdempotencyToken_opStartPlanExecutionMiddleware(stack *middleware.Stack, cfg Options) error {
+	return stack.Initialize.Add(&idempotencyToken_initializeOpStartPlanExecution{tokenProvider: cfg.IdempotencyTokenProvider}, middleware.Before)
 }

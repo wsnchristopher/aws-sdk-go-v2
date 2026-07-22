@@ -64,6 +64,12 @@ type UpdateComputeNodeGroupInput struct {
 	// [IAM instance profiles for PCS]: https://docs.aws.amazon.com/pcs/latest/userguide/security-instance-profiles.html
 	IamInstanceProfileArn *string
 
+	// The lifecycle actions to run on compute nodes in the compute node group. Use
+	// lifecycle actions to run custom scripts at defined stages of a compute node's
+	// lifecycle, such as when a compute node finishes bootstrapping or becomes ready
+	// to accept jobs.
+	NodeLifecycleActions *types.UpdateNodeLifecycleActionsRequest
+
 	// Specifies how EC2 instances are purchased on your behalf. PCS supports
 	// On-Demand Instances, Spot Instances, Interruptible Capacity Reservations,
 	// On-Demand Capacity Reservations, and Amazon EC2 Capacity Blocks for ML. For more

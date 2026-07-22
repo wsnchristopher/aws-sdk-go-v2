@@ -44,7 +44,8 @@ type UpdateScraperInput struct {
 	// request. Case-sensitive.
 	ClientToken *string
 
-	// The new Amazon Managed Service for Prometheus workspace to send metrics to.
+	// The new destination where the scraper sends metrics. Valid destinations are
+	// Amazon Managed Service for Prometheus workspaces and CloudWatch datasets.
 	Destination types.Destination
 
 	// Use this structure to enable cross-account access, so that you can use a target

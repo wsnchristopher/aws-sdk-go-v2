@@ -3953,6 +3953,18 @@ func awsRestjson1_serializeDocumentAnomalyDetectorMissingDataAction(v types.Anom
 	return nil
 }
 
+func awsRestjson1_serializeDocumentCloudWatchConfiguration(v *types.CloudWatchConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.DatasetArn != nil {
+		ok := object.Key("datasetArn")
+		ok.String(*v.DatasetArn)
+	}
+
+	return nil
+}
+
 func awsRestjson1_serializeDocumentCloudWatchLogDestination(v *types.CloudWatchLogDestination, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -3987,6 +3999,12 @@ func awsRestjson1_serializeDocumentDestination(v types.Destination, value smithy
 	case *types.DestinationMemberAmpConfiguration:
 		av := object.Key("ampConfiguration")
 		if err := awsRestjson1_serializeDocumentAmpConfiguration(&uv.Value, av); err != nil {
+			return err
+		}
+
+	case *types.DestinationMemberCloudWatchConfiguration:
+		av := object.Key("cloudWatchConfiguration")
+		if err := awsRestjson1_serializeDocumentCloudWatchConfiguration(&uv.Value, av); err != nil {
 			return err
 		}
 

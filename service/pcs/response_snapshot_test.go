@@ -276,6 +276,71 @@ func TestCheckResponseSnapshot_CreateComputeNodeGroup(t *testing.T) {
 					},
 				},
 			},
+			NodeLifecycleActions: &types.NodeLifecycleActions{
+				Stages: &types.NodeLifecycleStages{
+					NodeBootstrapped: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+					NodeReady: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+				},
+				ScriptCachingPolicy: types.ScriptCachingPolicy("CACHE_ONCE"),
+			},
 			ErrorInfo: []types.ErrorInfo{
 				{
 					Code:    ptr.String("__Code__"),
@@ -590,6 +655,71 @@ func TestCheckResponseSnapshot_GetComputeNodeGroup(t *testing.T) {
 					},
 				},
 			},
+			NodeLifecycleActions: &types.NodeLifecycleActions{
+				Stages: &types.NodeLifecycleStages{
+					NodeBootstrapped: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+					NodeReady: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+				},
+				ScriptCachingPolicy: types.ScriptCachingPolicy("CACHE_ONCE"),
+			},
 			ErrorInfo: []types.ErrorInfo{
 				{
 					Code:    ptr.String("__Code__"),
@@ -842,6 +972,74 @@ func TestCheckResponseSnapshot_RegisterComputeNodeGroupInstance(t *testing.T) {
 				Port:             ptr.String("__Port__"),
 			},
 		},
+		ClusterName:          ptr.String("__ClusterName__"),
+		ComputeNodeGroupId:   ptr.String("__ComputeNodeGroupId__"),
+		ComputeNodeGroupName: ptr.String("__ComputeNodeGroupName__"),
+		NodeLifecycleActions: &types.NodeLifecycleActions{
+			Stages: &types.NodeLifecycleStages{
+				NodeBootstrapped: []types.NodeLifecycleScript{
+					{
+						Name: ptr.String("__Name__"),
+						ScriptSource: &types.ScriptSource{
+							ScriptLocation: ptr.String("__ScriptLocation__"),
+							S3VersionId:    ptr.String("__S3VersionId__"),
+							Checksum:       ptr.String("__Checksum__"),
+						},
+						Arguments: []string{
+							"__Member__",
+							"__Member__",
+						},
+						OnError:         types.OnError("TERMINATE"),
+						ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+					},
+					{
+						Name: ptr.String("__Name__"),
+						ScriptSource: &types.ScriptSource{
+							ScriptLocation: ptr.String("__ScriptLocation__"),
+							S3VersionId:    ptr.String("__S3VersionId__"),
+							Checksum:       ptr.String("__Checksum__"),
+						},
+						Arguments: []string{
+							"__Member__",
+							"__Member__",
+						},
+						OnError:         types.OnError("TERMINATE"),
+						ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+					},
+				},
+				NodeReady: []types.NodeLifecycleScript{
+					{
+						Name: ptr.String("__Name__"),
+						ScriptSource: &types.ScriptSource{
+							ScriptLocation: ptr.String("__ScriptLocation__"),
+							S3VersionId:    ptr.String("__S3VersionId__"),
+							Checksum:       ptr.String("__Checksum__"),
+						},
+						Arguments: []string{
+							"__Member__",
+							"__Member__",
+						},
+						OnError:         types.OnError("TERMINATE"),
+						ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+					},
+					{
+						Name: ptr.String("__Name__"),
+						ScriptSource: &types.ScriptSource{
+							ScriptLocation: ptr.String("__ScriptLocation__"),
+							S3VersionId:    ptr.String("__S3VersionId__"),
+							Checksum:       ptr.String("__Checksum__"),
+						},
+						Arguments: []string{
+							"__Member__",
+							"__Member__",
+						},
+						OnError:         types.OnError("TERMINATE"),
+						ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+					},
+				},
+			},
+			ScriptCachingPolicy: types.ScriptCachingPolicy("CACHE_ONCE"),
+		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("RegisterComputeNodeGroupInstance.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -1066,6 +1264,71 @@ func TestCheckResponseSnapshot_UpdateComputeNodeGroup(t *testing.T) {
 						ParameterValue: ptr.String("__ParameterValue__"),
 					},
 				},
+			},
+			NodeLifecycleActions: &types.NodeLifecycleActions{
+				Stages: &types.NodeLifecycleStages{
+					NodeBootstrapped: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+					NodeReady: []types.NodeLifecycleScript{
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+						{
+							Name: ptr.String("__Name__"),
+							ScriptSource: &types.ScriptSource{
+								ScriptLocation: ptr.String("__ScriptLocation__"),
+								S3VersionId:    ptr.String("__S3VersionId__"),
+								Checksum:       ptr.String("__Checksum__"),
+							},
+							Arguments: []string{
+								"__Member__",
+								"__Member__",
+							},
+							OnError:         types.OnError("TERMINATE"),
+							ExecutionPolicy: types.ExecutionPolicy("FIRST_BOOT_ONLY"),
+						},
+					},
+				},
+				ScriptCachingPolicy: types.ScriptCachingPolicy("CACHE_ONCE"),
 			},
 			ErrorInfo: []types.ErrorInfo{
 				{

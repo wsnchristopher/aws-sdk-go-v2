@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/guardduty/types"
 	"github.com/aws/smithy-go/middleware"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
+	"time"
 )
 
 // Returns the details of the filter specified by the filter name.
@@ -63,6 +64,11 @@ type GetFilterOutput struct {
 	// This member is required.
 	Name *string
 
+	// The timestamp when the filter was created. This field is not available for
+	// filters that were created before the lifecycle metadata feature was enabled
+	// (legacy filters).
+	CreatedAt *time.Time
+
 	// The description of the filter.
 	Description *string
 
@@ -72,6 +78,16 @@ type GetFilterOutput struct {
 
 	// The tags of the filter resource.
 	Tags map[string]string
+
+	// The timestamp when the filter was last updated. For legacy filters, this field
+	// is present only after the filter has been updated at least once since the
+	// lifecycle metadata feature was enabled.
+	UpdatedAt *time.Time
+
+	// The version of the filter. Every time the filter is updated, the version
+	// increments by 1. This field is not available for legacy filters that were
+	// created before the lifecycle metadata feature was enabled.
+	Version *int64
 
 	// Metadata pertaining to the operation's result.
 	ResultMetadata middleware.Metadata

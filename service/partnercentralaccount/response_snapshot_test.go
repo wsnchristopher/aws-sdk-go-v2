@@ -723,6 +723,107 @@ func TestCheckResponseSnapshot_GetProfileVisibility(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_GetQualificationsAssociationDetails(t *testing.T) {
+	want := &GetQualificationsAssociationDetailsOutput{
+		Catalog: ptr.String("__Catalog__"),
+		Arn:     ptr.String("__Arn__"),
+		Id:      ptr.String("__Id__"),
+		Status:  types.QualificationsAssociationStatus("ASSOCIATED"),
+		PrimaryPartner: &types.QualificationsAssociationPartner{
+			ProfileId: ptr.String("__ProfileId__"),
+			AccountId: ptr.String("__AccountId__"),
+		},
+		AssociatedPartners: []types.QualificationsAssociationPartner{
+			{
+				ProfileId: ptr.String("__ProfileId__"),
+				AccountId: ptr.String("__AccountId__"),
+			},
+			{
+				ProfileId: ptr.String("__ProfileId__"),
+				AccountId: ptr.String("__AccountId__"),
+			},
+		},
+		UpdatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("GetQualificationsAssociationDetails.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.GetQualificationsAssociationDetails(context.Background(), &GetQualificationsAssociationDetailsInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "GetQualificationsAssociationDetails.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_GetQualificationsAssociationTask(t *testing.T) {
+	want := &GetQualificationsAssociationTaskOutput{
+		Catalog: ptr.String("__Catalog__"),
+		Arn:     ptr.String("__Arn__"),
+		Id:      ptr.String("__Id__"),
+		TaskId:  ptr.String("__TaskId__"),
+		Status:  types.QualificationsAssociationTaskStatus("IN_PROGRESS"),
+		PrimaryPartner: &types.QualificationsAssociationPartner{
+			ProfileId: ptr.String("__ProfileId__"),
+			AccountId: ptr.String("__AccountId__"),
+		},
+		StartedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		EndedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("GetQualificationsAssociationTask.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.GetQualificationsAssociationTask(context.Background(), &GetQualificationsAssociationTaskInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "GetQualificationsAssociationTask.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_GetQualificationsDisassociationTask(t *testing.T) {
+	want := &GetQualificationsDisassociationTaskOutput{
+		Catalog: ptr.String("__Catalog__"),
+		Arn:     ptr.String("__Arn__"),
+		Id:      ptr.String("__Id__"),
+		TaskId:  ptr.String("__TaskId__"),
+		Status:  types.QualificationsDisassociationTaskStatus("IN_PROGRESS"),
+		AssociatedPartner: &types.QualificationsAssociationPartner{
+			ProfileId: ptr.String("__ProfileId__"),
+			AccountId: ptr.String("__AccountId__"),
+		},
+		StartedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		EndedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("GetQualificationsDisassociationTask.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.GetQualificationsDisassociationTask(context.Background(), &GetQualificationsDisassociationTaskInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "GetQualificationsDisassociationTask.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_GetVerification(t *testing.T) {
 	want := &GetVerificationOutput{
 		VerificationType:         types.VerificationType("BUSINESS_VERIFICATION"),
@@ -1107,6 +1208,66 @@ func TestCheckResponseSnapshot_StartProfileUpdateTask(t *testing.T) {
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("response snapshot mismatch for %s: %v", "StartProfileUpdateTask.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_StartQualificationsAssociationTask(t *testing.T) {
+	want := &StartQualificationsAssociationTaskOutput{
+		Catalog: ptr.String("__Catalog__"),
+		Arn:     ptr.String("__Arn__"),
+		Id:      ptr.String("__Id__"),
+		TaskId:  ptr.String("__TaskId__"),
+		Status:  types.QualificationsAssociationTaskStatus("IN_PROGRESS"),
+		PrimaryPartner: &types.QualificationsAssociationPartner{
+			ProfileId: ptr.String("__ProfileId__"),
+			AccountId: ptr.String("__AccountId__"),
+		},
+		StartedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("StartQualificationsAssociationTask.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.StartQualificationsAssociationTask(context.Background(), &StartQualificationsAssociationTaskInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "StartQualificationsAssociationTask.response", err)
+	}
+}
+
+func TestCheckResponseSnapshot_StartQualificationsDisassociationTask(t *testing.T) {
+	want := &StartQualificationsDisassociationTaskOutput{
+		Catalog: ptr.String("__Catalog__"),
+		Arn:     ptr.String("__Arn__"),
+		Id:      ptr.String("__Id__"),
+		TaskId:  ptr.String("__TaskId__"),
+		Status:  types.QualificationsDisassociationTaskStatus("IN_PROGRESS"),
+		AssociatedPartner: &types.QualificationsAssociationPartner{
+			ProfileId: ptr.String("__ProfileId__"),
+			AccountId: ptr.String("__AccountId__"),
+		},
+		StartedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+	}
+	status, header, body, err := serdeRespReadSnapshot("StartQualificationsDisassociationTask.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.StartQualificationsDisassociationTask(context.Background(), &StartQualificationsDisassociationTaskInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "StartQualificationsDisassociationTask.response", err)
 	}
 }
 

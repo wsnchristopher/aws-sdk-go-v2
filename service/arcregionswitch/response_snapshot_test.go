@@ -1795,6 +1795,33 @@ func TestCheckResponseSnapshot_Error_AccessDeniedException(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_Error_ConflictException(t *testing.T) {
+	want := &types.ConflictException{
+		Message:      ptr.String("__Message__"),
+		ResourceId:   ptr.String("__ResourceId__"),
+		ResourceType: ptr.String("__ResourceType__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ConflictException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.StartPlanExecution(context.Background(), &StartPlanExecutionInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.ConflictException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.ConflictException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "ConflictException.error", err)
+	}
+}
+
 func TestCheckResponseSnapshot_Error_IllegalArgumentException(t *testing.T) {
 	want := &types.IllegalArgumentException{
 		Message: ptr.String("__Message__"),

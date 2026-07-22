@@ -2018,6 +2018,50 @@ func deserializeCBOR_AuroraServerlessScalingConfiguration(v smithycbor.Value) (*
 	return ds, nil
 }
 
+func deserializeCBOR_ConflictException(v smithycbor.Value) (*types.ConflictException, error) {
+	av, ok := v.(smithycbor.Map)
+	if !ok {
+		return nil, fmt.Errorf("unexpected value type %T", v)
+	}
+	ds := &types.ConflictException{}
+	for key, sv := range av {
+		_, _ = key, sv
+		if key == "message" {
+			if _, ok := sv.(*smithycbor.Nil); ok {
+				continue
+			}
+			dv, err := deserializeCBOR_String(sv)
+			if err != nil {
+				return nil, err
+			}
+			ds.Message = ptr.String(dv)
+		}
+
+		if key == "resourceId" {
+			if _, ok := sv.(*smithycbor.Nil); ok {
+				continue
+			}
+			dv, err := deserializeCBOR_String(sv)
+			if err != nil {
+				return nil, err
+			}
+			ds.ResourceId = ptr.String(dv)
+		}
+
+		if key == "resourceType" {
+			if _, ok := sv.(*smithycbor.Nil); ok {
+				continue
+			}
+			dv, err := deserializeCBOR_String(sv)
+			if err != nil {
+				return nil, err
+			}
+			ds.ResourceType = ptr.String(dv)
+		}
+	}
+	return ds, nil
+}
+
 func deserializeCBOR_CustomActionLambdaConfiguration(v smithycbor.Value) (*types.CustomActionLambdaConfiguration, error) {
 	av, ok := v.(smithycbor.Map)
 	if !ok {
@@ -6661,6 +6705,16 @@ func rpc2_deserializeOpErrorStartPlanExecution(resp *smithyhttp.Response) error 
 		if err != nil {
 			return &smithy.DeserializationError{
 				Err:      fmt.Errorf("deserialize com.amazonaws.arcregionswitch#AccessDeniedException: %w", err),
+				Snapshot: payload,
+			}
+		}
+
+		return verr
+	case "ConflictException":
+		verr, err := deserializeCBOR_ConflictException(v)
+		if err != nil {
+			return &smithy.DeserializationError{
+				Err:      fmt.Errorf("deserialize com.amazonaws.arcregionswitch#ConflictException: %w", err),
 				Snapshot: payload,
 			}
 		}

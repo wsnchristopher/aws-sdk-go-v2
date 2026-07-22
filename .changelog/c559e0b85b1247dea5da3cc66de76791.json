@@ -1,0 +1,8 @@
+{
+    "id": "c559e0b8-5b12-47de-a5da-3cc66de76791",
+    "type": "feature",
+    "description": "AWS PCS Node Lifecycle Actions provides a structured way to run custom scripts at defined points in a compute node's lifecycle directly through the AWS PCS compute node group API.",
+    "modules": [
+        "service/pcs"
+    ]
+}

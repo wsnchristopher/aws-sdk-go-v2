@@ -3243,6 +3243,11 @@ func awsAwsjson10_deserializeDocumentComputeNodeGroup(v **types.ComputeNodeGroup
 				sv.Name = ptr.String(jtv)
 			}
 
+		case "nodeLifecycleActions":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleActions(&sv.NodeLifecycleActions, value); err != nil {
+				return err
+			}
+
 		case "purchaseOption":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -4098,6 +4103,230 @@ func awsAwsjson10_deserializeDocumentNetworking(v **types.Networking, value inte
 	return nil
 }
 
+func awsAwsjson10_deserializeDocumentNodeLifecycleActions(v **types.NodeLifecycleActions, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.NodeLifecycleActions
+	if *v == nil {
+		sv = &types.NodeLifecycleActions{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "scriptCachingPolicy":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected ScriptCachingPolicy to be of type string, got %T instead", value)
+				}
+				sv.ScriptCachingPolicy = types.ScriptCachingPolicy(jtv)
+			}
+
+		case "stages":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleStages(&sv.Stages, value); err != nil {
+				return err
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
+func awsAwsjson10_deserializeDocumentNodeLifecycleScript(v **types.NodeLifecycleScript, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.NodeLifecycleScript
+	if *v == nil {
+		sv = &types.NodeLifecycleScript{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "arguments":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleScriptArguments(&sv.Arguments, value); err != nil {
+				return err
+			}
+
+		case "executionPolicy":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected ExecutionPolicy to be of type string, got %T instead", value)
+				}
+				sv.ExecutionPolicy = types.ExecutionPolicy(jtv)
+			}
+
+		case "name":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.Name = ptr.String(jtv)
+			}
+
+		case "onError":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OnError to be of type string, got %T instead", value)
+				}
+				sv.OnError = types.OnError(jtv)
+			}
+
+		case "scriptSource":
+			if err := awsAwsjson10_deserializeDocumentScriptSource(&sv.ScriptSource, value); err != nil {
+				return err
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
+func awsAwsjson10_deserializeDocumentNodeLifecycleScriptArguments(v *[]string, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.([]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var cv []string
+	if *v == nil {
+		cv = []string{}
+	} else {
+		cv = *v
+	}
+
+	for _, value := range shape {
+		var col string
+		if value != nil {
+			jtv, ok := value.(string)
+			if !ok {
+				return fmt.Errorf("expected NodeLifecycleScriptArgument to be of type string, got %T instead", value)
+			}
+			col = jtv
+		}
+		cv = append(cv, col)
+
+	}
+	*v = cv
+	return nil
+}
+
+func awsAwsjson10_deserializeDocumentNodeLifecycleScriptList(v *[]types.NodeLifecycleScript, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.([]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var cv []types.NodeLifecycleScript
+	if *v == nil {
+		cv = []types.NodeLifecycleScript{}
+	} else {
+		cv = *v
+	}
+
+	for _, value := range shape {
+		var col types.NodeLifecycleScript
+		destAddr := &col
+		if err := awsAwsjson10_deserializeDocumentNodeLifecycleScript(&destAddr, value); err != nil {
+			return err
+		}
+		col = *destAddr
+		cv = append(cv, col)
+
+	}
+	*v = cv
+	return nil
+}
+
+func awsAwsjson10_deserializeDocumentNodeLifecycleStages(v **types.NodeLifecycleStages, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.NodeLifecycleStages
+	if *v == nil {
+		sv = &types.NodeLifecycleStages{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "nodeBootstrapped":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleScriptList(&sv.NodeBootstrapped, value); err != nil {
+				return err
+			}
+
+		case "nodeReady":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleScriptList(&sv.NodeReady, value); err != nil {
+				return err
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsAwsjson10_deserializeDocumentQueue(v **types.Queue, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -4576,6 +4805,64 @@ func awsAwsjson10_deserializeDocumentScheduler(v **types.Scheduler, value interf
 					return fmt.Errorf("expected String to be of type string, got %T instead", value)
 				}
 				sv.Version = ptr.String(jtv)
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
+func awsAwsjson10_deserializeDocumentScriptSource(v **types.ScriptSource, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.ScriptSource
+	if *v == nil {
+		sv = &types.ScriptSource{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "checksum":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.Checksum = ptr.String(jtv)
+			}
+
+		case "s3VersionId":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.S3VersionId = ptr.String(jtv)
+			}
+
+		case "scriptLocation":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.ScriptLocation = ptr.String(jtv)
 			}
 
 		default:
@@ -5722,6 +6009,33 @@ func awsAwsjson10_deserializeOpDocumentRegisterComputeNodeGroupInstanceOutput(v 
 
 	for key, value := range shape {
 		switch key {
+		case "clusterName":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.ClusterName = ptr.String(jtv)
+			}
+
+		case "computeNodeGroupId":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.ComputeNodeGroupId = ptr.String(jtv)
+			}
+
+		case "computeNodeGroupName":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected String to be of type string, got %T instead", value)
+				}
+				sv.ComputeNodeGroupName = ptr.String(jtv)
+			}
+
 		case "endpoints":
 			if err := awsAwsjson10_deserializeDocumentEndpoints(&sv.Endpoints, value); err != nil {
 				return err
@@ -5734,6 +6048,11 @@ func awsAwsjson10_deserializeOpDocumentRegisterComputeNodeGroupInstanceOutput(v 
 					return fmt.Errorf("expected String to be of type string, got %T instead", value)
 				}
 				sv.NodeID = ptr.String(jtv)
+			}
+
+		case "nodeLifecycleActions":
+			if err := awsAwsjson10_deserializeDocumentNodeLifecycleActions(&sv.NodeLifecycleActions, value); err != nil {
+				return err
 			}
 
 		case "sharedSecret":

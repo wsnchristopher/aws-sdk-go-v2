@@ -7840,6 +7840,46 @@ func awsRestjson1_deserializeDocumentAnomalyDetectorSummaryList(v *[]types.Anoma
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentCloudWatchConfiguration(v **types.CloudWatchConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.CloudWatchConfiguration
+	if *v == nil {
+		sv = &types.CloudWatchConfiguration{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "datasetArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CloudWatchDatasetArn to be of type string, got %T instead", value)
+				}
+				sv.DatasetArn = ptr.String(jtv)
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentCloudWatchLogDestination(v **types.CloudWatchLogDestination, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -8002,6 +8042,16 @@ loop:
 			}
 			mv = *destAddr
 			uv = &types.DestinationMemberAmpConfiguration{Value: mv}
+			break loop
+
+		case "cloudWatchConfiguration":
+			var mv types.CloudWatchConfiguration
+			destAddr := &mv
+			if err := awsRestjson1_deserializeDocumentCloudWatchConfiguration(&destAddr, value); err != nil {
+				return err
+			}
+			mv = *destAddr
+			uv = &types.DestinationMemberCloudWatchConfiguration{Value: mv}
 			break loop
 
 		default:

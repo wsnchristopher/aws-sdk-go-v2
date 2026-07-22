@@ -1,0 +1,8 @@
+{
+    "id": "70bcfb04-5397-470d-981f-98120f603c6b",
+    "type": "feature",
+    "description": "Add CloudWatch dataset destinations for Amazon Managed Service for Prometheus collectors.",
+    "modules": [
+        "service/amp"
+    ]
+}

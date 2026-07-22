@@ -216,6 +216,19 @@ type AnomalyDetectorSummary struct {
 	noSmithyDocumentSerde
 }
 
+// The configuration identifies the CloudWatch dataset used as a scraper
+// destination.
+type CloudWatchConfiguration struct {
+
+	// The Amazon Resource Name (ARN) of the CloudWatch dataset. To use the default
+	// dataset, specify arn:aws:cloudwatch:<region>:<account-id>:dataset/default .
+	//
+	// This member is required.
+	DatasetArn *string
+
+	noSmithyDocumentSerde
+}
+
 // Configuration details for logging to CloudWatch Logs.
 type CloudWatchLogDestination struct {
 
@@ -242,6 +255,7 @@ type ComponentConfig struct {
 // The following types satisfy this interface:
 //
 //	DestinationMemberAmpConfiguration
+//	DestinationMemberCloudWatchConfiguration
 type Destination interface {
 	isDestination()
 }
@@ -254,6 +268,15 @@ type DestinationMemberAmpConfiguration struct {
 }
 
 func (*DestinationMemberAmpConfiguration) isDestination() {}
+
+// The CloudWatch dataset to send metrics to.
+type DestinationMemberCloudWatchConfiguration struct {
+	Value CloudWatchConfiguration
+
+	noSmithyDocumentSerde
+}
+
+func (*DestinationMemberCloudWatchConfiguration) isDestination() {}
 
 // The EksConfiguration structure describes the connection to the Amazon EKS
 // cluster from which a scraper collects metrics.
@@ -675,8 +698,8 @@ type ScraperDescription struct {
 	// This member is required.
 	CreatedAt *time.Time
 
-	// The Amazon Managed Service for Prometheus workspace the scraper sends metrics
-	// to.
+	// The destination where the scraper sends metrics. Valid destinations are Amazon
+	// Managed Service for Prometheus workspaces and CloudWatch datasets.
 	//
 	// This member is required.
 	Destination Destination
@@ -788,8 +811,8 @@ type ScraperSummary struct {
 	// This member is required.
 	CreatedAt *time.Time
 
-	// The Amazon Managed Service for Prometheus workspace the scraper sends metrics
-	// to.
+	// The destination where the scraper sends metrics. Valid destinations are Amazon
+	// Managed Service for Prometheus workspaces and CloudWatch datasets.
 	//
 	// This member is required.
 	Destination Destination

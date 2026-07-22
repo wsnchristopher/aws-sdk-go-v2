@@ -1167,6 +1167,9 @@ func TestCheckResponseSnapshot_GetFilter(t *testing.T) {
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
+		CreatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		UpdatedAt: ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		Version:   ptr.Int64(1),
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetFilter.response")
 	if errors.Is(err, fs.ErrNotExist) {

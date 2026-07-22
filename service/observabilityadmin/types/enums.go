@@ -192,6 +192,9 @@ const (
 	LogTypeAccess          LogType = "ACCESS_LOGS"
 	LogTypeConnection      LogType = "CONNECTION_LOGS"
 	LogTypeS3ServerAccess  LogType = "S3_SERVER_ACCESS_LOGS"
+	LogTypeAlbAccess       LogType = "ALB_ACCESS_LOGS"
+	LogTypeAlbConnection   LogType = "ALB_CONNECTION_LOGS"
+	LogTypeAlbHealthCheck  LogType = "ALB_HEALTH_CHECK_LOGS"
 )
 
 // Values returns all known values for LogType. Note that this can be expanded in
@@ -206,6 +209,9 @@ func (LogType) Values() []LogType {
 		"ACCESS_LOGS",
 		"CONNECTION_LOGS",
 		"S3_SERVER_ACCESS_LOGS",
+		"ALB_ACCESS_LOGS",
+		"ALB_CONNECTION_LOGS",
+		"ALB_HEALTH_CHECK_LOGS",
 	}
 }
 
@@ -294,6 +300,7 @@ const (
 	ResourceTypeAwsOtelEnrichment                   ResourceType = "AWS::CloudWatch::OTelEnrichment"
 	ResourceTypeAwsMskCluster                       ResourceType = "AWS::MSK::Cluster"
 	ResourceTypeAwsS3Bucket                         ResourceType = "AWS::S3::Bucket"
+	ResourceTypeAwsBedrockKnowledgebase             ResourceType = "AWS::Bedrock::KnowledgeBase"
 )
 
 // Values returns all known values for ResourceType. Note that this can be
@@ -322,6 +329,7 @@ func (ResourceType) Values() []ResourceType {
 		"AWS::CloudWatch::OTelEnrichment",
 		"AWS::MSK::Cluster",
 		"AWS::S3::Bucket",
+		"AWS::Bedrock::KnowledgeBase",
 	}
 }
 

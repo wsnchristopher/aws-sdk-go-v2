@@ -1380,6 +1380,106 @@ func awsAwsjson10_serializeDocumentNetworkingRequest(v *types.NetworkingRequest,
 	return nil
 }
 
+func awsAwsjson10_serializeDocumentNodeLifecycleActionsRequest(v *types.NodeLifecycleActionsRequest, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if len(v.ScriptCachingPolicy) > 0 {
+		ok := object.Key("scriptCachingPolicy")
+		ok.String(string(v.ScriptCachingPolicy))
+	}
+
+	if v.Stages != nil {
+		ok := object.Key("stages")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleStages(v.Stages, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func awsAwsjson10_serializeDocumentNodeLifecycleScript(v *types.NodeLifecycleScript, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.Arguments != nil {
+		ok := object.Key("arguments")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleScriptArguments(v.Arguments, ok); err != nil {
+			return err
+		}
+	}
+
+	if len(v.ExecutionPolicy) > 0 {
+		ok := object.Key("executionPolicy")
+		ok.String(string(v.ExecutionPolicy))
+	}
+
+	if v.Name != nil {
+		ok := object.Key("name")
+		ok.String(*v.Name)
+	}
+
+	if len(v.OnError) > 0 {
+		ok := object.Key("onError")
+		ok.String(string(v.OnError))
+	}
+
+	if v.ScriptSource != nil {
+		ok := object.Key("scriptSource")
+		if err := awsAwsjson10_serializeDocumentScriptSource(v.ScriptSource, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func awsAwsjson10_serializeDocumentNodeLifecycleScriptArguments(v []string, value smithyjson.Value) error {
+	array := value.Array()
+	defer array.Close()
+
+	for i := range v {
+		av := array.Value()
+		av.String(v[i])
+	}
+	return nil
+}
+
+func awsAwsjson10_serializeDocumentNodeLifecycleScriptList(v []types.NodeLifecycleScript, value smithyjson.Value) error {
+	array := value.Array()
+	defer array.Close()
+
+	for i := range v {
+		av := array.Value()
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleScript(&v[i], av); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func awsAwsjson10_serializeDocumentNodeLifecycleStages(v *types.NodeLifecycleStages, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.NodeBootstrapped != nil {
+		ok := object.Key("nodeBootstrapped")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleScriptList(v.NodeBootstrapped, ok); err != nil {
+			return err
+		}
+	}
+
+	if v.NodeReady != nil {
+		ok := object.Key("nodeReady")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleScriptList(v.NodeReady, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func awsAwsjson10_serializeDocumentQueueSlurmConfigurationRequest(v *types.QueueSlurmConfigurationRequest, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -1434,6 +1534,28 @@ func awsAwsjson10_serializeDocumentSchedulerRequest(v *types.SchedulerRequest, v
 	if v.Version != nil {
 		ok := object.Key("version")
 		ok.String(*v.Version)
+	}
+
+	return nil
+}
+
+func awsAwsjson10_serializeDocumentScriptSource(v *types.ScriptSource, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.Checksum != nil {
+		ok := object.Key("checksum")
+		ok.String(*v.Checksum)
+	}
+
+	if v.S3VersionId != nil {
+		ok := object.Key("s3VersionId")
+		ok.String(*v.S3VersionId)
+	}
+
+	if v.ScriptLocation != nil {
+		ok := object.Key("scriptLocation")
+		ok.String(*v.ScriptLocation)
 	}
 
 	return nil
@@ -1650,6 +1772,25 @@ func awsAwsjson10_serializeDocumentUpdateComputeNodeGroupSlurmConfigurationReque
 	return nil
 }
 
+func awsAwsjson10_serializeDocumentUpdateNodeLifecycleActionsRequest(v *types.UpdateNodeLifecycleActionsRequest, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if len(v.ScriptCachingPolicy) > 0 {
+		ok := object.Key("scriptCachingPolicy")
+		ok.String(string(v.ScriptCachingPolicy))
+	}
+
+	if v.Stages != nil {
+		ok := object.Key("stages")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleStages(v.Stages, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func awsAwsjson10_serializeDocumentUpdateQueueSlurmConfigurationRequest(v *types.UpdateQueueSlurmConfigurationRequest, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -1777,6 +1918,13 @@ func awsAwsjson10_serializeOpDocumentCreateComputeNodeGroupInput(v *CreateComput
 	if v.InstanceConfigs != nil {
 		ok := object.Key("instanceConfigs")
 		if err := awsAwsjson10_serializeDocumentInstanceList(v.InstanceConfigs, ok); err != nil {
+			return err
+		}
+	}
+
+	if v.NodeLifecycleActions != nil {
+		ok := object.Key("nodeLifecycleActions")
+		if err := awsAwsjson10_serializeDocumentNodeLifecycleActionsRequest(v.NodeLifecycleActions, ok); err != nil {
 			return err
 		}
 	}
@@ -2167,6 +2315,13 @@ func awsAwsjson10_serializeOpDocumentUpdateComputeNodeGroupInput(v *UpdateComput
 	if v.IamInstanceProfileArn != nil {
 		ok := object.Key("iamInstanceProfileArn")
 		ok.String(*v.IamInstanceProfileArn)
+	}
+
+	if v.NodeLifecycleActions != nil {
+		ok := object.Key("nodeLifecycleActions")
+		if err := awsAwsjson10_serializeDocumentUpdateNodeLifecycleActionsRequest(v.NodeLifecycleActions, ok); err != nil {
+			return err
+		}
 	}
 
 	if len(v.PurchaseOption) > 0 {

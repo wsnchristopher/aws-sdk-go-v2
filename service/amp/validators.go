@@ -1004,6 +1004,21 @@ func validateAnomalyDetectorConfiguration(v types.AnomalyDetectorConfiguration) 
 	}
 }
 
+func validateCloudWatchConfiguration(v *types.CloudWatchConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "CloudWatchConfiguration"}
+	if v.DatasetArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("DatasetArn"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateCloudWatchLogDestination(v *types.CloudWatchLogDestination) error {
 	if v == nil {
 		return nil
@@ -1028,6 +1043,11 @@ func validateDestination(v types.Destination) error {
 	case *types.DestinationMemberAmpConfiguration:
 		if err := validateAmpConfiguration(&uv.Value); err != nil {
 			invalidParams.AddNested("[ampConfiguration]", err.(smithy.InvalidParamsError))
+		}
+
+	case *types.DestinationMemberCloudWatchConfiguration:
+		if err := validateCloudWatchConfiguration(&uv.Value); err != nil {
+			invalidParams.AddNested("[cloudWatchConfiguration]", err.(smithy.InvalidParamsError))
 		}
 
 	}

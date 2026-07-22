@@ -526,6 +526,22 @@ type PartnerSummary struct {
 	noSmithyDocumentSerde
 }
 
+// Identifies a partner in a qualifications association group. Contains the
+// partner's profile identifier and AWS account identifier. In requests, provide at
+// least one of ProfileId or AccountId . In responses, both fields are populated.
+type QualificationsAssociationPartner struct {
+
+	// The 12-digit AWS account ID linked to the partner profile. Required in requests
+	// if ProfileId is not provided.
+	AccountId *string
+
+	// The unique identifier for the partner profile, in the format pprofile-* .
+	// Required in requests if AccountId is not provided.
+	ProfileId *string
+
+	noSmithyDocumentSerde
+}
+
 // Contains the personal information required for verifying an individual's
 // identity as part of the partner registration process in AWS Partner Central.
 type RegistrantVerificationDetails struct {

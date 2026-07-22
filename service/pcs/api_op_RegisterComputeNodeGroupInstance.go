@@ -61,6 +61,19 @@ type RegisterComputeNodeGroupInstanceOutput struct {
 	// This member is required.
 	SharedSecret *string
 
+	// The name of the cluster that the compute node registered into.
+	ClusterName *string
+
+	// The ID of the compute node group that the compute node registered into.
+	ComputeNodeGroupId *string
+
+	// The name of the compute node group that the compute node registered into.
+	ComputeNodeGroupName *string
+
+	// The node lifecycle actions configured for the node group, including scripts to
+	// run when a compute node finishes bootstrapping or becomes ready to accept jobs.
+	NodeLifecycleActions *types.NodeLifecycleActions
+
 	// Metadata pertaining to the operation's result.
 	ResultMetadata middleware.Metadata
 
