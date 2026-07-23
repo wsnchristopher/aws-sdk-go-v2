@@ -8,8891 +8,8491 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/service/appstream/types"
 	smithy "github.com/aws/smithy-go"
-	"github.com/aws/smithy-go/encoding/httpbinding"
-	smithyjson "github.com/aws/smithy-go/encoding/json"
+	smithycbor "github.com/aws/smithy-go/encoding/cbor"
 	"github.com/aws/smithy-go/middleware"
 	"github.com/aws/smithy-go/tracing"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
-	"path"
+	"net/http"
 )
 
-type awsAwsjson11_serializeOpAssociateAppBlockBuilderAppBlock struct {
+type smithyRpcv2cbor_serializeOpAssociateAppBlockBuilderAppBlock struct {
 }
 
-func (*awsAwsjson11_serializeOpAssociateAppBlockBuilderAppBlock) ID() string {
+func (*smithyRpcv2cbor_serializeOpAssociateAppBlockBuilderAppBlock) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpAssociateAppBlockBuilderAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpAssociateAppBlockBuilderAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*AssociateAppBlockBuilderAppBlockInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/AssociateAppBlockBuilderAppBlock"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_AssociateAppBlockBuilderAppBlockInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.AssociateAppBlockBuilderAppBlock")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentAssociateAppBlockBuilderAppBlockInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpAssociateApplicationFleet struct {
+type smithyRpcv2cbor_serializeOpAssociateApplicationFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpAssociateApplicationFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpAssociateApplicationFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpAssociateApplicationFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpAssociateApplicationFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*AssociateApplicationFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/AssociateApplicationFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_AssociateApplicationFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.AssociateApplicationFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentAssociateApplicationFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpAssociateApplicationToEntitlement struct {
+type smithyRpcv2cbor_serializeOpAssociateApplicationToEntitlement struct {
 }
 
-func (*awsAwsjson11_serializeOpAssociateApplicationToEntitlement) ID() string {
+func (*smithyRpcv2cbor_serializeOpAssociateApplicationToEntitlement) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpAssociateApplicationToEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpAssociateApplicationToEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*AssociateApplicationToEntitlementInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/AssociateApplicationToEntitlement"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_AssociateApplicationToEntitlementInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.AssociateApplicationToEntitlement")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentAssociateApplicationToEntitlementInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpAssociateFleet struct {
+type smithyRpcv2cbor_serializeOpAssociateFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpAssociateFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpAssociateFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpAssociateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpAssociateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*AssociateFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/AssociateFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_AssociateFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.AssociateFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentAssociateFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpAssociateSoftwareToImageBuilder struct {
+type smithyRpcv2cbor_serializeOpAssociateSoftwareToImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpAssociateSoftwareToImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpAssociateSoftwareToImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpAssociateSoftwareToImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpAssociateSoftwareToImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*AssociateSoftwareToImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/AssociateSoftwareToImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_AssociateSoftwareToImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.AssociateSoftwareToImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentAssociateSoftwareToImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpBatchAssociateUserStack struct {
+type smithyRpcv2cbor_serializeOpBatchAssociateUserStack struct {
 }
 
-func (*awsAwsjson11_serializeOpBatchAssociateUserStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpBatchAssociateUserStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpBatchAssociateUserStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpBatchAssociateUserStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*BatchAssociateUserStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/BatchAssociateUserStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_BatchAssociateUserStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.BatchAssociateUserStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentBatchAssociateUserStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpBatchDisassociateUserStack struct {
+type smithyRpcv2cbor_serializeOpBatchDisassociateUserStack struct {
 }
 
-func (*awsAwsjson11_serializeOpBatchDisassociateUserStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpBatchDisassociateUserStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpBatchDisassociateUserStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpBatchDisassociateUserStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*BatchDisassociateUserStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/BatchDisassociateUserStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_BatchDisassociateUserStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.BatchDisassociateUserStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentBatchDisassociateUserStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCopyImage struct {
+type smithyRpcv2cbor_serializeOpCopyImage struct {
 }
 
-func (*awsAwsjson11_serializeOpCopyImage) ID() string {
+func (*smithyRpcv2cbor_serializeOpCopyImage) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCopyImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCopyImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CopyImageInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CopyImage"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CopyImageInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CopyImage")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCopyImageInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateAppBlock struct {
+type smithyRpcv2cbor_serializeOpCreateAppBlock struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateAppBlock) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateAppBlock) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateAppBlockInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateAppBlock"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateAppBlockInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateAppBlock")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateAppBlockInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateAppBlockBuilder struct {
+type smithyRpcv2cbor_serializeOpCreateAppBlockBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateAppBlockBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateAppBlockBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateAppBlockBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateAppBlockBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateAppBlockBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateAppBlockBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateAppBlockBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateAppBlockBuilderStreamingURL struct {
+type smithyRpcv2cbor_serializeOpCreateAppBlockBuilderStreamingURL struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateAppBlockBuilderStreamingURL) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateAppBlockBuilderStreamingURL) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateAppBlockBuilderStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateAppBlockBuilderStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateAppBlockBuilderStreamingURLInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateAppBlockBuilderStreamingURL"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateAppBlockBuilderStreamingURLInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateAppBlockBuilderStreamingURL")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateAppBlockBuilderStreamingURLInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateApplication struct {
+type smithyRpcv2cbor_serializeOpCreateApplication struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateApplication) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateApplication) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateApplicationInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateApplication"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateApplicationInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateApplication")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateApplicationInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateDirectoryConfig struct {
+type smithyRpcv2cbor_serializeOpCreateDirectoryConfig struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateDirectoryConfig) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateDirectoryConfig) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateDirectoryConfigInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateDirectoryConfig"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateDirectoryConfigInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateDirectoryConfig")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateDirectoryConfigInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateEntitlement struct {
+type smithyRpcv2cbor_serializeOpCreateEntitlement struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateEntitlement) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateEntitlement) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateEntitlementInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateEntitlement"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateEntitlementInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateEntitlement")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateEntitlementInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateExportImageTask struct {
+type smithyRpcv2cbor_serializeOpCreateExportImageTask struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateExportImageTask) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateExportImageTask) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateExportImageTask) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateExportImageTask) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateExportImageTaskInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateExportImageTask"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateExportImageTaskInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateExportImageTask")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateExportImageTaskInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateFleet struct {
+type smithyRpcv2cbor_serializeOpCreateFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateImageBuilder struct {
+type smithyRpcv2cbor_serializeOpCreateImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateImageBuilderStreamingURL struct {
+type smithyRpcv2cbor_serializeOpCreateImageBuilderStreamingURL struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateImageBuilderStreamingURL) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateImageBuilderStreamingURL) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateImageBuilderStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateImageBuilderStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateImageBuilderStreamingURLInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateImageBuilderStreamingURL"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateImageBuilderStreamingURLInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateImageBuilderStreamingURL")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateImageBuilderStreamingURLInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateImportedImage struct {
+type smithyRpcv2cbor_serializeOpCreateImportedImage struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateImportedImage) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateImportedImage) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateImportedImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateImportedImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateImportedImageInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateImportedImage"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateImportedImageInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateImportedImage")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateImportedImageInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateStack struct {
+type smithyRpcv2cbor_serializeOpCreateStack struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateStreamingURL struct {
+type smithyRpcv2cbor_serializeOpCreateStreamingURL struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateStreamingURL) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateStreamingURL) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateStreamingURL) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateStreamingURLInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateStreamingURL"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateStreamingURLInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateStreamingURL")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateStreamingURLInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateThemeForStack struct {
+type smithyRpcv2cbor_serializeOpCreateThemeForStack struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateThemeForStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateThemeForStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateThemeForStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateThemeForStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateThemeForStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateThemeForStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateThemeForStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateUpdatedImage struct {
+type smithyRpcv2cbor_serializeOpCreateUpdatedImage struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateUpdatedImage) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateUpdatedImage) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateUpdatedImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateUpdatedImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateUpdatedImageInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateUpdatedImage"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateUpdatedImageInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateUpdatedImage")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateUpdatedImageInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateUsageReportSubscription struct {
+type smithyRpcv2cbor_serializeOpCreateUsageReportSubscription struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateUsageReportSubscription) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateUsageReportSubscription) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateUsageReportSubscription) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateUsageReportSubscription) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateUsageReportSubscriptionInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateUsageReportSubscription"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateUsageReportSubscriptionInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateUsageReportSubscription")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateUsageReportSubscriptionInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpCreateUser struct {
+type smithyRpcv2cbor_serializeOpCreateUser struct {
 }
 
-func (*awsAwsjson11_serializeOpCreateUser) ID() string {
+func (*smithyRpcv2cbor_serializeOpCreateUser) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpCreateUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpCreateUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*CreateUserInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/CreateUser"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_CreateUserInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.CreateUser")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentCreateUserInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteAppBlock struct {
+type smithyRpcv2cbor_serializeOpDeleteAppBlock struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteAppBlock) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteAppBlock) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteAppBlockInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteAppBlock"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteAppBlockInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteAppBlock")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteAppBlockInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteAppBlockBuilder struct {
+type smithyRpcv2cbor_serializeOpDeleteAppBlockBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteAppBlockBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteAppBlockBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteAppBlockBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteAppBlockBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteAppBlockBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteAppBlockBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteAppBlockBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteApplication struct {
+type smithyRpcv2cbor_serializeOpDeleteApplication struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteApplication) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteApplication) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteApplicationInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteApplication"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteApplicationInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteApplication")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteApplicationInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteDirectoryConfig struct {
+type smithyRpcv2cbor_serializeOpDeleteDirectoryConfig struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteDirectoryConfig) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteDirectoryConfig) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteDirectoryConfigInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteDirectoryConfig"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteDirectoryConfigInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteDirectoryConfig")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteDirectoryConfigInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteEntitlement struct {
+type smithyRpcv2cbor_serializeOpDeleteEntitlement struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteEntitlement) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteEntitlement) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteEntitlementInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteEntitlement"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteEntitlementInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteEntitlement")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteEntitlementInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteFleet struct {
+type smithyRpcv2cbor_serializeOpDeleteFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteImage struct {
+type smithyRpcv2cbor_serializeOpDeleteImage struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteImage) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteImage) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteImage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteImageInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteImage"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteImageInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteImage")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteImageInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteImageBuilder struct {
+type smithyRpcv2cbor_serializeOpDeleteImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteImagePermissions struct {
+type smithyRpcv2cbor_serializeOpDeleteImagePermissions struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteImagePermissions) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteImagePermissions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteImagePermissionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteImagePermissions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteImagePermissionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteImagePermissions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteImagePermissionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteStack struct {
+type smithyRpcv2cbor_serializeOpDeleteStack struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteThemeForStack struct {
+type smithyRpcv2cbor_serializeOpDeleteThemeForStack struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteThemeForStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteThemeForStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteThemeForStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteThemeForStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteThemeForStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteThemeForStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteThemeForStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteUsageReportSubscription struct {
+type smithyRpcv2cbor_serializeOpDeleteUsageReportSubscription struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteUsageReportSubscription) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteUsageReportSubscription) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteUsageReportSubscription) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteUsageReportSubscription) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteUsageReportSubscriptionInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteUsageReportSubscription"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteUsageReportSubscriptionInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteUsageReportSubscription")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteUsageReportSubscriptionInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDeleteUser struct {
+type smithyRpcv2cbor_serializeOpDeleteUser struct {
 }
 
-func (*awsAwsjson11_serializeOpDeleteUser) ID() string {
+func (*smithyRpcv2cbor_serializeOpDeleteUser) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDeleteUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDeleteUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DeleteUserInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DeleteUser"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DeleteUserInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DeleteUser")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDeleteUserInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeAppBlockBuilderAppBlockAssociations struct {
+type smithyRpcv2cbor_serializeOpDescribeAppBlockBuilderAppBlockAssociations struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeAppBlockBuilderAppBlockAssociations) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeAppBlockBuilderAppBlockAssociations) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeAppBlockBuilderAppBlockAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeAppBlockBuilderAppBlockAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeAppBlockBuilderAppBlockAssociationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeAppBlockBuilderAppBlockAssociations"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeAppBlockBuilderAppBlockAssociationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeAppBlockBuilderAppBlockAssociations")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeAppBlockBuilderAppBlockAssociationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeAppBlockBuilders struct {
+type smithyRpcv2cbor_serializeOpDescribeAppBlockBuilders struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeAppBlockBuilders) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeAppBlockBuilders) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeAppBlockBuilders) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeAppBlockBuilders) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeAppBlockBuildersInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeAppBlockBuilders"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeAppBlockBuildersInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeAppBlockBuilders")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeAppBlockBuildersInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeAppBlocks struct {
+type smithyRpcv2cbor_serializeOpDescribeAppBlocks struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeAppBlocks) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeAppBlocks) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeAppBlocks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeAppBlocks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeAppBlocksInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeAppBlocks"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeAppBlocksInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeAppBlocks")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeAppBlocksInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeApplicationFleetAssociations struct {
+type smithyRpcv2cbor_serializeOpDescribeApplicationFleetAssociations struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeApplicationFleetAssociations) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeApplicationFleetAssociations) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeApplicationFleetAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeApplicationFleetAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeApplicationFleetAssociationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeApplicationFleetAssociations"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeApplicationFleetAssociationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeApplicationFleetAssociations")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeApplicationFleetAssociationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeApplications struct {
+type smithyRpcv2cbor_serializeOpDescribeApplications struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeApplications) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeApplications) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeApplications) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeApplications) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeApplicationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeApplications"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeApplicationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeApplications")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeApplicationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeAppLicenseUsage struct {
+type smithyRpcv2cbor_serializeOpDescribeAppLicenseUsage struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeAppLicenseUsage) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeAppLicenseUsage) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeAppLicenseUsage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeAppLicenseUsage) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeAppLicenseUsageInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeAppLicenseUsage"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeAppLicenseUsageInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeAppLicenseUsage")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeAppLicenseUsageInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeDirectoryConfigs struct {
+type smithyRpcv2cbor_serializeOpDescribeDirectoryConfigs struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeDirectoryConfigs) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeDirectoryConfigs) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeDirectoryConfigs) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeDirectoryConfigs) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeDirectoryConfigsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeDirectoryConfigs"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeDirectoryConfigsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeDirectoryConfigs")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeDirectoryConfigsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeEntitlements struct {
+type smithyRpcv2cbor_serializeOpDescribeEntitlements struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeEntitlements) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeEntitlements) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeEntitlements) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeEntitlements) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeEntitlementsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeEntitlements"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeEntitlementsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeEntitlements")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeEntitlementsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeFleets struct {
+type smithyRpcv2cbor_serializeOpDescribeFleets struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeFleets) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeFleets) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeFleets) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeFleets) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeFleetsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeFleets"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeFleetsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeFleets")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeFleetsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeImageBuilders struct {
+type smithyRpcv2cbor_serializeOpDescribeImageBuilders struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeImageBuilders) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeImageBuilders) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeImageBuilders) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeImageBuilders) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeImageBuildersInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeImageBuilders"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeImageBuildersInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeImageBuilders")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeImageBuildersInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeImagePermissions struct {
+type smithyRpcv2cbor_serializeOpDescribeImagePermissions struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeImagePermissions) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeImagePermissions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeImagePermissionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeImagePermissions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeImagePermissionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeImagePermissions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeImagePermissionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeImages struct {
+type smithyRpcv2cbor_serializeOpDescribeImages struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeImages) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeImages) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeImages) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeImages) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeImagesInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeImages"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeImagesInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeImages")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeImagesInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeSessions struct {
+type smithyRpcv2cbor_serializeOpDescribeSessions struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeSessions) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeSessions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeSessions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeSessions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeSessionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeSessions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeSessionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeSessions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeSessionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeSoftwareAssociations struct {
+type smithyRpcv2cbor_serializeOpDescribeSoftwareAssociations struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeSoftwareAssociations) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeSoftwareAssociations) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeSoftwareAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeSoftwareAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeSoftwareAssociationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeSoftwareAssociations"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeSoftwareAssociationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeSoftwareAssociations")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeSoftwareAssociationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeStacks struct {
+type smithyRpcv2cbor_serializeOpDescribeStacks struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeStacks) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeStacks) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeStacks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeStacks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeStacksInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeStacks"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeStacksInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeStacks")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeStacksInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeThemeForStack struct {
+type smithyRpcv2cbor_serializeOpDescribeThemeForStack struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeThemeForStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeThemeForStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeThemeForStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeThemeForStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeThemeForStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeThemeForStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeThemeForStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeUsageReportSubscriptions struct {
+type smithyRpcv2cbor_serializeOpDescribeUsageReportSubscriptions struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeUsageReportSubscriptions) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeUsageReportSubscriptions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeUsageReportSubscriptions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeUsageReportSubscriptions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeUsageReportSubscriptionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeUsageReportSubscriptions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeUsageReportSubscriptionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeUsageReportSubscriptions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeUsageReportSubscriptionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeUsers struct {
+type smithyRpcv2cbor_serializeOpDescribeUsers struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeUsers) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeUsers) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeUsers) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeUsers) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeUsersInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeUsers"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeUsersInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeUsers")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeUsersInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDescribeUserStackAssociations struct {
+type smithyRpcv2cbor_serializeOpDescribeUserStackAssociations struct {
 }
 
-func (*awsAwsjson11_serializeOpDescribeUserStackAssociations) ID() string {
+func (*smithyRpcv2cbor_serializeOpDescribeUserStackAssociations) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDescribeUserStackAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDescribeUserStackAssociations) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DescribeUserStackAssociationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DescribeUserStackAssociations"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DescribeUserStackAssociationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DescribeUserStackAssociations")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDescribeUserStackAssociationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisableUser struct {
+type smithyRpcv2cbor_serializeOpDisableUser struct {
 }
 
-func (*awsAwsjson11_serializeOpDisableUser) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisableUser) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisableUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisableUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisableUserInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisableUser"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisableUserInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisableUser")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisableUserInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisassociateAppBlockBuilderAppBlock struct {
+type smithyRpcv2cbor_serializeOpDisassociateAppBlockBuilderAppBlock struct {
 }
 
-func (*awsAwsjson11_serializeOpDisassociateAppBlockBuilderAppBlock) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisassociateAppBlockBuilderAppBlock) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisassociateAppBlockBuilderAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisassociateAppBlockBuilderAppBlock) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisassociateAppBlockBuilderAppBlockInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisassociateAppBlockBuilderAppBlock"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisassociateAppBlockBuilderAppBlockInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisassociateAppBlockBuilderAppBlock")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisassociateAppBlockBuilderAppBlockInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisassociateApplicationFleet struct {
+type smithyRpcv2cbor_serializeOpDisassociateApplicationFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpDisassociateApplicationFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisassociateApplicationFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisassociateApplicationFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisassociateApplicationFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisassociateApplicationFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisassociateApplicationFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisassociateApplicationFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisassociateApplicationFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisassociateApplicationFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisassociateApplicationFromEntitlement struct {
+type smithyRpcv2cbor_serializeOpDisassociateApplicationFromEntitlement struct {
 }
 
-func (*awsAwsjson11_serializeOpDisassociateApplicationFromEntitlement) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisassociateApplicationFromEntitlement) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisassociateApplicationFromEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisassociateApplicationFromEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisassociateApplicationFromEntitlementInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisassociateApplicationFromEntitlement"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisassociateApplicationFromEntitlementInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisassociateApplicationFromEntitlement")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisassociateApplicationFromEntitlementInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisassociateFleet struct {
+type smithyRpcv2cbor_serializeOpDisassociateFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpDisassociateFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisassociateFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisassociateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisassociateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisassociateFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisassociateFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisassociateFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisassociateFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisassociateFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDisassociateSoftwareFromImageBuilder struct {
+type smithyRpcv2cbor_serializeOpDisassociateSoftwareFromImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpDisassociateSoftwareFromImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpDisassociateSoftwareFromImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDisassociateSoftwareFromImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDisassociateSoftwareFromImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DisassociateSoftwareFromImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DisassociateSoftwareFromImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DisassociateSoftwareFromImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DisassociateSoftwareFromImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDisassociateSoftwareFromImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpDrainSessionInstance struct {
+type smithyRpcv2cbor_serializeOpDrainSessionInstance struct {
 }
 
-func (*awsAwsjson11_serializeOpDrainSessionInstance) ID() string {
+func (*smithyRpcv2cbor_serializeOpDrainSessionInstance) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpDrainSessionInstance) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpDrainSessionInstance) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*DrainSessionInstanceInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/DrainSessionInstance"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_DrainSessionInstanceInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.DrainSessionInstance")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentDrainSessionInstanceInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpEnableUser struct {
+type smithyRpcv2cbor_serializeOpEnableUser struct {
 }
 
-func (*awsAwsjson11_serializeOpEnableUser) ID() string {
+func (*smithyRpcv2cbor_serializeOpEnableUser) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpEnableUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpEnableUser) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*EnableUserInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/EnableUser"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_EnableUserInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.EnableUser")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentEnableUserInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpExpireSession struct {
+type smithyRpcv2cbor_serializeOpExpireSession struct {
 }
 
-func (*awsAwsjson11_serializeOpExpireSession) ID() string {
+func (*smithyRpcv2cbor_serializeOpExpireSession) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpExpireSession) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpExpireSession) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ExpireSessionInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ExpireSession"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ExpireSessionInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ExpireSession")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentExpireSessionInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpGetExportImageTask struct {
+type smithyRpcv2cbor_serializeOpGetExportImageTask struct {
 }
 
-func (*awsAwsjson11_serializeOpGetExportImageTask) ID() string {
+func (*smithyRpcv2cbor_serializeOpGetExportImageTask) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpGetExportImageTask) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpGetExportImageTask) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*GetExportImageTaskInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/GetExportImageTask"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_GetExportImageTaskInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.GetExportImageTask")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentGetExportImageTaskInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpListAssociatedFleets struct {
+type smithyRpcv2cbor_serializeOpListAssociatedFleets struct {
 }
 
-func (*awsAwsjson11_serializeOpListAssociatedFleets) ID() string {
+func (*smithyRpcv2cbor_serializeOpListAssociatedFleets) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpListAssociatedFleets) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListAssociatedFleets) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListAssociatedFleetsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ListAssociatedFleets"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListAssociatedFleetsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ListAssociatedFleets")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentListAssociatedFleetsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpListAssociatedStacks struct {
+type smithyRpcv2cbor_serializeOpListAssociatedStacks struct {
 }
 
-func (*awsAwsjson11_serializeOpListAssociatedStacks) ID() string {
+func (*smithyRpcv2cbor_serializeOpListAssociatedStacks) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpListAssociatedStacks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListAssociatedStacks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListAssociatedStacksInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ListAssociatedStacks"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListAssociatedStacksInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ListAssociatedStacks")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentListAssociatedStacksInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpListEntitledApplications struct {
+type smithyRpcv2cbor_serializeOpListEntitledApplications struct {
 }
 
-func (*awsAwsjson11_serializeOpListEntitledApplications) ID() string {
+func (*smithyRpcv2cbor_serializeOpListEntitledApplications) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpListEntitledApplications) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListEntitledApplications) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListEntitledApplicationsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ListEntitledApplications"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListEntitledApplicationsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ListEntitledApplications")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentListEntitledApplicationsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpListExportImageTasks struct {
+type smithyRpcv2cbor_serializeOpListExportImageTasks struct {
 }
 
-func (*awsAwsjson11_serializeOpListExportImageTasks) ID() string {
+func (*smithyRpcv2cbor_serializeOpListExportImageTasks) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpListExportImageTasks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListExportImageTasks) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListExportImageTasksInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ListExportImageTasks"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListExportImageTasksInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ListExportImageTasks")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentListExportImageTasksInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpListTagsForResource struct {
+type smithyRpcv2cbor_serializeOpListTagsForResource struct {
 }
 
-func (*awsAwsjson11_serializeOpListTagsForResource) ID() string {
+func (*smithyRpcv2cbor_serializeOpListTagsForResource) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpListTagsForResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListTagsForResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListTagsForResourceInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/ListTagsForResource"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListTagsForResourceInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.ListTagsForResource")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentListTagsForResourceInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStartAppBlockBuilder struct {
+type smithyRpcv2cbor_serializeOpStartAppBlockBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpStartAppBlockBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpStartAppBlockBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStartAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStartAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StartAppBlockBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StartAppBlockBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StartAppBlockBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StartAppBlockBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStartAppBlockBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStartFleet struct {
+type smithyRpcv2cbor_serializeOpStartFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpStartFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpStartFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStartFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStartFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StartFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StartFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StartFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StartFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStartFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStartImageBuilder struct {
+type smithyRpcv2cbor_serializeOpStartImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpStartImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpStartImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStartImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStartImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StartImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StartImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StartImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StartImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStartImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStartSoftwareDeploymentToImageBuilder struct {
+type smithyRpcv2cbor_serializeOpStartSoftwareDeploymentToImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpStartSoftwareDeploymentToImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpStartSoftwareDeploymentToImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStartSoftwareDeploymentToImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStartSoftwareDeploymentToImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StartSoftwareDeploymentToImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StartSoftwareDeploymentToImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StartSoftwareDeploymentToImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StartSoftwareDeploymentToImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStartSoftwareDeploymentToImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStopAppBlockBuilder struct {
+type smithyRpcv2cbor_serializeOpStopAppBlockBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpStopAppBlockBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpStopAppBlockBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStopAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStopAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StopAppBlockBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StopAppBlockBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StopAppBlockBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StopAppBlockBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStopAppBlockBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStopFleet struct {
+type smithyRpcv2cbor_serializeOpStopFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpStopFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpStopFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStopFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStopFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StopFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StopFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StopFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StopFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStopFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpStopImageBuilder struct {
+type smithyRpcv2cbor_serializeOpStopImageBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpStopImageBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpStopImageBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpStopImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpStopImageBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*StopImageBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/StopImageBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_StopImageBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.StopImageBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentStopImageBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpTagResource struct {
+type smithyRpcv2cbor_serializeOpTagResource struct {
 }
 
-func (*awsAwsjson11_serializeOpTagResource) ID() string {
+func (*smithyRpcv2cbor_serializeOpTagResource) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpTagResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpTagResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*TagResourceInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/TagResource"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_TagResourceInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.TagResource")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentTagResourceInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUntagResource struct {
+type smithyRpcv2cbor_serializeOpUntagResource struct {
 }
 
-func (*awsAwsjson11_serializeOpUntagResource) ID() string {
+func (*smithyRpcv2cbor_serializeOpUntagResource) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUntagResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUntagResource) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UntagResourceInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UntagResource"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UntagResourceInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UntagResource")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUntagResourceInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateAppBlockBuilder struct {
+type smithyRpcv2cbor_serializeOpUpdateAppBlockBuilder struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateAppBlockBuilder) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateAppBlockBuilder) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateAppBlockBuilder) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateAppBlockBuilderInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateAppBlockBuilder"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateAppBlockBuilderInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateAppBlockBuilder")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateAppBlockBuilderInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateApplication struct {
+type smithyRpcv2cbor_serializeOpUpdateApplication struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateApplication) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateApplication) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateApplication) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateApplicationInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateApplication"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateApplicationInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateApplication")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateApplicationInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateDirectoryConfig struct {
+type smithyRpcv2cbor_serializeOpUpdateDirectoryConfig struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateDirectoryConfig) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateDirectoryConfig) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateDirectoryConfig) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateDirectoryConfigInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateDirectoryConfig"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateDirectoryConfigInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateDirectoryConfig")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateDirectoryConfigInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateEntitlement struct {
+type smithyRpcv2cbor_serializeOpUpdateEntitlement struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateEntitlement) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateEntitlement) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateEntitlement) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateEntitlementInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateEntitlement"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateEntitlementInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateEntitlement")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateEntitlementInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateFleet struct {
+type smithyRpcv2cbor_serializeOpUpdateFleet struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateFleet) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateFleet) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateFleet) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateFleetInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateFleet"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateFleetInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateFleet")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateFleetInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateImagePermissions struct {
+type smithyRpcv2cbor_serializeOpUpdateImagePermissions struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateImagePermissions) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateImagePermissions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateImagePermissions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateImagePermissionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateImagePermissions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateImagePermissionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateImagePermissions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateImagePermissionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateStack struct {
+type smithyRpcv2cbor_serializeOpUpdateStack struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
 
-type awsAwsjson11_serializeOpUpdateThemeForStack struct {
+type smithyRpcv2cbor_serializeOpUpdateThemeForStack struct {
 }
 
-func (*awsAwsjson11_serializeOpUpdateThemeForStack) ID() string {
+func (*smithyRpcv2cbor_serializeOpUpdateThemeForStack) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson11_serializeOpUpdateThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpUpdateThemeForStack) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*UpdateThemeForStackInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/PhotonAdminProxyService/operation/UpdateThemeForStack"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_UpdateThemeForStackInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.1")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("PhotonAdminProxyService.UpdateThemeForStack")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson11_serializeOpDocumentUpdateThemeForStackInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
-func awsAwsjson11_serializeDocumentAccessEndpoint(v *types.AccessEndpoint, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_AccessEndpoint(v *types.AccessEndpoint) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.EndpointType) > 0 {
-		ok := object.Key("EndpointType")
-		ok.String(string(v.EndpointType))
+		ser, err := serializeCBOR_AccessEndpointType(v.EndpointType)
+		if err != nil {
+			return nil, err
+		}
+		vm["EndpointType"] = ser
 	}
-
 	if v.VpceId != nil {
-		ok := object.Key("VpceId")
-		ok.String(*v.VpceId)
+		ser, err := serializeCBOR_String(*v.VpceId)
+		if err != nil {
+			return nil, err
+		}
+		vm["VpceId"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentAccessEndpointList(v []types.AccessEndpoint, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_AccessEndpointList(v []types.AccessEndpoint) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentAccessEndpoint(&v[i], av); err != nil {
-			return err
+
+		ser, err := serializeCBOR_AccessEndpoint(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentAgentAccessConfig(v *types.AgentAccessConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_AccessEndpointType(v types.AccessEndpointType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
-	if v.S3BucketArn != nil {
-		ok := object.Key("S3BucketArn")
-		ok.String(*v.S3BucketArn)
-	}
+func serializeCBOR_Action(v types.Action) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
-	if len(v.ScreenImageFormat) > 0 {
-		ok := object.Key("ScreenImageFormat")
-		ok.String(string(v.ScreenImageFormat))
-	}
-
-	if len(v.ScreenResolution) > 0 {
-		ok := object.Key("ScreenResolution")
-		ok.String(string(v.ScreenResolution))
-	}
-
-	if v.ScreenshotsUploadEnabled != nil {
-		ok := object.Key("ScreenshotsUploadEnabled")
-		ok.Boolean(*v.ScreenshotsUploadEnabled)
-	}
-
+func serializeCBOR_AgentAccessConfig(v *types.AgentAccessConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Settings != nil {
-		ok := object.Key("Settings")
-		if err := awsAwsjson11_serializeDocumentAgentAccessSettingList(v.Settings, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_AgentAccessSettingList(v.Settings)
+		if err != nil {
+			return nil, err
 		}
+		vm["Settings"] = ser
 	}
-
-	if len(v.UserControlMode) > 0 {
-		ok := object.Key("UserControlMode")
-		ok.String(string(v.UserControlMode))
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeDocumentAgentAccessConfigForUpdate(v *types.AgentAccessConfigForUpdate, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
 	if v.S3BucketArn != nil {
-		ok := object.Key("S3BucketArn")
-		ok.String(*v.S3BucketArn)
-	}
-
-	if len(v.ScreenImageFormat) > 0 {
-		ok := object.Key("ScreenImageFormat")
-		ok.String(string(v.ScreenImageFormat))
-	}
-
-	if len(v.ScreenResolution) > 0 {
-		ok := object.Key("ScreenResolution")
-		ok.String(string(v.ScreenResolution))
-	}
-
-	if v.ScreenshotsUploadEnabled != nil {
-		ok := object.Key("ScreenshotsUploadEnabled")
-		ok.Boolean(*v.ScreenshotsUploadEnabled)
-	}
-
-	if v.Settings != nil {
-		ok := object.Key("Settings")
-		if err := awsAwsjson11_serializeDocumentAgentAccessSettingList(v.Settings, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_String(*v.S3BucketArn)
+		if err != nil {
+			return nil, err
 		}
+		vm["S3BucketArn"] = ser
 	}
-
+	if v.ScreenshotsUploadEnabled != nil {
+		ser, err := serializeCBOR_Bool(*v.ScreenshotsUploadEnabled)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenshotsUploadEnabled"] = ser
+	}
+	if len(v.ScreenResolution) > 0 {
+		ser, err := serializeCBOR_ScreenResolution(v.ScreenResolution)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenResolution"] = ser
+	}
+	if len(v.ScreenImageFormat) > 0 {
+		ser, err := serializeCBOR_ScreenImageFormat(v.ScreenImageFormat)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenImageFormat"] = ser
+	}
 	if len(v.UserControlMode) > 0 {
-		ok := object.Key("UserControlMode")
-		ok.String(string(v.UserControlMode))
+		ser, err := serializeCBOR_UserControlMode(v.UserControlMode)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserControlMode"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentAgentAccessSetting(v *types.AgentAccessSetting, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_AgentAccessConfigForUpdate(v *types.AgentAccessConfigForUpdate) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Settings != nil {
+		ser, err := serializeCBOR_AgentAccessSettingList(v.Settings)
+		if err != nil {
+			return nil, err
+		}
+		vm["Settings"] = ser
+	}
+	if v.S3BucketArn != nil {
+		ser, err := serializeCBOR_String(*v.S3BucketArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["S3BucketArn"] = ser
+	}
+	if v.ScreenshotsUploadEnabled != nil {
+		ser, err := serializeCBOR_Bool(*v.ScreenshotsUploadEnabled)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenshotsUploadEnabled"] = ser
+	}
+	if len(v.ScreenResolution) > 0 {
+		ser, err := serializeCBOR_ScreenResolution(v.ScreenResolution)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenResolution"] = ser
+	}
+	if len(v.ScreenImageFormat) > 0 {
+		ser, err := serializeCBOR_ScreenImageFormat(v.ScreenImageFormat)
+		if err != nil {
+			return nil, err
+		}
+		vm["ScreenImageFormat"] = ser
+	}
+	if len(v.UserControlMode) > 0 {
+		ser, err := serializeCBOR_UserControlMode(v.UserControlMode)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserControlMode"] = ser
+	}
+	return vm, nil
+}
 
+func serializeCBOR_AgentAccessSetting(v *types.AgentAccessSetting) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.AgentAction) > 0 {
-		ok := object.Key("AgentAction")
-		ok.String(string(v.AgentAction))
+		ser, err := serializeCBOR_AgentAction(v.AgentAction)
+		if err != nil {
+			return nil, err
+		}
+		vm["AgentAction"] = ser
 	}
-
 	if len(v.Permission) > 0 {
-		ok := object.Key("Permission")
-		ok.String(string(v.Permission))
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeDocumentAgentAccessSettingList(v []types.AgentAccessSetting, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
-	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentAgentAccessSetting(&v[i], av); err != nil {
-			return err
+		ser, err := serializeCBOR_Permission(v.Permission)
+		if err != nil {
+			return nil, err
 		}
+		vm["Permission"] = ser
 	}
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentAppBlockBuilderAttributes(v []types.AppBlockBuilderAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_AgentAccessSettingList(v []types.AgentAccessSetting) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
-	}
-	return nil
-}
 
-func awsAwsjson11_serializeDocumentAppCatalogConfig(v []types.ApplicationConfig, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
-	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentApplicationConfig(&v[i], av); err != nil {
-			return err
+		ser, err := serializeCBOR_AgentAccessSetting(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentApplicationAttributes(v []types.ApplicationAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_AgentAction(v types.AgentAction) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_AgentSoftwareVersion(v types.AgentSoftwareVersion) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_AppBlockBuilderAttribute(v types.AppBlockBuilderAttribute) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_AppBlockBuilderAttributes(v []types.AppBlockBuilderAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
+
+		ser, err := serializeCBOR_AppBlockBuilderAttribute(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentApplicationConfig(v *types.ApplicationConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_AppBlockBuilderPlatformType(v types.AppBlockBuilderPlatformType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_AppCatalogConfig(v []types.ApplicationConfig) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
+	for i := range v {
+
+		ser, err := serializeCBOR_ApplicationConfig(&v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
+	}
+	return vl, nil
+}
+
+func serializeCBOR_ApplicationAttribute(v types.ApplicationAttribute) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_ApplicationAttributes(v []types.ApplicationAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
+	for i := range v {
+
+		ser, err := serializeCBOR_ApplicationAttribute(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
+	}
+	return vl, nil
+}
+
+func serializeCBOR_ApplicationConfig(v *types.ApplicationConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
 	if v.AbsoluteAppPath != nil {
-		ok := object.Key("AbsoluteAppPath")
-		ok.String(*v.AbsoluteAppPath)
+		ser, err := serializeCBOR_String(*v.AbsoluteAppPath)
+		if err != nil {
+			return nil, err
+		}
+		vm["AbsoluteAppPath"] = ser
 	}
-
 	if v.AbsoluteIconPath != nil {
-		ok := object.Key("AbsoluteIconPath")
-		ok.String(*v.AbsoluteIconPath)
+		ser, err := serializeCBOR_String(*v.AbsoluteIconPath)
+		if err != nil {
+			return nil, err
+		}
+		vm["AbsoluteIconPath"] = ser
 	}
-
 	if v.AbsoluteManifestPath != nil {
-		ok := object.Key("AbsoluteManifestPath")
-		ok.String(*v.AbsoluteManifestPath)
+		ser, err := serializeCBOR_String(*v.AbsoluteManifestPath)
+		if err != nil {
+			return nil, err
+		}
+		vm["AbsoluteManifestPath"] = ser
 	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.LaunchParameters != nil {
-		ok := object.Key("LaunchParameters")
-		ok.String(*v.LaunchParameters)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
 	if v.WorkingDirectory != nil {
-		ok := object.Key("WorkingDirectory")
-		ok.String(*v.WorkingDirectory)
+		ser, err := serializeCBOR_String(*v.WorkingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		vm["WorkingDirectory"] = ser
 	}
-
-	return nil
+	if v.LaunchParameters != nil {
+		ser, err := serializeCBOR_String(*v.LaunchParameters)
+		if err != nil {
+			return nil, err
+		}
+		vm["LaunchParameters"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentApplicationSettings(v *types.ApplicationSettings, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_ApplicationSettings(v *types.ApplicationSettings) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Enabled != nil {
-		ok := object.Key("Enabled")
-		ok.Boolean(*v.Enabled)
+		ser, err := serializeCBOR_Bool(*v.Enabled)
+		if err != nil {
+			return nil, err
+		}
+		vm["Enabled"] = ser
 	}
-
 	if v.SettingsGroup != nil {
-		ok := object.Key("SettingsGroup")
-		ok.String(*v.SettingsGroup)
+		ser, err := serializeCBOR_String(*v.SettingsGroup)
+		if err != nil {
+			return nil, err
+		}
+		vm["SettingsGroup"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentArnList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_AppVisibility(v types.AppVisibility) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_ArnList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentAwsAccountIdList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_AuthenticationType(v types.AuthenticationType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_AwsAccountIdList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentCertificateBasedAuthProperties(v *types.CertificateBasedAuthProperties, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.CertificateAuthorityArn != nil {
-		ok := object.Key("CertificateAuthorityArn")
-		ok.String(*v.CertificateAuthorityArn)
-	}
-
+func serializeCBOR_CertificateBasedAuthProperties(v *types.CertificateBasedAuthProperties) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.Status) > 0 {
-		ok := object.Key("Status")
-		ok.String(string(v.Status))
+		ser, err := serializeCBOR_CertificateBasedAuthStatus(v.Status)
+		if err != nil {
+			return nil, err
+		}
+		vm["Status"] = ser
 	}
-
-	return nil
+	if v.CertificateAuthorityArn != nil {
+		ser, err := serializeCBOR_String(*v.CertificateAuthorityArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["CertificateAuthorityArn"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentComputeCapacity(v *types.ComputeCapacity, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_CertificateBasedAuthStatus(v types.CertificateBasedAuthStatus) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_ComputeCapacity(v *types.ComputeCapacity) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.DesiredInstances != nil {
-		ok := object.Key("DesiredInstances")
-		ok.Integer(*v.DesiredInstances)
+		ser, err := serializeCBOR_Int32(*v.DesiredInstances)
+		if err != nil {
+			return nil, err
+		}
+		vm["DesiredInstances"] = ser
 	}
-
 	if v.DesiredSessions != nil {
-		ok := object.Key("DesiredSessions")
-		ok.Integer(*v.DesiredSessions)
+		ser, err := serializeCBOR_Int32(*v.DesiredSessions)
+		if err != nil {
+			return nil, err
+		}
+		vm["DesiredSessions"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentContentRedirection(v *types.ContentRedirection, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_ContentRedirection(v *types.ContentRedirection) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.HostToClient != nil {
-		ok := object.Key("HostToClient")
-		if err := awsAwsjson11_serializeDocumentUrlRedirectionConfig(v.HostToClient, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_UrlRedirectionConfig(v.HostToClient)
+		if err != nil {
+			return nil, err
 		}
+		vm["HostToClient"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentDirectoryNameList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_DirectoryNameList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentDomainJoinInfo(v *types.DomainJoinInfo, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_DomainJoinInfo(v *types.DomainJoinInfo) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.DirectoryName != nil {
-		ok := object.Key("DirectoryName")
-		ok.String(*v.DirectoryName)
+		ser, err := serializeCBOR_String(*v.DirectoryName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DirectoryName"] = ser
 	}
-
 	if v.OrganizationalUnitDistinguishedName != nil {
-		ok := object.Key("OrganizationalUnitDistinguishedName")
-		ok.String(*v.OrganizationalUnitDistinguishedName)
+		ser, err := serializeCBOR_String(*v.OrganizationalUnitDistinguishedName)
+		if err != nil {
+			return nil, err
+		}
+		vm["OrganizationalUnitDistinguishedName"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentDomainList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_DomainList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentEmbedHostDomains(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_EmbedHostDomains(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentEntitlementAttribute(v *types.EntitlementAttribute, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_EntitlementAttribute(v *types.EntitlementAttribute) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
 	}
-
 	if v.Value != nil {
-		ok := object.Key("Value")
-		ok.String(*v.Value)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeDocumentEntitlementAttributeList(v []types.EntitlementAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
-	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentEntitlementAttribute(&v[i], av); err != nil {
-			return err
+		ser, err := serializeCBOR_String(*v.Value)
+		if err != nil {
+			return nil, err
 		}
+		vm["Value"] = ser
 	}
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentFilter(v *types.Filter, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_EntitlementAttributeList(v []types.EntitlementAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
+	for i := range v {
 
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
+		ser, err := serializeCBOR_EntitlementAttribute(&v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
+	return vl, nil
+}
 
+func serializeCBOR_Filter(v *types.Filter) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
 	if v.Values != nil {
-		ok := object.Key("Values")
-		if err := awsAwsjson11_serializeDocumentFilterValues(v.Values, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_FilterValues(v.Values)
+		if err != nil {
+			return nil, err
 		}
+		vm["Values"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentFilters(v []types.Filter, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_Filters(v []types.Filter) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentFilter(&v[i], av); err != nil {
-			return err
+
+		ser, err := serializeCBOR_Filter(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentFilterValues(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_FilterValues(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentFleetAttributes(v []types.FleetAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_FleetAttribute(v types.FleetAttribute) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_FleetAttributes(v []types.FleetAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
+
+		ser, err := serializeCBOR_FleetAttribute(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentImagePermissions(v *types.ImagePermissions, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_FleetType(v types.FleetType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_ImagePermissions(v *types.ImagePermissions) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.AllowFleet != nil {
-		ok := object.Key("allowFleet")
-		ok.Boolean(*v.AllowFleet)
+		ser, err := serializeCBOR_Bool(*v.AllowFleet)
+		if err != nil {
+			return nil, err
+		}
+		vm["allowFleet"] = ser
 	}
-
 	if v.AllowImageBuilder != nil {
-		ok := object.Key("allowImageBuilder")
-		ok.Boolean(*v.AllowImageBuilder)
+		ser, err := serializeCBOR_Bool(*v.AllowImageBuilder)
+		if err != nil {
+			return nil, err
+		}
+		vm["allowImageBuilder"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentOrganizationalUnitDistinguishedNamesList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_MessageAction(v types.MessageAction) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_OrganizationalUnitDistinguishedNamesList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentPlatforms(v []types.PlatformType, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_PackagingType(v types.PackagingType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_Permission(v types.Permission) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_Platforms(v []types.PlatformType) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
+
+		ser, err := serializeCBOR_PlatformType(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentRuntimeValidationConfig(v *types.RuntimeValidationConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_PlatformType(v types.PlatformType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_PreferredProtocol(v types.PreferredProtocol) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_RuntimeValidationConfig(v *types.RuntimeValidationConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.IntendedInstanceType != nil {
-		ok := object.Key("IntendedInstanceType")
-		ok.String(*v.IntendedInstanceType)
+		ser, err := serializeCBOR_String(*v.IntendedInstanceType)
+		if err != nil {
+			return nil, err
+		}
+		vm["IntendedInstanceType"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentS3Location(v *types.S3Location, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_S3Location(v *types.S3Location) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.S3Bucket != nil {
-		ok := object.Key("S3Bucket")
-		ok.String(*v.S3Bucket)
+		ser, err := serializeCBOR_String(*v.S3Bucket)
+		if err != nil {
+			return nil, err
+		}
+		vm["S3Bucket"] = ser
 	}
-
 	if v.S3Key != nil {
-		ok := object.Key("S3Key")
-		ok.String(*v.S3Key)
+		ser, err := serializeCBOR_String(*v.S3Key)
+		if err != nil {
+			return nil, err
+		}
+		vm["S3Key"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentScriptDetails(v *types.ScriptDetails, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_ScreenImageFormat(v types.ScreenImageFormat) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
-	if v.ExecutableParameters != nil {
-		ok := object.Key("ExecutableParameters")
-		ok.String(*v.ExecutableParameters)
-	}
+func serializeCBOR_ScreenResolution(v types.ScreenResolution) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
-	if v.ExecutablePath != nil {
-		ok := object.Key("ExecutablePath")
-		ok.String(*v.ExecutablePath)
-	}
-
+func serializeCBOR_ScriptDetails(v *types.ScriptDetails) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.ScriptS3Location != nil {
-		ok := object.Key("ScriptS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.ScriptS3Location, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_S3Location(v.ScriptS3Location)
+		if err != nil {
+			return nil, err
 		}
+		vm["ScriptS3Location"] = ser
 	}
-
+	if v.ExecutablePath != nil {
+		ser, err := serializeCBOR_String(*v.ExecutablePath)
+		if err != nil {
+			return nil, err
+		}
+		vm["ExecutablePath"] = ser
+	}
+	if v.ExecutableParameters != nil {
+		ser, err := serializeCBOR_String(*v.ExecutableParameters)
+		if err != nil {
+			return nil, err
+		}
+		vm["ExecutableParameters"] = ser
+	}
 	if v.TimeoutInSeconds != nil {
-		ok := object.Key("TimeoutInSeconds")
-		ok.Integer(*v.TimeoutInSeconds)
+		ser, err := serializeCBOR_Int32(*v.TimeoutInSeconds)
+		if err != nil {
+			return nil, err
+		}
+		vm["TimeoutInSeconds"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentSecurityGroupIdList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_SecurityGroupIdList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentServiceAccountCredentials(v *types.ServiceAccountCredentials, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_ServiceAccountCredentials(v *types.ServiceAccountCredentials) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.AccountName != nil {
-		ok := object.Key("AccountName")
-		ok.String(*v.AccountName)
+		ser, err := serializeCBOR_String(*v.AccountName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccountName"] = ser
 	}
-
 	if v.AccountPassword != nil {
-		ok := object.Key("AccountPassword")
-		ok.String(*v.AccountPassword)
+		ser, err := serializeCBOR_String(*v.AccountPassword)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccountPassword"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentStackAttributes(v []types.StackAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_StackAttribute(v types.StackAttribute) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_StackAttributes(v []types.StackAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
+
+		ser, err := serializeCBOR_StackAttribute(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentStorageConnector(v *types.StorageConnector, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_StorageConnector(v *types.StorageConnector) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.ConnectorType) > 0 {
-		ok := object.Key("ConnectorType")
-		ok.String(string(v.ConnectorType))
-	}
-
-	if v.Domains != nil {
-		ok := object.Key("Domains")
-		if err := awsAwsjson11_serializeDocumentDomainList(v.Domains, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_StorageConnectorType(v.ConnectorType)
+		if err != nil {
+			return nil, err
 		}
+		vm["ConnectorType"] = ser
 	}
-
-	if v.DomainsRequireAdminConsent != nil {
-		ok := object.Key("DomainsRequireAdminConsent")
-		if err := awsAwsjson11_serializeDocumentDomainList(v.DomainsRequireAdminConsent, ok); err != nil {
-			return err
-		}
-	}
-
 	if v.ResourceIdentifier != nil {
-		ok := object.Key("ResourceIdentifier")
-		ok.String(*v.ResourceIdentifier)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeDocumentStorageConnectorList(v []types.StorageConnector, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
-	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentStorageConnector(&v[i], av); err != nil {
-			return err
+		ser, err := serializeCBOR_String(*v.ResourceIdentifier)
+		if err != nil {
+			return nil, err
 		}
+		vm["ResourceIdentifier"] = ser
 	}
-	return nil
+	if v.Domains != nil {
+		ser, err := serializeCBOR_DomainList(v.Domains)
+		if err != nil {
+			return nil, err
+		}
+		vm["Domains"] = ser
+	}
+	if v.DomainsRequireAdminConsent != nil {
+		ser, err := serializeCBOR_DomainList(v.DomainsRequireAdminConsent)
+		if err != nil {
+			return nil, err
+		}
+		vm["DomainsRequireAdminConsent"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentStreamingExperienceSettings(v *types.StreamingExperienceSettings, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_StorageConnectorList(v []types.StorageConnector) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
+	for i := range v {
 
+		ser, err := serializeCBOR_StorageConnector(&v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
+	}
+	return vl, nil
+}
+
+func serializeCBOR_StorageConnectorType(v types.StorageConnectorType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_StreamingExperienceSettings(v *types.StreamingExperienceSettings) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.PreferredProtocol) > 0 {
-		ok := object.Key("PreferredProtocol")
-		ok.String(string(v.PreferredProtocol))
+		ser, err := serializeCBOR_PreferredProtocol(v.PreferredProtocol)
+		if err != nil {
+			return nil, err
+		}
+		vm["PreferredProtocol"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentStringList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_StreamView(v types.StreamView) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_StringList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentSubnetIdList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_SubnetIdList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentTagKeyList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_TagKeyList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentTags(v map[string]string, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_Tags(v map[string]string) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	for k, vv := range v {
 
-	for key := range v {
-		om := object.Key(key)
-		om.String(v[key])
+		ser, err := serializeCBOR_String(vv)
+		if err != nil {
+			return nil, err
+		}
+		vm[k] = ser
 	}
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentThemeAttributes(v []types.ThemeAttribute, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_ThemeAttribute(v types.ThemeAttribute) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_ThemeAttributes(v []types.ThemeAttribute) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(string(v[i]))
+
+		ser, err := serializeCBOR_ThemeAttribute(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentThemeFooterLink(v *types.ThemeFooterLink, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_ThemeFooterLink(v *types.ThemeFooterLink) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
 	}
-
 	if v.FooterLinkURL != nil {
-		ok := object.Key("FooterLinkURL")
-		ok.String(*v.FooterLinkURL)
+		ser, err := serializeCBOR_String(*v.FooterLinkURL)
+		if err != nil {
+			return nil, err
+		}
+		vm["FooterLinkURL"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentThemeFooterLinks(v []types.ThemeFooterLink, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_ThemeFooterLinks(v []types.ThemeFooterLink) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentThemeFooterLink(&v[i], av); err != nil {
-			return err
+
+		ser, err := serializeCBOR_ThemeFooterLink(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentUrlPatternList(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_ThemeState(v types.ThemeState) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_ThemeStyling(v types.ThemeStyling) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
+
+func serializeCBOR_UrlPatternList(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentUrlRedirectionConfig(v *types.UrlRedirectionConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AllowedUrls != nil {
-		ok := object.Key("AllowedUrls")
-		if err := awsAwsjson11_serializeDocumentUrlPatternList(v.AllowedUrls, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.DeniedUrls != nil {
-		ok := object.Key("DeniedUrls")
-		if err := awsAwsjson11_serializeDocumentUrlPatternList(v.DeniedUrls, ok); err != nil {
-			return err
-		}
-	}
-
+func serializeCBOR_UrlRedirectionConfig(v *types.UrlRedirectionConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Enabled != nil {
-		ok := object.Key("Enabled")
-		ok.Boolean(*v.Enabled)
+		ser, err := serializeCBOR_Bool(*v.Enabled)
+		if err != nil {
+			return nil, err
+		}
+		vm["Enabled"] = ser
 	}
-
-	return nil
+	if v.AllowedUrls != nil {
+		ser, err := serializeCBOR_UrlPatternList(v.AllowedUrls)
+		if err != nil {
+			return nil, err
+		}
+		vm["AllowedUrls"] = ser
+	}
+	if v.DeniedUrls != nil {
+		ser, err := serializeCBOR_UrlPatternList(v.DeniedUrls)
+		if err != nil {
+			return nil, err
+		}
+		vm["DeniedUrls"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentUsbDeviceFilterStrings(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_UsbDeviceFilterStrings(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentUserSetting(v *types.UserSetting, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_UserControlMode(v types.UserControlMode) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_UserSetting(v *types.UserSetting) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.Action) > 0 {
-		ok := object.Key("Action")
-		ok.String(string(v.Action))
+		ser, err := serializeCBOR_Action(v.Action)
+		if err != nil {
+			return nil, err
+		}
+		vm["Action"] = ser
 	}
-
-	if v.MaximumLength != nil {
-		ok := object.Key("MaximumLength")
-		ok.Integer(*v.MaximumLength)
-	}
-
 	if len(v.Permission) > 0 {
-		ok := object.Key("Permission")
-		ok.String(string(v.Permission))
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeDocumentUserSettingList(v []types.UserSetting, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
-	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentUserSetting(&v[i], av); err != nil {
-			return err
+		ser, err := serializeCBOR_Permission(v.Permission)
+		if err != nil {
+			return nil, err
 		}
+		vm["Permission"] = ser
 	}
-	return nil
+	if v.MaximumLength != nil {
+		ser, err := serializeCBOR_Int32(*v.MaximumLength)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaximumLength"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentUserStackAssociation(v *types.UserStackAssociation, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_UserSettingList(v []types.UserSetting) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
+	for i := range v {
 
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
+		ser, err := serializeCBOR_UserSetting(&v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
+	return vl, nil
+}
 
+func serializeCBOR_UserStackAssociation(v *types.UserStackAssociation) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
 	if v.SendEmailNotification != nil {
-		ok := object.Key("SendEmailNotification")
-		ok.Boolean(*v.SendEmailNotification)
+		ser, err := serializeCBOR_Bool(*v.SendEmailNotification)
+		if err != nil {
+			return nil, err
+		}
+		vm["SendEmailNotification"] = ser
 	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentUserStackAssociationList(v []types.UserStackAssociation, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_UserStackAssociationList(v []types.UserStackAssociation) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson11_serializeDocumentUserStackAssociation(&v[i], av); err != nil {
-			return err
+
+		ser, err := serializeCBOR_UserStackAssociation(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson11_serializeDocumentVolumeConfig(v *types.VolumeConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_VisibilityType(v types.VisibilityType) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_VolumeConfig(v *types.VolumeConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.VolumeSizeInGb != nil {
-		ok := object.Key("VolumeSizeInGb")
-		ok.Integer(*v.VolumeSizeInGb)
+		ser, err := serializeCBOR_Int32(*v.VolumeSizeInGb)
+		if err != nil {
+			return nil, err
+		}
+		vm["VolumeSizeInGb"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeDocumentVpcConfig(v *types.VpcConfig, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.SecurityGroupIds != nil {
-		ok := object.Key("SecurityGroupIds")
-		if err := awsAwsjson11_serializeDocumentSecurityGroupIdList(v.SecurityGroupIds, ok); err != nil {
-			return err
-		}
-	}
-
+func serializeCBOR_VpcConfig(v *types.VpcConfig) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.SubnetIds != nil {
-		ok := object.Key("SubnetIds")
-		if err := awsAwsjson11_serializeDocumentSubnetIdList(v.SubnetIds, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_SubnetIdList(v.SubnetIds)
+		if err != nil {
+			return nil, err
 		}
+		vm["SubnetIds"] = ser
 	}
-
-	return nil
+	if v.SecurityGroupIds != nil {
+		ser, err := serializeCBOR_SecurityGroupIdList(v.SecurityGroupIds)
+		if err != nil {
+			return nil, err
+		}
+		vm["SecurityGroupIds"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentAssociateAppBlockBuilderAppBlockInput(v *AssociateAppBlockBuilderAppBlockInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_Bool(v bool) (smithycbor.Value, error) {
+	return smithycbor.Bool(v), nil
+}
 
+func serializeCBOR_Int32(v int32) (smithycbor.Value, error) {
+	if v < 0 {
+		return smithycbor.NegInt(uint64(-v)), nil
+	}
+	return smithycbor.Uint(uint64(v)), nil
+}
+
+func serializeCBOR_Int64(v int64) (smithycbor.Value, error) {
+	if v < 0 {
+		return smithycbor.NegInt(uint64(-v)), nil
+	}
+	return smithycbor.Uint(uint64(v)), nil
+}
+
+func serializeCBOR_String(v string) (smithycbor.Value, error) {
+	return smithycbor.String(v), nil
+}
+
+func serializeCBOR_AssociateAppBlockBuilderAppBlockInput(v *AssociateAppBlockBuilderAppBlockInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.AppBlockArn != nil {
-		ok := object.Key("AppBlockArn")
-		ok.String(*v.AppBlockArn)
+		ser, err := serializeCBOR_String(*v.AppBlockArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockArn"] = ser
 	}
-
 	if v.AppBlockBuilderName != nil {
-		ok := object.Key("AppBlockBuilderName")
-		ok.String(*v.AppBlockBuilderName)
+		ser, err := serializeCBOR_String(*v.AppBlockBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockBuilderName"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentAssociateApplicationFleetInput(v *AssociateApplicationFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_AssociateApplicationFleetInput(v *AssociateApplicationFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
 	if v.ApplicationArn != nil {
-		ok := object.Key("ApplicationArn")
-		ok.String(*v.ApplicationArn)
+		ser, err := serializeCBOR_String(*v.ApplicationArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationArn"] = ser
 	}
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentAssociateApplicationToEntitlementInput(v *AssociateApplicationToEntitlementInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ApplicationIdentifier != nil {
-		ok := object.Key("ApplicationIdentifier")
-		ok.String(*v.ApplicationIdentifier)
+func serializeCBOR_AssociateApplicationToEntitlementInput(v *AssociateApplicationToEntitlementInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
 	}
-
 	if v.EntitlementName != nil {
-		ok := object.Key("EntitlementName")
-		ok.String(*v.EntitlementName)
+		ser, err := serializeCBOR_String(*v.EntitlementName)
+		if err != nil {
+			return nil, err
+		}
+		vm["EntitlementName"] = ser
 	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
+	if v.ApplicationIdentifier != nil {
+		ser, err := serializeCBOR_String(*v.ApplicationIdentifier)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationIdentifier"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentAssociateFleetInput(v *AssociateFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_AssociateFleetInput(v *AssociateFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
 	}
-
 	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentAssociateSoftwareToImageBuilderInput(v *AssociateSoftwareToImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_AssociateSoftwareToImageBuilderInput(v *AssociateSoftwareToImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.ImageBuilderName != nil {
-		ok := object.Key("ImageBuilderName")
-		ok.String(*v.ImageBuilderName)
+		ser, err := serializeCBOR_String(*v.ImageBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageBuilderName"] = ser
 	}
-
 	if v.SoftwareNames != nil {
-		ok := object.Key("SoftwareNames")
-		if err := awsAwsjson11_serializeDocumentStringList(v.SoftwareNames, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_StringList(v.SoftwareNames)
+		if err != nil {
+			return nil, err
 		}
+		vm["SoftwareNames"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentBatchAssociateUserStackInput(v *BatchAssociateUserStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_BatchAssociateUserStackInput(v *BatchAssociateUserStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.UserStackAssociations != nil {
-		ok := object.Key("UserStackAssociations")
-		if err := awsAwsjson11_serializeDocumentUserStackAssociationList(v.UserStackAssociations, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_UserStackAssociationList(v.UserStackAssociations)
+		if err != nil {
+			return nil, err
 		}
+		vm["UserStackAssociations"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentBatchDisassociateUserStackInput(v *BatchDisassociateUserStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_BatchDisassociateUserStackInput(v *BatchDisassociateUserStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.UserStackAssociations != nil {
-		ok := object.Key("UserStackAssociations")
-		if err := awsAwsjson11_serializeDocumentUserStackAssociationList(v.UserStackAssociations, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_UserStackAssociationList(v.UserStackAssociations)
+		if err != nil {
+			return nil, err
 		}
+		vm["UserStackAssociations"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCopyImageInput(v *CopyImageInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.DestinationImageDescription != nil {
-		ok := object.Key("DestinationImageDescription")
-		ok.String(*v.DestinationImageDescription)
-	}
-
-	if v.DestinationImageName != nil {
-		ok := object.Key("DestinationImageName")
-		ok.String(*v.DestinationImageName)
-	}
-
-	if v.DestinationRegion != nil {
-		ok := object.Key("DestinationRegion")
-		ok.String(*v.DestinationRegion)
-	}
-
+func serializeCBOR_CopyImageInput(v *CopyImageInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.SourceImageName != nil {
-		ok := object.Key("SourceImageName")
-		ok.String(*v.SourceImageName)
+		ser, err := serializeCBOR_String(*v.SourceImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["SourceImageName"] = ser
 	}
-
-	return nil
+	if v.DestinationImageName != nil {
+		ser, err := serializeCBOR_String(*v.DestinationImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DestinationImageName"] = ser
+	}
+	if v.DestinationRegion != nil {
+		ser, err := serializeCBOR_String(*v.DestinationRegion)
+		if err != nil {
+			return nil, err
+		}
+		vm["DestinationRegion"] = ser
+	}
+	if v.DestinationImageDescription != nil {
+		ser, err := serializeCBOR_String(*v.DestinationImageDescription)
+		if err != nil {
+			return nil, err
+		}
+		vm["DestinationImageDescription"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateAppBlockBuilderInput(v *CreateAppBlockBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AccessEndpoints != nil {
-		ok := object.Key("AccessEndpoints")
-		if err := awsAwsjson11_serializeDocumentAccessEndpointList(v.AccessEndpoints, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisableIMDSV1 != nil {
-		ok := object.Key("DisableIMDSV1")
-		ok.Boolean(*v.DisableIMDSV1)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.EnableDefaultInternetAccess != nil {
-		ok := object.Key("EnableDefaultInternetAccess")
-		ok.Boolean(*v.EnableDefaultInternetAccess)
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.InstanceType != nil {
-		ok := object.Key("InstanceType")
-		ok.String(*v.InstanceType)
-	}
-
+func serializeCBOR_CreateAppBlockBuilderInput(v *CreateAppBlockBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
 	}
-
-	if len(v.Platform) > 0 {
-		ok := object.Key("Platform")
-		ok.String(string(v.Platform))
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
 	}
-
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
 	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
 		}
+		vm["Tags"] = ser
 	}
-
+	if len(v.Platform) > 0 {
+		ser, err := serializeCBOR_AppBlockBuilderPlatformType(v.Platform)
+		if err != nil {
+			return nil, err
+		}
+		vm["Platform"] = ser
+	}
+	if v.InstanceType != nil {
+		ser, err := serializeCBOR_String(*v.InstanceType)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceType"] = ser
+	}
 	if v.VpcConfig != nil {
-		ok := object.Key("VpcConfig")
-		if err := awsAwsjson11_serializeDocumentVpcConfig(v.VpcConfig, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_VpcConfig(v.VpcConfig)
+		if err != nil {
+			return nil, err
 		}
+		vm["VpcConfig"] = ser
 	}
-
-	return nil
+	if v.EnableDefaultInternetAccess != nil {
+		ser, err := serializeCBOR_Bool(*v.EnableDefaultInternetAccess)
+		if err != nil {
+			return nil, err
+		}
+		vm["EnableDefaultInternetAccess"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if v.AccessEndpoints != nil {
+		ser, err := serializeCBOR_AccessEndpointList(v.AccessEndpoints)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccessEndpoints"] = ser
+	}
+	if v.DisableIMDSV1 != nil {
+		ser, err := serializeCBOR_Bool(*v.DisableIMDSV1)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisableIMDSV1"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateAppBlockBuilderStreamingURLInput(v *CreateAppBlockBuilderStreamingURLInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_CreateAppBlockBuilderStreamingURLInput(v *CreateAppBlockBuilderStreamingURLInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.AppBlockBuilderName != nil {
-		ok := object.Key("AppBlockBuilderName")
-		ok.String(*v.AppBlockBuilderName)
+		ser, err := serializeCBOR_String(*v.AppBlockBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockBuilderName"] = ser
 	}
-
 	if v.Validity != nil {
-		ok := object.Key("Validity")
-		ok.Long(*v.Validity)
+		ser, err := serializeCBOR_Int64(*v.Validity)
+		if err != nil {
+			return nil, err
+		}
+		vm["Validity"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateAppBlockInput(v *CreateAppBlockInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
+func serializeCBOR_CreateAppBlockInput(v *CreateAppBlockInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if len(v.PackagingType) > 0 {
-		ok := object.Key("PackagingType")
-		ok.String(string(v.PackagingType))
-	}
-
-	if v.PostSetupScriptDetails != nil {
-		ok := object.Key("PostSetupScriptDetails")
-		if err := awsAwsjson11_serializeDocumentScriptDetails(v.PostSetupScriptDetails, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
 		}
+		vm["Name"] = ser
 	}
-
-	if v.SetupScriptDetails != nil {
-		ok := object.Key("SetupScriptDetails")
-		if err := awsAwsjson11_serializeDocumentScriptDetails(v.SetupScriptDetails, ok); err != nil {
-			return err
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
 		}
+		vm["Description"] = ser
 	}
-
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
 	if v.SourceS3Location != nil {
-		ok := object.Key("SourceS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.SourceS3Location, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_S3Location(v.SourceS3Location)
+		if err != nil {
+			return nil, err
 		}
+		vm["SourceS3Location"] = ser
 	}
-
+	if v.SetupScriptDetails != nil {
+		ser, err := serializeCBOR_ScriptDetails(v.SetupScriptDetails)
+		if err != nil {
+			return nil, err
+		}
+		vm["SetupScriptDetails"] = ser
+	}
 	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
 		}
+		vm["Tags"] = ser
 	}
-
-	return nil
+	if v.PostSetupScriptDetails != nil {
+		ser, err := serializeCBOR_ScriptDetails(v.PostSetupScriptDetails)
+		if err != nil {
+			return nil, err
+		}
+		vm["PostSetupScriptDetails"] = ser
+	}
+	if len(v.PackagingType) > 0 {
+		ser, err := serializeCBOR_PackagingType(v.PackagingType)
+		if err != nil {
+			return nil, err
+		}
+		vm["PackagingType"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateApplicationInput(v *CreateApplicationInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AppBlockArn != nil {
-		ok := object.Key("AppBlockArn")
-		ok.String(*v.AppBlockArn)
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.IconS3Location != nil {
-		ok := object.Key("IconS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.IconS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.InstanceFamilies != nil {
-		ok := object.Key("InstanceFamilies")
-		if err := awsAwsjson11_serializeDocumentStringList(v.InstanceFamilies, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.LaunchParameters != nil {
-		ok := object.Key("LaunchParameters")
-		ok.String(*v.LaunchParameters)
-	}
-
-	if v.LaunchPath != nil {
-		ok := object.Key("LaunchPath")
-		ok.String(*v.LaunchPath)
-	}
-
+func serializeCBOR_CreateApplicationInput(v *CreateApplicationInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
 	}
-
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.IconS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.IconS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["IconS3Location"] = ser
+	}
+	if v.LaunchPath != nil {
+		ser, err := serializeCBOR_String(*v.LaunchPath)
+		if err != nil {
+			return nil, err
+		}
+		vm["LaunchPath"] = ser
+	}
+	if v.WorkingDirectory != nil {
+		ser, err := serializeCBOR_String(*v.WorkingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		vm["WorkingDirectory"] = ser
+	}
+	if v.LaunchParameters != nil {
+		ser, err := serializeCBOR_String(*v.LaunchParameters)
+		if err != nil {
+			return nil, err
+		}
+		vm["LaunchParameters"] = ser
+	}
 	if v.Platforms != nil {
-		ok := object.Key("Platforms")
-		if err := awsAwsjson11_serializeDocumentPlatforms(v.Platforms, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_Platforms(v.Platforms)
+		if err != nil {
+			return nil, err
 		}
+		vm["Platforms"] = ser
 	}
-
+	if v.InstanceFamilies != nil {
+		ser, err := serializeCBOR_StringList(v.InstanceFamilies)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceFamilies"] = ser
+	}
+	if v.AppBlockArn != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockArn"] = ser
+	}
 	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
 		}
+		vm["Tags"] = ser
 	}
-
-	if v.WorkingDirectory != nil {
-		ok := object.Key("WorkingDirectory")
-		ok.String(*v.WorkingDirectory)
-	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateDirectoryConfigInput(v *CreateDirectoryConfigInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.CertificateBasedAuthProperties != nil {
-		ok := object.Key("CertificateBasedAuthProperties")
-		if err := awsAwsjson11_serializeDocumentCertificateBasedAuthProperties(v.CertificateBasedAuthProperties, ok); err != nil {
-			return err
-		}
-	}
-
+func serializeCBOR_CreateDirectoryConfigInput(v *CreateDirectoryConfigInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.DirectoryName != nil {
-		ok := object.Key("DirectoryName")
-		ok.String(*v.DirectoryName)
+		ser, err := serializeCBOR_String(*v.DirectoryName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DirectoryName"] = ser
 	}
-
 	if v.OrganizationalUnitDistinguishedNames != nil {
-		ok := object.Key("OrganizationalUnitDistinguishedNames")
-		if err := awsAwsjson11_serializeDocumentOrganizationalUnitDistinguishedNamesList(v.OrganizationalUnitDistinguishedNames, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_OrganizationalUnitDistinguishedNamesList(v.OrganizationalUnitDistinguishedNames)
+		if err != nil {
+			return nil, err
 		}
+		vm["OrganizationalUnitDistinguishedNames"] = ser
 	}
-
 	if v.ServiceAccountCredentials != nil {
-		ok := object.Key("ServiceAccountCredentials")
-		if err := awsAwsjson11_serializeDocumentServiceAccountCredentials(v.ServiceAccountCredentials, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_ServiceAccountCredentials(v.ServiceAccountCredentials)
+		if err != nil {
+			return nil, err
 		}
+		vm["ServiceAccountCredentials"] = ser
 	}
-
-	return nil
+	if v.CertificateBasedAuthProperties != nil {
+		ser, err := serializeCBOR_CertificateBasedAuthProperties(v.CertificateBasedAuthProperties)
+		if err != nil {
+			return nil, err
+		}
+		vm["CertificateBasedAuthProperties"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateEntitlementInput(v *CreateEntitlementInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AppVisibility) > 0 {
-		ok := object.Key("AppVisibility")
-		ok.String(string(v.AppVisibility))
-	}
-
-	if v.Attributes != nil {
-		ok := object.Key("Attributes")
-		if err := awsAwsjson11_serializeDocumentEntitlementAttributeList(v.Attributes, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
+func serializeCBOR_CreateEntitlementInput(v *CreateEntitlementInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
 	}
-
 	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
 	}
-
-	return nil
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if len(v.AppVisibility) > 0 {
+		ser, err := serializeCBOR_AppVisibility(v.AppVisibility)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppVisibility"] = ser
+	}
+	if v.Attributes != nil {
+		ser, err := serializeCBOR_EntitlementAttributeList(v.Attributes)
+		if err != nil {
+			return nil, err
+		}
+		vm["Attributes"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateExportImageTaskInput(v *CreateExportImageTaskInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AmiDescription != nil {
-		ok := object.Key("AmiDescription")
-		ok.String(*v.AmiDescription)
+func serializeCBOR_CreateExportImageTaskInput(v *CreateExportImageTaskInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ImageName != nil {
+		ser, err := serializeCBOR_String(*v.ImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageName"] = ser
 	}
-
 	if v.AmiName != nil {
-		ok := object.Key("AmiName")
-		ok.String(*v.AmiName)
+		ser, err := serializeCBOR_String(*v.AmiName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AmiName"] = ser
 	}
-
 	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
 	}
-
-	if v.ImageName != nil {
-		ok := object.Key("ImageName")
-		ok.String(*v.ImageName)
-	}
-
 	if v.TagSpecifications != nil {
-		ok := object.Key("TagSpecifications")
-		if err := awsAwsjson11_serializeDocumentTags(v.TagSpecifications, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_Tags(v.TagSpecifications)
+		if err != nil {
+			return nil, err
 		}
+		vm["TagSpecifications"] = ser
 	}
-
-	return nil
+	if v.AmiDescription != nil {
+		ser, err := serializeCBOR_String(*v.AmiDescription)
+		if err != nil {
+			return nil, err
+		}
+		vm["AmiDescription"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentCreateFleetInput(v *CreateFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ComputeCapacity != nil {
-		ok := object.Key("ComputeCapacity")
-		if err := awsAwsjson11_serializeDocumentComputeCapacity(v.ComputeCapacity, ok); err != nil {
-			return err
+func serializeCBOR_CreateFleetInput(v *CreateFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
 		}
+		vm["Name"] = ser
 	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisableIMDSV1 != nil {
-		ok := object.Key("DisableIMDSV1")
-		ok.Boolean(*v.DisableIMDSV1)
-	}
-
-	if v.DisconnectTimeoutInSeconds != nil {
-		ok := object.Key("DisconnectTimeoutInSeconds")
-		ok.Integer(*v.DisconnectTimeoutInSeconds)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.DomainJoinInfo != nil {
-		ok := object.Key("DomainJoinInfo")
-		if err := awsAwsjson11_serializeDocumentDomainJoinInfo(v.DomainJoinInfo, ok); err != nil {
-			return err
+	if v.ImageName != nil {
+		ser, err := serializeCBOR_String(*v.ImageName)
+		if err != nil {
+			return nil, err
 		}
+		vm["ImageName"] = ser
 	}
-
-	if v.EnableDefaultInternetAccess != nil {
-		ok := object.Key("EnableDefaultInternetAccess")
-		ok.Boolean(*v.EnableDefaultInternetAccess)
+	if v.ImageArn != nil {
+		ser, err := serializeCBOR_String(*v.ImageArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageArn"] = ser
 	}
-
+	if v.InstanceType != nil {
+		ser, err := serializeCBOR_String(*v.InstanceType)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceType"] = ser
+	}
 	if len(v.FleetType) > 0 {
-		ok := object.Key("FleetType")
-		ok.String(string(v.FleetType))
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.IdleDisconnectTimeoutInSeconds != nil {
-		ok := object.Key("IdleDisconnectTimeoutInSeconds")
-		ok.Integer(*v.IdleDisconnectTimeoutInSeconds)
-	}
-
-	if v.ImageArn != nil {
-		ok := object.Key("ImageArn")
-		ok.String(*v.ImageArn)
-	}
-
-	if v.ImageName != nil {
-		ok := object.Key("ImageName")
-		ok.String(*v.ImageName)
-	}
-
-	if v.InstanceType != nil {
-		ok := object.Key("InstanceType")
-		ok.String(*v.InstanceType)
-	}
-
-	if v.MaxConcurrentSessions != nil {
-		ok := object.Key("MaxConcurrentSessions")
-		ok.Integer(*v.MaxConcurrentSessions)
-	}
-
-	if v.MaxSessionsPerInstance != nil {
-		ok := object.Key("MaxSessionsPerInstance")
-		ok.Integer(*v.MaxSessionsPerInstance)
-	}
-
-	if v.MaxUserDurationInSeconds != nil {
-		ok := object.Key("MaxUserDurationInSeconds")
-		ok.Integer(*v.MaxUserDurationInSeconds)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if len(v.Platform) > 0 {
-		ok := object.Key("Platform")
-		ok.String(string(v.Platform))
-	}
-
-	if v.RootVolumeConfig != nil {
-		ok := object.Key("RootVolumeConfig")
-		if err := awsAwsjson11_serializeDocumentVolumeConfig(v.RootVolumeConfig, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_FleetType(v.FleetType)
+		if err != nil {
+			return nil, err
 		}
+		vm["FleetType"] = ser
 	}
-
-	if v.SessionScriptS3Location != nil {
-		ok := object.Key("SessionScriptS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.SessionScriptS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if len(v.StreamView) > 0 {
-		ok := object.Key("StreamView")
-		ok.String(string(v.StreamView))
-	}
-
-	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.UsbDeviceFilterStrings != nil {
-		ok := object.Key("UsbDeviceFilterStrings")
-		if err := awsAwsjson11_serializeDocumentUsbDeviceFilterStrings(v.UsbDeviceFilterStrings, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.VpcConfig != nil {
-		ok := object.Key("VpcConfig")
-		if err := awsAwsjson11_serializeDocumentVpcConfig(v.VpcConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateImageBuilderInput(v *CreateImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AccessEndpoints != nil {
-		ok := object.Key("AccessEndpoints")
-		if err := awsAwsjson11_serializeDocumentAccessEndpointList(v.AccessEndpoints, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.AppstreamAgentVersion != nil {
-		ok := object.Key("AppstreamAgentVersion")
-		ok.String(*v.AppstreamAgentVersion)
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisableIMDSV1 != nil {
-		ok := object.Key("DisableIMDSV1")
-		ok.Boolean(*v.DisableIMDSV1)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.DomainJoinInfo != nil {
-		ok := object.Key("DomainJoinInfo")
-		if err := awsAwsjson11_serializeDocumentDomainJoinInfo(v.DomainJoinInfo, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.EnableDefaultInternetAccess != nil {
-		ok := object.Key("EnableDefaultInternetAccess")
-		ok.Boolean(*v.EnableDefaultInternetAccess)
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.ImageArn != nil {
-		ok := object.Key("ImageArn")
-		ok.String(*v.ImageArn)
-	}
-
-	if v.ImageName != nil {
-		ok := object.Key("ImageName")
-		ok.String(*v.ImageName)
-	}
-
-	if v.InstanceType != nil {
-		ok := object.Key("InstanceType")
-		ok.String(*v.InstanceType)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.RootVolumeConfig != nil {
-		ok := object.Key("RootVolumeConfig")
-		if err := awsAwsjson11_serializeDocumentVolumeConfig(v.RootVolumeConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.SoftwaresToInstall != nil {
-		ok := object.Key("SoftwaresToInstall")
-		if err := awsAwsjson11_serializeDocumentStringList(v.SoftwaresToInstall, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.SoftwaresToUninstall != nil {
-		ok := object.Key("SoftwaresToUninstall")
-		if err := awsAwsjson11_serializeDocumentStringList(v.SoftwaresToUninstall, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.VpcConfig != nil {
-		ok := object.Key("VpcConfig")
-		if err := awsAwsjson11_serializeDocumentVpcConfig(v.VpcConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateImageBuilderStreamingURLInput(v *CreateImageBuilderStreamingURLInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.Validity != nil {
-		ok := object.Key("Validity")
-		ok.Long(*v.Validity)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateImportedImageInput(v *CreateImportedImageInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AgentSoftwareVersion) > 0 {
-		ok := object.Key("AgentSoftwareVersion")
-		ok.String(string(v.AgentSoftwareVersion))
-	}
-
-	if v.AppCatalogConfig != nil {
-		ok := object.Key("AppCatalogConfig")
-		if err := awsAwsjson11_serializeDocumentAppCatalogConfig(v.AppCatalogConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.DryRun != nil {
-		ok := object.Key("DryRun")
-		ok.Boolean(*v.DryRun)
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.RuntimeValidationConfig != nil {
-		ok := object.Key("RuntimeValidationConfig")
-		if err := awsAwsjson11_serializeDocumentRuntimeValidationConfig(v.RuntimeValidationConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.SourceAmiId != nil {
-		ok := object.Key("SourceAmiId")
-		ok.String(*v.SourceAmiId)
-	}
-
-	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.WorkspaceImageId != nil {
-		ok := object.Key("WorkspaceImageId")
-		ok.String(*v.WorkspaceImageId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateStackInput(v *CreateStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AccessEndpoints != nil {
-		ok := object.Key("AccessEndpoints")
-		if err := awsAwsjson11_serializeDocumentAccessEndpointList(v.AccessEndpoints, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.AgentAccessConfig != nil {
-		ok := object.Key("AgentAccessConfig")
-		if err := awsAwsjson11_serializeDocumentAgentAccessConfig(v.AgentAccessConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.ApplicationSettings != nil {
-		ok := object.Key("ApplicationSettings")
-		if err := awsAwsjson11_serializeDocumentApplicationSettings(v.ApplicationSettings, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.ContentRedirection != nil {
-		ok := object.Key("ContentRedirection")
-		if err := awsAwsjson11_serializeDocumentContentRedirection(v.ContentRedirection, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.EmbedHostDomains != nil {
-		ok := object.Key("EmbedHostDomains")
-		if err := awsAwsjson11_serializeDocumentEmbedHostDomains(v.EmbedHostDomains, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.FeedbackURL != nil {
-		ok := object.Key("FeedbackURL")
-		ok.String(*v.FeedbackURL)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.RedirectURL != nil {
-		ok := object.Key("RedirectURL")
-		ok.String(*v.RedirectURL)
-	}
-
-	if v.StorageConnectors != nil {
-		ok := object.Key("StorageConnectors")
-		if err := awsAwsjson11_serializeDocumentStorageConnectorList(v.StorageConnectors, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.StreamingExperienceSettings != nil {
-		ok := object.Key("StreamingExperienceSettings")
-		if err := awsAwsjson11_serializeDocumentStreamingExperienceSettings(v.StreamingExperienceSettings, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.UserSettings != nil {
-		ok := object.Key("UserSettings")
-		if err := awsAwsjson11_serializeDocumentUserSettingList(v.UserSettings, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateStreamingURLInput(v *CreateStreamingURLInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ApplicationId != nil {
-		ok := object.Key("ApplicationId")
-		ok.String(*v.ApplicationId)
-	}
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	if v.SessionContext != nil {
-		ok := object.Key("SessionContext")
-		ok.String(*v.SessionContext)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	if v.UserId != nil {
-		ok := object.Key("UserId")
-		ok.String(*v.UserId)
-	}
-
-	if v.Validity != nil {
-		ok := object.Key("Validity")
-		ok.Long(*v.Validity)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateThemeForStackInput(v *CreateThemeForStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.FaviconS3Location != nil {
-		ok := object.Key("FaviconS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.FaviconS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.FooterLinks != nil {
-		ok := object.Key("FooterLinks")
-		if err := awsAwsjson11_serializeDocumentThemeFooterLinks(v.FooterLinks, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.OrganizationLogoS3Location != nil {
-		ok := object.Key("OrganizationLogoS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.OrganizationLogoS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	if len(v.ThemeStyling) > 0 {
-		ok := object.Key("ThemeStyling")
-		ok.String(string(v.ThemeStyling))
-	}
-
-	if v.TitleText != nil {
-		ok := object.Key("TitleText")
-		ok.String(*v.TitleText)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateUpdatedImageInput(v *CreateUpdatedImageInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.DryRun != nil {
-		ok := object.Key("dryRun")
-		ok.Boolean(*v.DryRun)
-	}
-
-	if v.ExistingImageName != nil {
-		ok := object.Key("existingImageName")
-		ok.String(*v.ExistingImageName)
-	}
-
-	if v.NewImageDescription != nil {
-		ok := object.Key("newImageDescription")
-		ok.String(*v.NewImageDescription)
-	}
-
-	if v.NewImageDisplayName != nil {
-		ok := object.Key("newImageDisplayName")
-		ok.String(*v.NewImageDisplayName)
-	}
-
-	if v.NewImageName != nil {
-		ok := object.Key("newImageName")
-		ok.String(*v.NewImageName)
-	}
-
-	if v.NewImageTags != nil {
-		ok := object.Key("newImageTags")
-		if err := awsAwsjson11_serializeDocumentTags(v.NewImageTags, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateUsageReportSubscriptionInput(v *CreateUsageReportSubscriptionInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentCreateUserInput(v *CreateUserInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.FirstName != nil {
-		ok := object.Key("FirstName")
-		ok.String(*v.FirstName)
-	}
-
-	if v.LastName != nil {
-		ok := object.Key("LastName")
-		ok.String(*v.LastName)
-	}
-
-	if len(v.MessageAction) > 0 {
-		ok := object.Key("MessageAction")
-		ok.String(string(v.MessageAction))
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteAppBlockBuilderInput(v *DeleteAppBlockBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteAppBlockInput(v *DeleteAppBlockInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteApplicationInput(v *DeleteApplicationInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteDirectoryConfigInput(v *DeleteDirectoryConfigInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.DirectoryName != nil {
-		ok := object.Key("DirectoryName")
-		ok.String(*v.DirectoryName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteEntitlementInput(v *DeleteEntitlementInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteFleetInput(v *DeleteFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteImageBuilderInput(v *DeleteImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteImageInput(v *DeleteImageInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteImagePermissionsInput(v *DeleteImagePermissionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.SharedAccountId != nil {
-		ok := object.Key("SharedAccountId")
-		ok.String(*v.SharedAccountId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteStackInput(v *DeleteStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteThemeForStackInput(v *DeleteThemeForStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteUsageReportSubscriptionInput(v *DeleteUsageReportSubscriptionInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDeleteUserInput(v *DeleteUserInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeAppBlockBuilderAppBlockAssociationsInput(v *DescribeAppBlockBuilderAppBlockAssociationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AppBlockArn != nil {
-		ok := object.Key("AppBlockArn")
-		ok.String(*v.AppBlockArn)
-	}
-
-	if v.AppBlockBuilderName != nil {
-		ok := object.Key("AppBlockBuilderName")
-		ok.String(*v.AppBlockBuilderName)
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeAppBlockBuildersInput(v *DescribeAppBlockBuildersInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.Names != nil {
-		ok := object.Key("Names")
-		if err := awsAwsjson11_serializeDocumentStringList(v.Names, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeAppBlocksInput(v *DescribeAppBlocksInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Arns != nil {
-		ok := object.Key("Arns")
-		if err := awsAwsjson11_serializeDocumentArnList(v.Arns, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeApplicationFleetAssociationsInput(v *DescribeApplicationFleetAssociationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ApplicationArn != nil {
-		ok := object.Key("ApplicationArn")
-		ok.String(*v.ApplicationArn)
-	}
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeApplicationsInput(v *DescribeApplicationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Arns != nil {
-		ok := object.Key("Arns")
-		if err := awsAwsjson11_serializeDocumentArnList(v.Arns, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeAppLicenseUsageInput(v *DescribeAppLicenseUsageInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.BillingPeriod != nil {
-		ok := object.Key("BillingPeriod")
-		ok.String(*v.BillingPeriod)
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeDirectoryConfigsInput(v *DescribeDirectoryConfigsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.DirectoryNames != nil {
-		ok := object.Key("DirectoryNames")
-		if err := awsAwsjson11_serializeDocumentDirectoryNameList(v.DirectoryNames, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeEntitlementsInput(v *DescribeEntitlementsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeFleetsInput(v *DescribeFleetsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Names != nil {
-		ok := object.Key("Names")
-		if err := awsAwsjson11_serializeDocumentStringList(v.Names, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeImageBuildersInput(v *DescribeImageBuildersInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.Names != nil {
-		ok := object.Key("Names")
-		if err := awsAwsjson11_serializeDocumentStringList(v.Names, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeImagePermissionsInput(v *DescribeImagePermissionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.SharedAwsAccountIds != nil {
-		ok := object.Key("SharedAwsAccountIds")
-		if err := awsAwsjson11_serializeDocumentAwsAccountIdList(v.SharedAwsAccountIds, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeImagesInput(v *DescribeImagesInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Arns != nil {
-		ok := object.Key("Arns")
-		if err := awsAwsjson11_serializeDocumentArnList(v.Arns, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.Names != nil {
-		ok := object.Key("Names")
-		if err := awsAwsjson11_serializeDocumentStringList(v.Names, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if len(v.Type) > 0 {
-		ok := object.Key("Type")
-		ok.String(string(v.Type))
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeSessionsInput(v *DescribeSessionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	if v.InstanceId != nil {
-		ok := object.Key("InstanceId")
-		ok.String(*v.InstanceId)
-	}
-
-	if v.Limit != nil {
-		ok := object.Key("Limit")
-		ok.Integer(*v.Limit)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	if v.UserId != nil {
-		ok := object.Key("UserId")
-		ok.String(*v.UserId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeSoftwareAssociationsInput(v *DescribeSoftwareAssociationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AssociatedResource != nil {
-		ok := object.Key("AssociatedResource")
-		ok.String(*v.AssociatedResource)
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeStacksInput(v *DescribeStacksInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Names != nil {
-		ok := object.Key("Names")
-		if err := awsAwsjson11_serializeDocumentStringList(v.Names, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeThemeForStackInput(v *DescribeThemeForStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeUsageReportSubscriptionsInput(v *DescribeUsageReportSubscriptionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeUsersInput(v *DescribeUsersInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDescribeUserStackAssociationsInput(v *DescribeUserStackAssociationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisableUserInput(v *DisableUserInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisassociateAppBlockBuilderAppBlockInput(v *DisassociateAppBlockBuilderAppBlockInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AppBlockArn != nil {
-		ok := object.Key("AppBlockArn")
-		ok.String(*v.AppBlockArn)
-	}
-
-	if v.AppBlockBuilderName != nil {
-		ok := object.Key("AppBlockBuilderName")
-		ok.String(*v.AppBlockBuilderName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisassociateApplicationFleetInput(v *DisassociateApplicationFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ApplicationArn != nil {
-		ok := object.Key("ApplicationArn")
-		ok.String(*v.ApplicationArn)
-	}
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisassociateApplicationFromEntitlementInput(v *DisassociateApplicationFromEntitlementInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ApplicationIdentifier != nil {
-		ok := object.Key("ApplicationIdentifier")
-		ok.String(*v.ApplicationIdentifier)
-	}
-
-	if v.EntitlementName != nil {
-		ok := object.Key("EntitlementName")
-		ok.String(*v.EntitlementName)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisassociateFleetInput(v *DisassociateFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDisassociateSoftwareFromImageBuilderInput(v *DisassociateSoftwareFromImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ImageBuilderName != nil {
-		ok := object.Key("ImageBuilderName")
-		ok.String(*v.ImageBuilderName)
-	}
-
-	if v.SoftwareNames != nil {
-		ok := object.Key("SoftwareNames")
-		if err := awsAwsjson11_serializeDocumentStringList(v.SoftwareNames, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentDrainSessionInstanceInput(v *DrainSessionInstanceInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.SessionId != nil {
-		ok := object.Key("SessionId")
-		ok.String(*v.SessionId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentEnableUserInput(v *EnableUserInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AuthenticationType) > 0 {
-		ok := object.Key("AuthenticationType")
-		ok.String(string(v.AuthenticationType))
-	}
-
-	if v.UserName != nil {
-		ok := object.Key("UserName")
-		ok.String(*v.UserName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentExpireSessionInput(v *ExpireSessionInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.SessionId != nil {
-		ok := object.Key("SessionId")
-		ok.String(*v.SessionId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentGetExportImageTaskInput(v *GetExportImageTaskInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.TaskId != nil {
-		ok := object.Key("TaskId")
-		ok.String(*v.TaskId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentListAssociatedFleetsInput(v *ListAssociatedFleetsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentListAssociatedStacksInput(v *ListAssociatedStacksInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.FleetName != nil {
-		ok := object.Key("FleetName")
-		ok.String(*v.FleetName)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentListEntitledApplicationsInput(v *ListEntitledApplicationsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.EntitlementName != nil {
-		ok := object.Key("EntitlementName")
-		ok.String(*v.EntitlementName)
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentListExportImageTasksInput(v *ListExportImageTasksInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Filters != nil {
-		ok := object.Key("Filters")
-		if err := awsAwsjson11_serializeDocumentFilters(v.Filters, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.MaxResults != nil {
-		ok := object.Key("MaxResults")
-		ok.Integer(*v.MaxResults)
-	}
-
-	if v.NextToken != nil {
-		ok := object.Key("NextToken")
-		ok.String(*v.NextToken)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentListTagsForResourceInput(v *ListTagsForResourceInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ResourceArn != nil {
-		ok := object.Key("ResourceArn")
-		ok.String(*v.ResourceArn)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStartAppBlockBuilderInput(v *StartAppBlockBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStartFleetInput(v *StartFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStartImageBuilderInput(v *StartImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AppstreamAgentVersion != nil {
-		ok := object.Key("AppstreamAgentVersion")
-		ok.String(*v.AppstreamAgentVersion)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStartSoftwareDeploymentToImageBuilderInput(v *StartSoftwareDeploymentToImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ImageBuilderName != nil {
-		ok := object.Key("ImageBuilderName")
-		ok.String(*v.ImageBuilderName)
-	}
-
-	if v.RetryFailedDeployments != nil {
-		ok := object.Key("RetryFailedDeployments")
-		ok.Boolean(*v.RetryFailedDeployments)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStopAppBlockBuilderInput(v *StopAppBlockBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStopFleetInput(v *StopFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentStopImageBuilderInput(v *StopImageBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentTagResourceInput(v *TagResourceInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ResourceArn != nil {
-		ok := object.Key("ResourceArn")
-		ok.String(*v.ResourceArn)
-	}
-
-	if v.Tags != nil {
-		ok := object.Key("Tags")
-		if err := awsAwsjson11_serializeDocumentTags(v.Tags, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUntagResourceInput(v *UntagResourceInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ResourceArn != nil {
-		ok := object.Key("ResourceArn")
-		ok.String(*v.ResourceArn)
-	}
-
-	if v.TagKeys != nil {
-		ok := object.Key("TagKeys")
-		if err := awsAwsjson11_serializeDocumentTagKeyList(v.TagKeys, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateAppBlockBuilderInput(v *UpdateAppBlockBuilderInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AccessEndpoints != nil {
-		ok := object.Key("AccessEndpoints")
-		if err := awsAwsjson11_serializeDocumentAccessEndpointList(v.AccessEndpoints, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.AttributesToDelete != nil {
-		ok := object.Key("AttributesToDelete")
-		if err := awsAwsjson11_serializeDocumentAppBlockBuilderAttributes(v.AttributesToDelete, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisableIMDSV1 != nil {
-		ok := object.Key("DisableIMDSV1")
-		ok.Boolean(*v.DisableIMDSV1)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.EnableDefaultInternetAccess != nil {
-		ok := object.Key("EnableDefaultInternetAccess")
-		ok.Boolean(*v.EnableDefaultInternetAccess)
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.InstanceType != nil {
-		ok := object.Key("InstanceType")
-		ok.String(*v.InstanceType)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if len(v.Platform) > 0 {
-		ok := object.Key("Platform")
-		ok.String(string(v.Platform))
-	}
-
-	if v.VpcConfig != nil {
-		ok := object.Key("VpcConfig")
-		if err := awsAwsjson11_serializeDocumentVpcConfig(v.VpcConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateApplicationInput(v *UpdateApplicationInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AppBlockArn != nil {
-		ok := object.Key("AppBlockArn")
-		ok.String(*v.AppBlockArn)
-	}
-
-	if v.AttributesToDelete != nil {
-		ok := object.Key("AttributesToDelete")
-		if err := awsAwsjson11_serializeDocumentApplicationAttributes(v.AttributesToDelete, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.IconS3Location != nil {
-		ok := object.Key("IconS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.IconS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.LaunchParameters != nil {
-		ok := object.Key("LaunchParameters")
-		ok.String(*v.LaunchParameters)
-	}
-
-	if v.LaunchPath != nil {
-		ok := object.Key("LaunchPath")
-		ok.String(*v.LaunchPath)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.WorkingDirectory != nil {
-		ok := object.Key("WorkingDirectory")
-		ok.String(*v.WorkingDirectory)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateDirectoryConfigInput(v *UpdateDirectoryConfigInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.CertificateBasedAuthProperties != nil {
-		ok := object.Key("CertificateBasedAuthProperties")
-		if err := awsAwsjson11_serializeDocumentCertificateBasedAuthProperties(v.CertificateBasedAuthProperties, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.DirectoryName != nil {
-		ok := object.Key("DirectoryName")
-		ok.String(*v.DirectoryName)
-	}
-
-	if v.OrganizationalUnitDistinguishedNames != nil {
-		ok := object.Key("OrganizationalUnitDistinguishedNames")
-		if err := awsAwsjson11_serializeDocumentOrganizationalUnitDistinguishedNamesList(v.OrganizationalUnitDistinguishedNames, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.ServiceAccountCredentials != nil {
-		ok := object.Key("ServiceAccountCredentials")
-		if err := awsAwsjson11_serializeDocumentServiceAccountCredentials(v.ServiceAccountCredentials, ok); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateEntitlementInput(v *UpdateEntitlementInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if len(v.AppVisibility) > 0 {
-		ok := object.Key("AppVisibility")
-		ok.String(string(v.AppVisibility))
-	}
-
-	if v.Attributes != nil {
-		ok := object.Key("Attributes")
-		if err := awsAwsjson11_serializeDocumentEntitlementAttributeList(v.Attributes, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateFleetInput(v *UpdateFleetInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AttributesToDelete != nil {
-		ok := object.Key("AttributesToDelete")
-		if err := awsAwsjson11_serializeDocumentFleetAttributes(v.AttributesToDelete, ok); err != nil {
-			return err
-		}
-	}
-
 	if v.ComputeCapacity != nil {
-		ok := object.Key("ComputeCapacity")
-		if err := awsAwsjson11_serializeDocumentComputeCapacity(v.ComputeCapacity, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_ComputeCapacity(v.ComputeCapacity)
+		if err != nil {
+			return nil, err
 		}
+		vm["ComputeCapacity"] = ser
 	}
-
-	if v.DeleteVpcConfig != nil {
-		ok := object.Key("DeleteVpcConfig")
-		ok.Boolean(*v.DeleteVpcConfig)
-	}
-
-	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
-	}
-
-	if v.DisableIMDSV1 != nil {
-		ok := object.Key("DisableIMDSV1")
-		ok.Boolean(*v.DisableIMDSV1)
-	}
-
-	if v.DisconnectTimeoutInSeconds != nil {
-		ok := object.Key("DisconnectTimeoutInSeconds")
-		ok.Integer(*v.DisconnectTimeoutInSeconds)
-	}
-
-	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.DomainJoinInfo != nil {
-		ok := object.Key("DomainJoinInfo")
-		if err := awsAwsjson11_serializeDocumentDomainJoinInfo(v.DomainJoinInfo, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.EnableDefaultInternetAccess != nil {
-		ok := object.Key("EnableDefaultInternetAccess")
-		ok.Boolean(*v.EnableDefaultInternetAccess)
-	}
-
-	if v.IamRoleArn != nil {
-		ok := object.Key("IamRoleArn")
-		ok.String(*v.IamRoleArn)
-	}
-
-	if v.IdleDisconnectTimeoutInSeconds != nil {
-		ok := object.Key("IdleDisconnectTimeoutInSeconds")
-		ok.Integer(*v.IdleDisconnectTimeoutInSeconds)
-	}
-
-	if v.ImageArn != nil {
-		ok := object.Key("ImageArn")
-		ok.String(*v.ImageArn)
-	}
-
-	if v.ImageName != nil {
-		ok := object.Key("ImageName")
-		ok.String(*v.ImageName)
-	}
-
-	if v.InstanceType != nil {
-		ok := object.Key("InstanceType")
-		ok.String(*v.InstanceType)
-	}
-
-	if v.MaxConcurrentSessions != nil {
-		ok := object.Key("MaxConcurrentSessions")
-		ok.Integer(*v.MaxConcurrentSessions)
-	}
-
-	if v.MaxSessionsPerInstance != nil {
-		ok := object.Key("MaxSessionsPerInstance")
-		ok.Integer(*v.MaxSessionsPerInstance)
-	}
-
-	if v.MaxUserDurationInSeconds != nil {
-		ok := object.Key("MaxUserDurationInSeconds")
-		ok.Integer(*v.MaxUserDurationInSeconds)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if len(v.Platform) > 0 {
-		ok := object.Key("Platform")
-		ok.String(string(v.Platform))
-	}
-
-	if v.RootVolumeConfig != nil {
-		ok := object.Key("RootVolumeConfig")
-		if err := awsAwsjson11_serializeDocumentVolumeConfig(v.RootVolumeConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.SessionScriptS3Location != nil {
-		ok := object.Key("SessionScriptS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.SessionScriptS3Location, ok); err != nil {
-			return err
-		}
-	}
-
-	if len(v.StreamView) > 0 {
-		ok := object.Key("StreamView")
-		ok.String(string(v.StreamView))
-	}
-
-	if v.UsbDeviceFilterStrings != nil {
-		ok := object.Key("UsbDeviceFilterStrings")
-		if err := awsAwsjson11_serializeDocumentUsbDeviceFilterStrings(v.UsbDeviceFilterStrings, ok); err != nil {
-			return err
-		}
-	}
-
 	if v.VpcConfig != nil {
-		ok := object.Key("VpcConfig")
-		if err := awsAwsjson11_serializeDocumentVpcConfig(v.VpcConfig, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_VpcConfig(v.VpcConfig)
+		if err != nil {
+			return nil, err
 		}
+		vm["VpcConfig"] = ser
 	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateImagePermissionsInput(v *UpdateImagePermissionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.ImagePermissions != nil {
-		ok := object.Key("ImagePermissions")
-		if err := awsAwsjson11_serializeDocumentImagePermissions(v.ImagePermissions, ok); err != nil {
-			return err
+	if v.MaxUserDurationInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxUserDurationInSeconds)
+		if err != nil {
+			return nil, err
 		}
+		vm["MaxUserDurationInSeconds"] = ser
 	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.SharedAccountId != nil {
-		ok := object.Key("SharedAccountId")
-		ok.String(*v.SharedAccountId)
-	}
-
-	return nil
-}
-
-func awsAwsjson11_serializeOpDocumentUpdateStackInput(v *UpdateStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AccessEndpoints != nil {
-		ok := object.Key("AccessEndpoints")
-		if err := awsAwsjson11_serializeDocumentAccessEndpointList(v.AccessEndpoints, ok); err != nil {
-			return err
+	if v.DisconnectTimeoutInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.DisconnectTimeoutInSeconds)
+		if err != nil {
+			return nil, err
 		}
+		vm["DisconnectTimeoutInSeconds"] = ser
 	}
-
-	if v.AgentAccessConfig != nil {
-		ok := object.Key("AgentAccessConfig")
-		if err := awsAwsjson11_serializeDocumentAgentAccessConfigForUpdate(v.AgentAccessConfig, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.ApplicationSettings != nil {
-		ok := object.Key("ApplicationSettings")
-		if err := awsAwsjson11_serializeDocumentApplicationSettings(v.ApplicationSettings, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.AttributesToDelete != nil {
-		ok := object.Key("AttributesToDelete")
-		if err := awsAwsjson11_serializeDocumentStackAttributes(v.AttributesToDelete, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.ContentRedirection != nil {
-		ok := object.Key("ContentRedirection")
-		if err := awsAwsjson11_serializeDocumentContentRedirection(v.ContentRedirection, ok); err != nil {
-			return err
-		}
-	}
-
-	if v.DeleteStorageConnectors != nil {
-		ok := object.Key("DeleteStorageConnectors")
-		ok.Boolean(*v.DeleteStorageConnectors)
-	}
-
 	if v.Description != nil {
-		ok := object.Key("Description")
-		ok.String(*v.Description)
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
 	}
-
 	if v.DisplayName != nil {
-		ok := object.Key("DisplayName")
-		ok.String(*v.DisplayName)
-	}
-
-	if v.EmbedHostDomains != nil {
-		ok := object.Key("EmbedHostDomains")
-		if err := awsAwsjson11_serializeDocumentEmbedHostDomains(v.EmbedHostDomains, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
 		}
+		vm["DisplayName"] = ser
 	}
-
-	if v.FeedbackURL != nil {
-		ok := object.Key("FeedbackURL")
-		ok.String(*v.FeedbackURL)
-	}
-
-	if v.Name != nil {
-		ok := object.Key("Name")
-		ok.String(*v.Name)
-	}
-
-	if v.RedirectURL != nil {
-		ok := object.Key("RedirectURL")
-		ok.String(*v.RedirectURL)
-	}
-
-	if v.StorageConnectors != nil {
-		ok := object.Key("StorageConnectors")
-		if err := awsAwsjson11_serializeDocumentStorageConnectorList(v.StorageConnectors, ok); err != nil {
-			return err
+	if v.EnableDefaultInternetAccess != nil {
+		ser, err := serializeCBOR_Bool(*v.EnableDefaultInternetAccess)
+		if err != nil {
+			return nil, err
 		}
+		vm["EnableDefaultInternetAccess"] = ser
 	}
-
-	if v.StreamingExperienceSettings != nil {
-		ok := object.Key("StreamingExperienceSettings")
-		if err := awsAwsjson11_serializeDocumentStreamingExperienceSettings(v.StreamingExperienceSettings, ok); err != nil {
-			return err
+	if v.DomainJoinInfo != nil {
+		ser, err := serializeCBOR_DomainJoinInfo(v.DomainJoinInfo)
+		if err != nil {
+			return nil, err
 		}
+		vm["DomainJoinInfo"] = ser
 	}
-
-	if v.UserSettings != nil {
-		ok := object.Key("UserSettings")
-		if err := awsAwsjson11_serializeDocumentUserSettingList(v.UserSettings, ok); err != nil {
-			return err
+	if v.Tags != nil {
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
 		}
+		vm["Tags"] = ser
 	}
-
-	return nil
+	if v.IdleDisconnectTimeoutInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.IdleDisconnectTimeoutInSeconds)
+		if err != nil {
+			return nil, err
+		}
+		vm["IdleDisconnectTimeoutInSeconds"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if len(v.StreamView) > 0 {
+		ser, err := serializeCBOR_StreamView(v.StreamView)
+		if err != nil {
+			return nil, err
+		}
+		vm["StreamView"] = ser
+	}
+	if len(v.Platform) > 0 {
+		ser, err := serializeCBOR_PlatformType(v.Platform)
+		if err != nil {
+			return nil, err
+		}
+		vm["Platform"] = ser
+	}
+	if v.MaxConcurrentSessions != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxConcurrentSessions)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxConcurrentSessions"] = ser
+	}
+	if v.UsbDeviceFilterStrings != nil {
+		ser, err := serializeCBOR_UsbDeviceFilterStrings(v.UsbDeviceFilterStrings)
+		if err != nil {
+			return nil, err
+		}
+		vm["UsbDeviceFilterStrings"] = ser
+	}
+	if v.SessionScriptS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.SessionScriptS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["SessionScriptS3Location"] = ser
+	}
+	if v.MaxSessionsPerInstance != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxSessionsPerInstance)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxSessionsPerInstance"] = ser
+	}
+	if v.RootVolumeConfig != nil {
+		ser, err := serializeCBOR_VolumeConfig(v.RootVolumeConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["RootVolumeConfig"] = ser
+	}
+	if v.DisableIMDSV1 != nil {
+		ser, err := serializeCBOR_Bool(*v.DisableIMDSV1)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisableIMDSV1"] = ser
+	}
+	return vm, nil
 }
 
-func awsAwsjson11_serializeOpDocumentUpdateThemeForStackInput(v *UpdateThemeForStackInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
-	if v.AttributesToDelete != nil {
-		ok := object.Key("AttributesToDelete")
-		if err := awsAwsjson11_serializeDocumentThemeAttributes(v.AttributesToDelete, ok); err != nil {
-			return err
+func serializeCBOR_CreateImageBuilderInput(v *CreateImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
 		}
+		vm["Name"] = ser
 	}
-
-	if v.FaviconS3Location != nil {
-		ok := object.Key("FaviconS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.FaviconS3Location, ok); err != nil {
-			return err
+	if v.ImageName != nil {
+		ser, err := serializeCBOR_String(*v.ImageName)
+		if err != nil {
+			return nil, err
 		}
+		vm["ImageName"] = ser
 	}
-
-	if v.FooterLinks != nil {
-		ok := object.Key("FooterLinks")
-		if err := awsAwsjson11_serializeDocumentThemeFooterLinks(v.FooterLinks, ok); err != nil {
-			return err
+	if v.ImageArn != nil {
+		ser, err := serializeCBOR_String(*v.ImageArn)
+		if err != nil {
+			return nil, err
 		}
+		vm["ImageArn"] = ser
 	}
-
-	if v.OrganizationLogoS3Location != nil {
-		ok := object.Key("OrganizationLogoS3Location")
-		if err := awsAwsjson11_serializeDocumentS3Location(v.OrganizationLogoS3Location, ok); err != nil {
-			return err
+	if v.InstanceType != nil {
+		ser, err := serializeCBOR_String(*v.InstanceType)
+		if err != nil {
+			return nil, err
 		}
+		vm["InstanceType"] = ser
 	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.VpcConfig != nil {
+		ser, err := serializeCBOR_VpcConfig(v.VpcConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["VpcConfig"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if v.EnableDefaultInternetAccess != nil {
+		ser, err := serializeCBOR_Bool(*v.EnableDefaultInternetAccess)
+		if err != nil {
+			return nil, err
+		}
+		vm["EnableDefaultInternetAccess"] = ser
+	}
+	if v.DomainJoinInfo != nil {
+		ser, err := serializeCBOR_DomainJoinInfo(v.DomainJoinInfo)
+		if err != nil {
+			return nil, err
+		}
+		vm["DomainJoinInfo"] = ser
+	}
+	if v.AppstreamAgentVersion != nil {
+		ser, err := serializeCBOR_String(*v.AppstreamAgentVersion)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppstreamAgentVersion"] = ser
+	}
+	if v.Tags != nil {
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
+		}
+		vm["Tags"] = ser
+	}
+	if v.AccessEndpoints != nil {
+		ser, err := serializeCBOR_AccessEndpointList(v.AccessEndpoints)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccessEndpoints"] = ser
+	}
+	if v.RootVolumeConfig != nil {
+		ser, err := serializeCBOR_VolumeConfig(v.RootVolumeConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["RootVolumeConfig"] = ser
+	}
+	if v.SoftwaresToInstall != nil {
+		ser, err := serializeCBOR_StringList(v.SoftwaresToInstall)
+		if err != nil {
+			return nil, err
+		}
+		vm["SoftwaresToInstall"] = ser
+	}
+	if v.SoftwaresToUninstall != nil {
+		ser, err := serializeCBOR_StringList(v.SoftwaresToUninstall)
+		if err != nil {
+			return nil, err
+		}
+		vm["SoftwaresToUninstall"] = ser
+	}
+	if v.DisableIMDSV1 != nil {
+		ser, err := serializeCBOR_Bool(*v.DisableIMDSV1)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisableIMDSV1"] = ser
+	}
+	return vm, nil
+}
 
+func serializeCBOR_CreateImageBuilderStreamingURLInput(v *CreateImageBuilderStreamingURLInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.Validity != nil {
+		ser, err := serializeCBOR_Int64(*v.Validity)
+		if err != nil {
+			return nil, err
+		}
+		vm["Validity"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_CreateImportedImageInput(v *CreateImportedImageInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.SourceAmiId != nil {
+		ser, err := serializeCBOR_String(*v.SourceAmiId)
+		if err != nil {
+			return nil, err
+		}
+		vm["SourceAmiId"] = ser
+	}
+	if v.WorkspaceImageId != nil {
+		ser, err := serializeCBOR_String(*v.WorkspaceImageId)
+		if err != nil {
+			return nil, err
+		}
+		vm["WorkspaceImageId"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.Tags != nil {
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
+		}
+		vm["Tags"] = ser
+	}
+	if v.RuntimeValidationConfig != nil {
+		ser, err := serializeCBOR_RuntimeValidationConfig(v.RuntimeValidationConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["RuntimeValidationConfig"] = ser
+	}
+	if len(v.AgentSoftwareVersion) > 0 {
+		ser, err := serializeCBOR_AgentSoftwareVersion(v.AgentSoftwareVersion)
+		if err != nil {
+			return nil, err
+		}
+		vm["AgentSoftwareVersion"] = ser
+	}
+	if v.AppCatalogConfig != nil {
+		ser, err := serializeCBOR_AppCatalogConfig(v.AppCatalogConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppCatalogConfig"] = ser
+	}
+	if v.DryRun != nil {
+		ser, err := serializeCBOR_Bool(*v.DryRun)
+		if err != nil {
+			return nil, err
+		}
+		vm["DryRun"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_CreateStackInput(v *CreateStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.StorageConnectors != nil {
+		ser, err := serializeCBOR_StorageConnectorList(v.StorageConnectors)
+		if err != nil {
+			return nil, err
+		}
+		vm["StorageConnectors"] = ser
+	}
+	if v.RedirectURL != nil {
+		ser, err := serializeCBOR_String(*v.RedirectURL)
+		if err != nil {
+			return nil, err
+		}
+		vm["RedirectURL"] = ser
+	}
+	if v.FeedbackURL != nil {
+		ser, err := serializeCBOR_String(*v.FeedbackURL)
+		if err != nil {
+			return nil, err
+		}
+		vm["FeedbackURL"] = ser
+	}
+	if v.UserSettings != nil {
+		ser, err := serializeCBOR_UserSettingList(v.UserSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserSettings"] = ser
+	}
+	if v.ApplicationSettings != nil {
+		ser, err := serializeCBOR_ApplicationSettings(v.ApplicationSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationSettings"] = ser
+	}
+	if v.Tags != nil {
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
+		}
+		vm["Tags"] = ser
+	}
+	if v.AccessEndpoints != nil {
+		ser, err := serializeCBOR_AccessEndpointList(v.AccessEndpoints)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccessEndpoints"] = ser
+	}
+	if v.EmbedHostDomains != nil {
+		ser, err := serializeCBOR_EmbedHostDomains(v.EmbedHostDomains)
+		if err != nil {
+			return nil, err
+		}
+		vm["EmbedHostDomains"] = ser
+	}
+	if v.StreamingExperienceSettings != nil {
+		ser, err := serializeCBOR_StreamingExperienceSettings(v.StreamingExperienceSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["StreamingExperienceSettings"] = ser
+	}
+	if v.ContentRedirection != nil {
+		ser, err := serializeCBOR_ContentRedirection(v.ContentRedirection)
+		if err != nil {
+			return nil, err
+		}
+		vm["ContentRedirection"] = ser
+	}
+	if v.AgentAccessConfig != nil {
+		ser, err := serializeCBOR_AgentAccessConfig(v.AgentAccessConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["AgentAccessConfig"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_CreateStreamingURLInput(v *CreateStreamingURLInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.StackName != nil {
-		ok := object.Key("StackName")
-		ok.String(*v.StackName)
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
 	}
-
-	if len(v.State) > 0 {
-		ok := object.Key("State")
-		ok.String(string(v.State))
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
 	}
-
-	if len(v.ThemeStyling) > 0 {
-		ok := object.Key("ThemeStyling")
-		ok.String(string(v.ThemeStyling))
+	if v.UserId != nil {
+		ser, err := serializeCBOR_String(*v.UserId)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserId"] = ser
 	}
+	if v.ApplicationId != nil {
+		ser, err := serializeCBOR_String(*v.ApplicationId)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationId"] = ser
+	}
+	if v.Validity != nil {
+		ser, err := serializeCBOR_Int64(*v.Validity)
+		if err != nil {
+			return nil, err
+		}
+		vm["Validity"] = ser
+	}
+	if v.SessionContext != nil {
+		ser, err := serializeCBOR_String(*v.SessionContext)
+		if err != nil {
+			return nil, err
+		}
+		vm["SessionContext"] = ser
+	}
+	return vm, nil
+}
 
+func serializeCBOR_CreateThemeForStackInput(v *CreateThemeForStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.FooterLinks != nil {
+		ser, err := serializeCBOR_ThemeFooterLinks(v.FooterLinks)
+		if err != nil {
+			return nil, err
+		}
+		vm["FooterLinks"] = ser
+	}
 	if v.TitleText != nil {
-		ok := object.Key("TitleText")
-		ok.String(*v.TitleText)
+		ser, err := serializeCBOR_String(*v.TitleText)
+		if err != nil {
+			return nil, err
+		}
+		vm["TitleText"] = ser
 	}
+	if len(v.ThemeStyling) > 0 {
+		ser, err := serializeCBOR_ThemeStyling(v.ThemeStyling)
+		if err != nil {
+			return nil, err
+		}
+		vm["ThemeStyling"] = ser
+	}
+	if v.OrganizationLogoS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.OrganizationLogoS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["OrganizationLogoS3Location"] = ser
+	}
+	if v.FaviconS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.FaviconS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["FaviconS3Location"] = ser
+	}
+	return vm, nil
+}
 
-	return nil
+func serializeCBOR_CreateUpdatedImageInput(v *CreateUpdatedImageInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ExistingImageName != nil {
+		ser, err := serializeCBOR_String(*v.ExistingImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["existingImageName"] = ser
+	}
+	if v.NewImageName != nil {
+		ser, err := serializeCBOR_String(*v.NewImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["newImageName"] = ser
+	}
+	if v.NewImageDescription != nil {
+		ser, err := serializeCBOR_String(*v.NewImageDescription)
+		if err != nil {
+			return nil, err
+		}
+		vm["newImageDescription"] = ser
+	}
+	if v.NewImageDisplayName != nil {
+		ser, err := serializeCBOR_String(*v.NewImageDisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["newImageDisplayName"] = ser
+	}
+	if v.NewImageTags != nil {
+		ser, err := serializeCBOR_Tags(v.NewImageTags)
+		if err != nil {
+			return nil, err
+		}
+		vm["newImageTags"] = ser
+	}
+	if v.DryRun != nil {
+		ser, err := serializeCBOR_Bool(*v.DryRun)
+		if err != nil {
+			return nil, err
+		}
+		vm["dryRun"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_CreateUsageReportSubscriptionInput(v *CreateUsageReportSubscriptionInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+
+	return vm, nil
+}
+
+func serializeCBOR_CreateUserInput(v *CreateUserInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.MessageAction) > 0 {
+		ser, err := serializeCBOR_MessageAction(v.MessageAction)
+		if err != nil {
+			return nil, err
+		}
+		vm["MessageAction"] = ser
+	}
+	if v.FirstName != nil {
+		ser, err := serializeCBOR_String(*v.FirstName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FirstName"] = ser
+	}
+	if v.LastName != nil {
+		ser, err := serializeCBOR_String(*v.LastName)
+		if err != nil {
+			return nil, err
+		}
+		vm["LastName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteAppBlockBuilderInput(v *DeleteAppBlockBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteAppBlockInput(v *DeleteAppBlockInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteApplicationInput(v *DeleteApplicationInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteDirectoryConfigInput(v *DeleteDirectoryConfigInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.DirectoryName != nil {
+		ser, err := serializeCBOR_String(*v.DirectoryName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DirectoryName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteEntitlementInput(v *DeleteEntitlementInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteFleetInput(v *DeleteFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteImageBuilderInput(v *DeleteImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteImageInput(v *DeleteImageInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteImagePermissionsInput(v *DeleteImagePermissionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.SharedAccountId != nil {
+		ser, err := serializeCBOR_String(*v.SharedAccountId)
+		if err != nil {
+			return nil, err
+		}
+		vm["SharedAccountId"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteStackInput(v *DeleteStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteThemeForStackInput(v *DeleteThemeForStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DeleteUsageReportSubscriptionInput(v *DeleteUsageReportSubscriptionInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+
+	return vm, nil
+}
+
+func serializeCBOR_DeleteUserInput(v *DeleteUserInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeAppBlockBuilderAppBlockAssociationsInput(v *DescribeAppBlockBuilderAppBlockAssociationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.AppBlockArn != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockArn"] = ser
+	}
+	if v.AppBlockBuilderName != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockBuilderName"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeAppBlockBuildersInput(v *DescribeAppBlockBuildersInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Names != nil {
+		ser, err := serializeCBOR_StringList(v.Names)
+		if err != nil {
+			return nil, err
+		}
+		vm["Names"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeAppBlocksInput(v *DescribeAppBlocksInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Arns != nil {
+		ser, err := serializeCBOR_ArnList(v.Arns)
+		if err != nil {
+			return nil, err
+		}
+		vm["Arns"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeApplicationFleetAssociationsInput(v *DescribeApplicationFleetAssociationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
+	if v.ApplicationArn != nil {
+		ser, err := serializeCBOR_String(*v.ApplicationArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationArn"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeApplicationsInput(v *DescribeApplicationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Arns != nil {
+		ser, err := serializeCBOR_ArnList(v.Arns)
+		if err != nil {
+			return nil, err
+		}
+		vm["Arns"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeAppLicenseUsageInput(v *DescribeAppLicenseUsageInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.BillingPeriod != nil {
+		ser, err := serializeCBOR_String(*v.BillingPeriod)
+		if err != nil {
+			return nil, err
+		}
+		vm["BillingPeriod"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeDirectoryConfigsInput(v *DescribeDirectoryConfigsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.DirectoryNames != nil {
+		ser, err := serializeCBOR_DirectoryNameList(v.DirectoryNames)
+		if err != nil {
+			return nil, err
+		}
+		vm["DirectoryNames"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeEntitlementsInput(v *DescribeEntitlementsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeFleetsInput(v *DescribeFleetsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Names != nil {
+		ser, err := serializeCBOR_StringList(v.Names)
+		if err != nil {
+			return nil, err
+		}
+		vm["Names"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeImageBuildersInput(v *DescribeImageBuildersInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Names != nil {
+		ser, err := serializeCBOR_StringList(v.Names)
+		if err != nil {
+			return nil, err
+		}
+		vm["Names"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeImagePermissionsInput(v *DescribeImagePermissionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.SharedAwsAccountIds != nil {
+		ser, err := serializeCBOR_AwsAccountIdList(v.SharedAwsAccountIds)
+		if err != nil {
+			return nil, err
+		}
+		vm["SharedAwsAccountIds"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeImagesInput(v *DescribeImagesInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Names != nil {
+		ser, err := serializeCBOR_StringList(v.Names)
+		if err != nil {
+			return nil, err
+		}
+		vm["Names"] = ser
+	}
+	if v.Arns != nil {
+		ser, err := serializeCBOR_ArnList(v.Arns)
+		if err != nil {
+			return nil, err
+		}
+		vm["Arns"] = ser
+	}
+	if len(v.Type) > 0 {
+		ser, err := serializeCBOR_VisibilityType(v.Type)
+		if err != nil {
+			return nil, err
+		}
+		vm["Type"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeSessionsInput(v *DescribeSessionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
+	if v.UserId != nil {
+		ser, err := serializeCBOR_String(*v.UserId)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserId"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.Limit != nil {
+		ser, err := serializeCBOR_Int32(*v.Limit)
+		if err != nil {
+			return nil, err
+		}
+		vm["Limit"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	if v.InstanceId != nil {
+		ser, err := serializeCBOR_String(*v.InstanceId)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceId"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeSoftwareAssociationsInput(v *DescribeSoftwareAssociationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.AssociatedResource != nil {
+		ser, err := serializeCBOR_String(*v.AssociatedResource)
+		if err != nil {
+			return nil, err
+		}
+		vm["AssociatedResource"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeStacksInput(v *DescribeStacksInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Names != nil {
+		ser, err := serializeCBOR_StringList(v.Names)
+		if err != nil {
+			return nil, err
+		}
+		vm["Names"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeThemeForStackInput(v *DescribeThemeForStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeUsageReportSubscriptionsInput(v *DescribeUsageReportSubscriptionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeUsersInput(v *DescribeUsersInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DescribeUserStackAssociationsInput(v *DescribeUserStackAssociationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisableUserInput(v *DisableUserInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisassociateAppBlockBuilderAppBlockInput(v *DisassociateAppBlockBuilderAppBlockInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.AppBlockArn != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockArn"] = ser
+	}
+	if v.AppBlockBuilderName != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockBuilderName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisassociateApplicationFleetInput(v *DisassociateApplicationFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
+	if v.ApplicationArn != nil {
+		ser, err := serializeCBOR_String(*v.ApplicationArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationArn"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisassociateApplicationFromEntitlementInput(v *DisassociateApplicationFromEntitlementInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.EntitlementName != nil {
+		ser, err := serializeCBOR_String(*v.EntitlementName)
+		if err != nil {
+			return nil, err
+		}
+		vm["EntitlementName"] = ser
+	}
+	if v.ApplicationIdentifier != nil {
+		ser, err := serializeCBOR_String(*v.ApplicationIdentifier)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationIdentifier"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisassociateFleetInput(v *DisassociateFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DisassociateSoftwareFromImageBuilderInput(v *DisassociateSoftwareFromImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ImageBuilderName != nil {
+		ser, err := serializeCBOR_String(*v.ImageBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageBuilderName"] = ser
+	}
+	if v.SoftwareNames != nil {
+		ser, err := serializeCBOR_StringList(v.SoftwareNames)
+		if err != nil {
+			return nil, err
+		}
+		vm["SoftwareNames"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_DrainSessionInstanceInput(v *DrainSessionInstanceInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.SessionId != nil {
+		ser, err := serializeCBOR_String(*v.SessionId)
+		if err != nil {
+			return nil, err
+		}
+		vm["SessionId"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_EnableUserInput(v *EnableUserInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.UserName != nil {
+		ser, err := serializeCBOR_String(*v.UserName)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserName"] = ser
+	}
+	if len(v.AuthenticationType) > 0 {
+		ser, err := serializeCBOR_AuthenticationType(v.AuthenticationType)
+		if err != nil {
+			return nil, err
+		}
+		vm["AuthenticationType"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ExpireSessionInput(v *ExpireSessionInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.SessionId != nil {
+		ser, err := serializeCBOR_String(*v.SessionId)
+		if err != nil {
+			return nil, err
+		}
+		vm["SessionId"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_GetExportImageTaskInput(v *GetExportImageTaskInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.TaskId != nil {
+		ser, err := serializeCBOR_String(*v.TaskId)
+		if err != nil {
+			return nil, err
+		}
+		vm["TaskId"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ListAssociatedFleetsInput(v *ListAssociatedFleetsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ListAssociatedStacksInput(v *ListAssociatedStacksInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.FleetName != nil {
+		ser, err := serializeCBOR_String(*v.FleetName)
+		if err != nil {
+			return nil, err
+		}
+		vm["FleetName"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ListEntitledApplicationsInput(v *ListEntitledApplicationsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.EntitlementName != nil {
+		ser, err := serializeCBOR_String(*v.EntitlementName)
+		if err != nil {
+			return nil, err
+		}
+		vm["EntitlementName"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ListExportImageTasksInput(v *ListExportImageTasksInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Filters != nil {
+		ser, err := serializeCBOR_Filters(v.Filters)
+		if err != nil {
+			return nil, err
+		}
+		vm["Filters"] = ser
+	}
+	if v.MaxResults != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxResults"] = ser
+	}
+	if v.NextToken != nil {
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["NextToken"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_ListTagsForResourceInput(v *ListTagsForResourceInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ResourceArn != nil {
+		ser, err := serializeCBOR_String(*v.ResourceArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ResourceArn"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StartAppBlockBuilderInput(v *StartAppBlockBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StartFleetInput(v *StartFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StartImageBuilderInput(v *StartImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.AppstreamAgentVersion != nil {
+		ser, err := serializeCBOR_String(*v.AppstreamAgentVersion)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppstreamAgentVersion"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StartSoftwareDeploymentToImageBuilderInput(v *StartSoftwareDeploymentToImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ImageBuilderName != nil {
+		ser, err := serializeCBOR_String(*v.ImageBuilderName)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageBuilderName"] = ser
+	}
+	if v.RetryFailedDeployments != nil {
+		ser, err := serializeCBOR_Bool(*v.RetryFailedDeployments)
+		if err != nil {
+			return nil, err
+		}
+		vm["RetryFailedDeployments"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StopAppBlockBuilderInput(v *StopAppBlockBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StopFleetInput(v *StopFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_StopImageBuilderInput(v *StopImageBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_TagResourceInput(v *TagResourceInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ResourceArn != nil {
+		ser, err := serializeCBOR_String(*v.ResourceArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ResourceArn"] = ser
+	}
+	if v.Tags != nil {
+		ser, err := serializeCBOR_Tags(v.Tags)
+		if err != nil {
+			return nil, err
+		}
+		vm["Tags"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UntagResourceInput(v *UntagResourceInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ResourceArn != nil {
+		ser, err := serializeCBOR_String(*v.ResourceArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ResourceArn"] = ser
+	}
+	if v.TagKeys != nil {
+		ser, err := serializeCBOR_TagKeyList(v.TagKeys)
+		if err != nil {
+			return nil, err
+		}
+		vm["TagKeys"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateAppBlockBuilderInput(v *UpdateAppBlockBuilderInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if len(v.Platform) > 0 {
+		ser, err := serializeCBOR_PlatformType(v.Platform)
+		if err != nil {
+			return nil, err
+		}
+		vm["Platform"] = ser
+	}
+	if v.InstanceType != nil {
+		ser, err := serializeCBOR_String(*v.InstanceType)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceType"] = ser
+	}
+	if v.VpcConfig != nil {
+		ser, err := serializeCBOR_VpcConfig(v.VpcConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["VpcConfig"] = ser
+	}
+	if v.EnableDefaultInternetAccess != nil {
+		ser, err := serializeCBOR_Bool(*v.EnableDefaultInternetAccess)
+		if err != nil {
+			return nil, err
+		}
+		vm["EnableDefaultInternetAccess"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if v.AccessEndpoints != nil {
+		ser, err := serializeCBOR_AccessEndpointList(v.AccessEndpoints)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccessEndpoints"] = ser
+	}
+	if v.AttributesToDelete != nil {
+		ser, err := serializeCBOR_AppBlockBuilderAttributes(v.AttributesToDelete)
+		if err != nil {
+			return nil, err
+		}
+		vm["AttributesToDelete"] = ser
+	}
+	if v.DisableIMDSV1 != nil {
+		ser, err := serializeCBOR_Bool(*v.DisableIMDSV1)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisableIMDSV1"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateApplicationInput(v *UpdateApplicationInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.IconS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.IconS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["IconS3Location"] = ser
+	}
+	if v.LaunchPath != nil {
+		ser, err := serializeCBOR_String(*v.LaunchPath)
+		if err != nil {
+			return nil, err
+		}
+		vm["LaunchPath"] = ser
+	}
+	if v.WorkingDirectory != nil {
+		ser, err := serializeCBOR_String(*v.WorkingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		vm["WorkingDirectory"] = ser
+	}
+	if v.LaunchParameters != nil {
+		ser, err := serializeCBOR_String(*v.LaunchParameters)
+		if err != nil {
+			return nil, err
+		}
+		vm["LaunchParameters"] = ser
+	}
+	if v.AppBlockArn != nil {
+		ser, err := serializeCBOR_String(*v.AppBlockArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppBlockArn"] = ser
+	}
+	if v.AttributesToDelete != nil {
+		ser, err := serializeCBOR_ApplicationAttributes(v.AttributesToDelete)
+		if err != nil {
+			return nil, err
+		}
+		vm["AttributesToDelete"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateDirectoryConfigInput(v *UpdateDirectoryConfigInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.DirectoryName != nil {
+		ser, err := serializeCBOR_String(*v.DirectoryName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DirectoryName"] = ser
+	}
+	if v.OrganizationalUnitDistinguishedNames != nil {
+		ser, err := serializeCBOR_OrganizationalUnitDistinguishedNamesList(v.OrganizationalUnitDistinguishedNames)
+		if err != nil {
+			return nil, err
+		}
+		vm["OrganizationalUnitDistinguishedNames"] = ser
+	}
+	if v.ServiceAccountCredentials != nil {
+		ser, err := serializeCBOR_ServiceAccountCredentials(v.ServiceAccountCredentials)
+		if err != nil {
+			return nil, err
+		}
+		vm["ServiceAccountCredentials"] = ser
+	}
+	if v.CertificateBasedAuthProperties != nil {
+		ser, err := serializeCBOR_CertificateBasedAuthProperties(v.CertificateBasedAuthProperties)
+		if err != nil {
+			return nil, err
+		}
+		vm["CertificateBasedAuthProperties"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateEntitlementInput(v *UpdateEntitlementInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if len(v.AppVisibility) > 0 {
+		ser, err := serializeCBOR_AppVisibility(v.AppVisibility)
+		if err != nil {
+			return nil, err
+		}
+		vm["AppVisibility"] = ser
+	}
+	if v.Attributes != nil {
+		ser, err := serializeCBOR_EntitlementAttributeList(v.Attributes)
+		if err != nil {
+			return nil, err
+		}
+		vm["Attributes"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateFleetInput(v *UpdateFleetInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.ImageName != nil {
+		ser, err := serializeCBOR_String(*v.ImageName)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageName"] = ser
+	}
+	if v.ImageArn != nil {
+		ser, err := serializeCBOR_String(*v.ImageArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImageArn"] = ser
+	}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.InstanceType != nil {
+		ser, err := serializeCBOR_String(*v.InstanceType)
+		if err != nil {
+			return nil, err
+		}
+		vm["InstanceType"] = ser
+	}
+	if v.ComputeCapacity != nil {
+		ser, err := serializeCBOR_ComputeCapacity(v.ComputeCapacity)
+		if err != nil {
+			return nil, err
+		}
+		vm["ComputeCapacity"] = ser
+	}
+	if v.VpcConfig != nil {
+		ser, err := serializeCBOR_VpcConfig(v.VpcConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["VpcConfig"] = ser
+	}
+	if v.MaxUserDurationInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxUserDurationInSeconds)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxUserDurationInSeconds"] = ser
+	}
+	if v.DisconnectTimeoutInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.DisconnectTimeoutInSeconds)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisconnectTimeoutInSeconds"] = ser
+	}
+	if v.DeleteVpcConfig != nil {
+		ser, err := serializeCBOR_Bool(*v.DeleteVpcConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["DeleteVpcConfig"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.EnableDefaultInternetAccess != nil {
+		ser, err := serializeCBOR_Bool(*v.EnableDefaultInternetAccess)
+		if err != nil {
+			return nil, err
+		}
+		vm["EnableDefaultInternetAccess"] = ser
+	}
+	if v.DomainJoinInfo != nil {
+		ser, err := serializeCBOR_DomainJoinInfo(v.DomainJoinInfo)
+		if err != nil {
+			return nil, err
+		}
+		vm["DomainJoinInfo"] = ser
+	}
+	if v.IdleDisconnectTimeoutInSeconds != nil {
+		ser, err := serializeCBOR_Int32(*v.IdleDisconnectTimeoutInSeconds)
+		if err != nil {
+			return nil, err
+		}
+		vm["IdleDisconnectTimeoutInSeconds"] = ser
+	}
+	if v.AttributesToDelete != nil {
+		ser, err := serializeCBOR_FleetAttributes(v.AttributesToDelete)
+		if err != nil {
+			return nil, err
+		}
+		vm["AttributesToDelete"] = ser
+	}
+	if v.IamRoleArn != nil {
+		ser, err := serializeCBOR_String(*v.IamRoleArn)
+		if err != nil {
+			return nil, err
+		}
+		vm["IamRoleArn"] = ser
+	}
+	if len(v.StreamView) > 0 {
+		ser, err := serializeCBOR_StreamView(v.StreamView)
+		if err != nil {
+			return nil, err
+		}
+		vm["StreamView"] = ser
+	}
+	if len(v.Platform) > 0 {
+		ser, err := serializeCBOR_PlatformType(v.Platform)
+		if err != nil {
+			return nil, err
+		}
+		vm["Platform"] = ser
+	}
+	if v.MaxConcurrentSessions != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxConcurrentSessions)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxConcurrentSessions"] = ser
+	}
+	if v.UsbDeviceFilterStrings != nil {
+		ser, err := serializeCBOR_UsbDeviceFilterStrings(v.UsbDeviceFilterStrings)
+		if err != nil {
+			return nil, err
+		}
+		vm["UsbDeviceFilterStrings"] = ser
+	}
+	if v.SessionScriptS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.SessionScriptS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["SessionScriptS3Location"] = ser
+	}
+	if v.MaxSessionsPerInstance != nil {
+		ser, err := serializeCBOR_Int32(*v.MaxSessionsPerInstance)
+		if err != nil {
+			return nil, err
+		}
+		vm["MaxSessionsPerInstance"] = ser
+	}
+	if v.RootVolumeConfig != nil {
+		ser, err := serializeCBOR_VolumeConfig(v.RootVolumeConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["RootVolumeConfig"] = ser
+	}
+	if v.DisableIMDSV1 != nil {
+		ser, err := serializeCBOR_Bool(*v.DisableIMDSV1)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisableIMDSV1"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateImagePermissionsInput(v *UpdateImagePermissionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.SharedAccountId != nil {
+		ser, err := serializeCBOR_String(*v.SharedAccountId)
+		if err != nil {
+			return nil, err
+		}
+		vm["SharedAccountId"] = ser
+	}
+	if v.ImagePermissions != nil {
+		ser, err := serializeCBOR_ImagePermissions(v.ImagePermissions)
+		if err != nil {
+			return nil, err
+		}
+		vm["ImagePermissions"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateStackInput(v *UpdateStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.DisplayName != nil {
+		ser, err := serializeCBOR_String(*v.DisplayName)
+		if err != nil {
+			return nil, err
+		}
+		vm["DisplayName"] = ser
+	}
+	if v.Description != nil {
+		ser, err := serializeCBOR_String(*v.Description)
+		if err != nil {
+			return nil, err
+		}
+		vm["Description"] = ser
+	}
+	if v.Name != nil {
+		ser, err := serializeCBOR_String(*v.Name)
+		if err != nil {
+			return nil, err
+		}
+		vm["Name"] = ser
+	}
+	if v.StorageConnectors != nil {
+		ser, err := serializeCBOR_StorageConnectorList(v.StorageConnectors)
+		if err != nil {
+			return nil, err
+		}
+		vm["StorageConnectors"] = ser
+	}
+	if v.DeleteStorageConnectors != nil {
+		ser, err := serializeCBOR_Bool(*v.DeleteStorageConnectors)
+		if err != nil {
+			return nil, err
+		}
+		vm["DeleteStorageConnectors"] = ser
+	}
+	if v.RedirectURL != nil {
+		ser, err := serializeCBOR_String(*v.RedirectURL)
+		if err != nil {
+			return nil, err
+		}
+		vm["RedirectURL"] = ser
+	}
+	if v.FeedbackURL != nil {
+		ser, err := serializeCBOR_String(*v.FeedbackURL)
+		if err != nil {
+			return nil, err
+		}
+		vm["FeedbackURL"] = ser
+	}
+	if v.AttributesToDelete != nil {
+		ser, err := serializeCBOR_StackAttributes(v.AttributesToDelete)
+		if err != nil {
+			return nil, err
+		}
+		vm["AttributesToDelete"] = ser
+	}
+	if v.UserSettings != nil {
+		ser, err := serializeCBOR_UserSettingList(v.UserSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["UserSettings"] = ser
+	}
+	if v.ApplicationSettings != nil {
+		ser, err := serializeCBOR_ApplicationSettings(v.ApplicationSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["ApplicationSettings"] = ser
+	}
+	if v.AccessEndpoints != nil {
+		ser, err := serializeCBOR_AccessEndpointList(v.AccessEndpoints)
+		if err != nil {
+			return nil, err
+		}
+		vm["AccessEndpoints"] = ser
+	}
+	if v.EmbedHostDomains != nil {
+		ser, err := serializeCBOR_EmbedHostDomains(v.EmbedHostDomains)
+		if err != nil {
+			return nil, err
+		}
+		vm["EmbedHostDomains"] = ser
+	}
+	if v.StreamingExperienceSettings != nil {
+		ser, err := serializeCBOR_StreamingExperienceSettings(v.StreamingExperienceSettings)
+		if err != nil {
+			return nil, err
+		}
+		vm["StreamingExperienceSettings"] = ser
+	}
+	if v.ContentRedirection != nil {
+		ser, err := serializeCBOR_ContentRedirection(v.ContentRedirection)
+		if err != nil {
+			return nil, err
+		}
+		vm["ContentRedirection"] = ser
+	}
+	if v.AgentAccessConfig != nil {
+		ser, err := serializeCBOR_AgentAccessConfigForUpdate(v.AgentAccessConfig)
+		if err != nil {
+			return nil, err
+		}
+		vm["AgentAccessConfig"] = ser
+	}
+	return vm, nil
+}
+
+func serializeCBOR_UpdateThemeForStackInput(v *UpdateThemeForStackInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
+	if v.StackName != nil {
+		ser, err := serializeCBOR_String(*v.StackName)
+		if err != nil {
+			return nil, err
+		}
+		vm["StackName"] = ser
+	}
+	if v.FooterLinks != nil {
+		ser, err := serializeCBOR_ThemeFooterLinks(v.FooterLinks)
+		if err != nil {
+			return nil, err
+		}
+		vm["FooterLinks"] = ser
+	}
+	if v.TitleText != nil {
+		ser, err := serializeCBOR_String(*v.TitleText)
+		if err != nil {
+			return nil, err
+		}
+		vm["TitleText"] = ser
+	}
+	if len(v.ThemeStyling) > 0 {
+		ser, err := serializeCBOR_ThemeStyling(v.ThemeStyling)
+		if err != nil {
+			return nil, err
+		}
+		vm["ThemeStyling"] = ser
+	}
+	if v.OrganizationLogoS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.OrganizationLogoS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["OrganizationLogoS3Location"] = ser
+	}
+	if v.FaviconS3Location != nil {
+		ser, err := serializeCBOR_S3Location(v.FaviconS3Location)
+		if err != nil {
+			return nil, err
+		}
+		vm["FaviconS3Location"] = ser
+	}
+	if len(v.State) > 0 {
+		ser, err := serializeCBOR_ThemeState(v.State)
+		if err != nil {
+			return nil, err
+		}
+		vm["State"] = ser
+	}
+	if v.AttributesToDelete != nil {
+		ser, err := serializeCBOR_ThemeAttributes(v.AttributesToDelete)
+		if err != nil {
+			return nil, err
+		}
+		vm["AttributesToDelete"] = ser
+	}
+	return vm, nil
 }

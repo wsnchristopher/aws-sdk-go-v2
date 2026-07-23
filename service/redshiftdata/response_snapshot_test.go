@@ -121,6 +121,9 @@ func TestCheckResponseSnapshot_BatchExecuteStatement(t *testing.T) {
 		SecretArn:     ptr.String("__SecretArn__"),
 		WorkgroupName: ptr.String("__WorkgroupName__"),
 		SessionId:     ptr.String("__SessionId__"),
+		Status:        types.StatementStatusString("SUBMITTED"),
+		RedshiftPid:   ptr.Int64(1),
+		HasResultSet:  ptr.Bool(true),
 	}
 	status, header, body, err := serdeRespReadSnapshot("BatchExecuteStatement.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -219,6 +222,7 @@ func TestCheckResponseSnapshot_DescribeStatement(t *testing.T) {
 		WorkgroupName: ptr.String("__WorkgroupName__"),
 		ResultFormat:  types.ResultFormatString("JSON"),
 		SessionId:     ptr.String("__SessionId__"),
+		ExecutionMode: types.ExecutionMode("TRANSACTION"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("DescribeStatement.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -305,6 +309,9 @@ func TestCheckResponseSnapshot_ExecuteStatement(t *testing.T) {
 		SecretArn:     ptr.String("__SecretArn__"),
 		WorkgroupName: ptr.String("__WorkgroupName__"),
 		SessionId:     ptr.String("__SessionId__"),
+		Status:        types.StatementStatusString("SUBMITTED"),
+		RedshiftPid:   ptr.Int64(1),
+		HasResultSet:  ptr.Bool(true),
 	}
 	status, header, body, err := serdeRespReadSnapshot("ExecuteStatement.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -508,6 +515,55 @@ func TestCheckResponseSnapshot_ListSchemas(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_ListSessions(t *testing.T) {
+	want := &ListSessionsOutput{
+		Sessions: []types.SessionData{
+			{
+				SessionId:           ptr.String("__SessionId__"),
+				Status:              types.SessionStatusString("AVAILABLE"),
+				CreatedAt:           ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				UpdatedAt:           ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				Database:            ptr.String("__Database__"),
+				DbUser:              ptr.String("__DbUser__"),
+				ClusterIdentifier:   ptr.String("__ClusterIdentifier__"),
+				WorkgroupName:       ptr.String("__WorkgroupName__"),
+				SessionAliveSeconds: ptr.Int32(1),
+				SessionTtl:          ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				CurrentStatementId:  ptr.String("__CurrentStatementId__"),
+			},
+			{
+				SessionId:           ptr.String("__SessionId__"),
+				Status:              types.SessionStatusString("AVAILABLE"),
+				CreatedAt:           ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				UpdatedAt:           ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				Database:            ptr.String("__Database__"),
+				DbUser:              ptr.String("__DbUser__"),
+				ClusterIdentifier:   ptr.String("__ClusterIdentifier__"),
+				WorkgroupName:       ptr.String("__WorkgroupName__"),
+				SessionAliveSeconds: ptr.Int32(1),
+				SessionTtl:          ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				CurrentStatementId:  ptr.String("__CurrentStatementId__"),
+			},
+		},
+		NextToken: ptr.String("__NextToken__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ListSessions.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.ListSessions(context.Background(), &ListSessionsInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "ListSessions.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_ListStatements(t *testing.T) {
 	want := &ListStatementsOutput{
 		Statements: []types.StatementData{
@@ -663,6 +719,31 @@ func TestCheckResponseSnapshot_Error_ActiveStatementsExceededException(t *testin
 	}
 	if err := smithytesting.CompareValues(want, got); err != nil {
 		t.Errorf("error response snapshot mismatch for %s: %v", "ActiveStatementsExceededException.error", err)
+	}
+}
+
+func TestCheckResponseSnapshot_Error_ActiveWaitingRequestsExceededException(t *testing.T) {
+	want := &types.ActiveWaitingRequestsExceededException{
+		Message: ptr.String("__Message__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("ActiveWaitingRequestsExceededException.error")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	_, opErr := svc.DescribeStatement(context.Background(), &DescribeStatementInput{})
+	if opErr == nil {
+		t.Fatal("expected error, got nil")
+	}
+	var got *types.ActiveWaitingRequestsExceededException
+	if !errors.As(opErr, &got) {
+		t.Fatalf("expected types.ActiveWaitingRequestsExceededException, got %v", opErr)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("error response snapshot mismatch for %s: %v", "ActiveWaitingRequestsExceededException.error", err)
 	}
 }
 

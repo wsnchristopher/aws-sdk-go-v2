@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/UpdateAppBlockBuilder
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.UpdateAppBlockBuilder
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AccessEndpoints":[{"EndpointType":"STREAMING","VpceId":"__VpceId__"},{"EndpointType":"STREAMING","VpceId":"__VpceId__"}],"AttributesToDelete":["IAM_ROLE_ARN","IAM_ROLE_ARN"],"Description":"__Description__","DisableIMDSV1":true,"DisplayName":"__DisplayName__","EnableDefaultInternetAccess":true,"IamRoleArn":"__IamRoleArn__","InstanceType":"__InstanceType__","Name":"__Name__","Platform":"WINDOWS","VpcConfig":{"SecurityGroupIds":["__Member__","__Member__"],"SubnetIds":["__Member__","__Member__"]}}
+«dNameh__Name__kDescriptiono__Description__kDisplayNameo__DisplayName__hPlatformgWINDOWSxEnableDefaultInternetAccessõoAccessEndpoints‚¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__rAttributesToDelete‚lIAM_ROLE_ARNlIAM_ROLE_ARNlInstanceTypep__InstanceType__iVpcConfig¢iSubnetIds‚j__Member__j__Member__pSecurityGroupIds‚j__Member__j__Member__jIamRoleArnn__IamRoleArn__mDisableIMDSV1õ

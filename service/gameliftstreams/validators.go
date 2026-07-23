@@ -538,6 +538,23 @@ func addOpUpdateStreamGroupValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpUpdateStreamGroup{}, middleware.After)
 }
 
+func validateDisplayConfiguration(v *types.DisplayConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "DisplayConfiguration"}
+	if v.Resolution != nil {
+		if err := validateResolution(v.Resolution); err != nil {
+			invalidParams.AddNested("Resolution", err.(smithy.InvalidParamsError))
+		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateLocationConfiguration(v *types.LocationConfiguration) error {
 	if v == nil {
 		return nil
@@ -567,6 +584,24 @@ func validateLocationConfigurations(v []types.LocationConfiguration) error {
 		if err := validateLocationConfiguration(&v[i]); err != nil {
 			invalidParams.AddNested(fmt.Sprintf("[%d]", i), err.(smithy.InvalidParamsError))
 		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateResolution(v *types.Resolution) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "Resolution"}
+	if v.Width == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("Width"))
+	}
+	if v.Height == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("Height"))
 	}
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -922,6 +957,11 @@ func validateOpStartStreamSessionInput(v *StartStreamSessionInput) error {
 	}
 	if v.ApplicationIdentifier == nil {
 		invalidParams.Add(smithy.NewErrParamRequired("ApplicationIdentifier"))
+	}
+	if v.DisplayConfiguration != nil {
+		if err := validateDisplayConfiguration(v.DisplayConfiguration); err != nil {
+			invalidParams.AddNested("DisplayConfiguration", err.(smithy.InvalidParamsError))
+		}
 	}
 	if invalidParams.Len() > 0 {
 		return invalidParams

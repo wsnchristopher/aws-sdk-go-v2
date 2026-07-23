@@ -4330,6 +4330,17 @@ type ClusterAutoPatchConfig struct {
 
 	// The strategy for applying patches to instances in the group.
 	//
+	//   - WhenIdle : Cordons all instances and patches each instance as it becomes
+	//   idle (no running jobs). Each instance is uncordoned immediately after patching
+	//   and becomes available for new jobs. If instances do not become idle, they remain
+	//   on the previous AMI version. You can then use UpdateClusterSoftware with the
+	//   desired ImageReleaseVersion to manually update the remaining instances.
+	//
+	//   - WhenAllIdle : Cordons all instances and waits for all to become idle before
+	//   patching. All instances are uncordoned after patching completes. If not all
+	//   instances become idle, no patching occurs and all instances remain on the
+	//   previous AMI version.
+	//
 	// This member is required.
 	PatchingStrategy ClusterPatchingStrategy
 
@@ -4359,6 +4370,17 @@ type ClusterAutoPatchConfigDetails struct {
 	DesiredPatchSchedule *ClusterPatchScheduleDetails
 
 	// The strategy used for applying patches to instances in the group.
+	//
+	//   - WhenIdle : Cordons all instances and patches each instance as it becomes
+	//   idle (no running jobs). Each instance is uncordoned immediately after patching
+	//   and becomes available for new jobs. If instances do not become idle, they remain
+	//   on the previous AMI version. You can then use UpdateClusterSoftware with the
+	//   desired ImageReleaseVersion to manually update the remaining instances.
+	//
+	//   - WhenAllIdle : Cordons all instances and waits for all to become idle before
+	//   patching. All instances are uncordoned after patching completes. If not all
+	//   instances become idle, no patching occurs and all instances remain on the
+	//   previous AMI version.
 	PatchingStrategy ClusterPatchingStrategy
 
 	noSmithyDocumentSerde

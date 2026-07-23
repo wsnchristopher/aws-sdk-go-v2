@@ -516,6 +516,22 @@ func TestCheckRequestSnapshot_CreateBrowser(t *testing.T) {
 				},
 			},
 		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+		},
 		ClientToken: ptr.String("__ClientToken__"),
 		Tags: map[string]string{
 			"key0": "__Value__",
@@ -608,6 +624,22 @@ func TestCheckRequestSnapshot_CreateCodeInterpreter(t *testing.T) {
 					Value: types.SecretsManagerLocation{
 						SecretArn: ptr.String("__SecretArn__"),
 					},
+				},
+			},
+		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
 				},
 			},
 		},
@@ -7742,6 +7774,22 @@ func TestUpdateRequestSnapshot_CreateBrowser(t *testing.T) {
 				},
 			},
 		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+		},
 		ClientToken: ptr.String("__ClientToken__"),
 		Tags: map[string]string{
 			"key0": "__Value__",
@@ -7834,6 +7882,22 @@ func TestUpdateRequestSnapshot_CreateCodeInterpreter(t *testing.T) {
 					Value: types.SecretsManagerLocation{
 						SecretArn: ptr.String("__SecretArn__"),
 					},
+				},
+			},
+		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
 				},
 			},
 		},

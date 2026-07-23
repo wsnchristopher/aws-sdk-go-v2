@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSKendraRerankingFrontendService/operation/CreateRescoreExecutionPlan
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSKendraRerankingFrontendService.CreateRescoreExecutionPlan
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"CapacityUnits":{"RescoreCapacityUnits":1},"ClientToken":"__ClientToken__","Description":"__Description__","Name":"__Name__","Tags":[{"Key":"__Key__","Value":"__Value__"},{"Key":"__Key__","Value":"__Value__"}]}
+¥dNameh__Name__kDescriptiono__Description__mCapacityUnits¡tRescoreCapacityUnitsdTags‚¢eValuei__Value__cKeyg__Key__¢cKeyg__Key__eValuei__Value__kClientTokeno__ClientToken__

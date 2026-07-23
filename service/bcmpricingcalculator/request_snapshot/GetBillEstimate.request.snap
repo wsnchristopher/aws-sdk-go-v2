@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/GetBillEstimate
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.GetBillEstimate
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"identifier":"__Identifier__"}
+¡jidentifiern__Identifier__

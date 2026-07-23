@@ -2017,6 +2017,32 @@ type EfsAccessPointConfiguration struct {
 	noSmithyDocumentSerde
 }
 
+// The configuration for mounting an Amazon Elastic File System (Amazon EFS)
+// access point that you own into a session.
+type EfsConfiguration struct {
+
+	// The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS)
+	// access point to mount.
+	//
+	// This member is required.
+	AccessPointArn *string
+
+	// The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS)
+	// file system that owns the access point.
+	//
+	// This member is required.
+	FileSystemArn *string
+
+	// The absolute path within the session at which the access point is mounted, for
+	// example /mnt/efs . Each mount path must be unique across all file system
+	// configurations in the session.
+	//
+	// This member is required.
+	MountPath *string
+
+	noSmithyDocumentSerde
+}
+
 // Contains configurations to override the default consolidation step for the
 // episodic memory strategy.
 type EpisodicConsolidationOverride struct {
@@ -6986,6 +7012,32 @@ type S3FilesAccessPointConfiguration struct {
 	noSmithyDocumentSerde
 }
 
+// The configuration for mounting an Amazon Simple Storage Service (Amazon S3)
+// Files access point that you own into a session.
+type S3FilesConfiguration struct {
+
+	// The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3)
+	// Files access point to mount.
+	//
+	// This member is required.
+	AccessPointArn *string
+
+	// The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3)
+	// Files file system that owns the access point.
+	//
+	// This member is required.
+	FileSystemArn *string
+
+	// The absolute path within the session at which the access point is mounted, for
+	// example /mnt/s3data . Each mount path must be unique across all file system
+	// configurations in the session.
+	//
+	// This member is required.
+	MountPath *string
+
+	noSmithyDocumentSerde
+}
+
 // The Amazon S3 location for storing data. This structure defines where in Amazon
 // S3 data is stored.
 type S3Location struct {
@@ -7975,6 +8027,43 @@ type ToolsDefinition struct {
 	noSmithyDocumentSerde
 }
 
+// Specifies a file system to mount into the session by providing exactly one of
+// the following:
+//
+//   - s3FilesConfiguration - Mounts an Amazon Simple Storage Service (Amazon S3)
+//     Files access point.
+//
+//   - efsConfiguration - Mounts an Amazon Elastic File System (Amazon EFS) access
+//     point.
+//
+// The following types satisfy this interface:
+//
+//	ToolsFileSystemConfigurationMemberEfsConfiguration
+//	ToolsFileSystemConfigurationMemberS3FilesConfiguration
+type ToolsFileSystemConfiguration interface {
+	isToolsFileSystemConfiguration()
+}
+
+// The configuration for mounting your own Amazon Elastic File System (Amazon EFS)
+// access point into the session.
+type ToolsFileSystemConfigurationMemberEfsConfiguration struct {
+	Value EfsConfiguration
+
+	noSmithyDocumentSerde
+}
+
+func (*ToolsFileSystemConfigurationMemberEfsConfiguration) isToolsFileSystemConfiguration() {}
+
+// The configuration for mounting your own Amazon Simple Storage Service (Amazon
+// S3) Files access point into the session.
+type ToolsFileSystemConfigurationMemberS3FilesConfiguration struct {
+	Value S3FilesConfiguration
+
+	noSmithyDocumentSerde
+}
+
+func (*ToolsFileSystemConfigurationMemberS3FilesConfiguration) isToolsFileSystemConfiguration() {}
+
 // An entry in a traffic split configuration, defining a named variant with a
 // weight and configuration bundle reference.
 type TrafficSplitEntry struct {
@@ -8720,6 +8809,7 @@ func (*UnknownUnionMember) isSelfManagedLatticeResource()             {}
 func (*UnknownUnionMember) isStreamDeliveryResource()                 {}
 func (*UnknownUnionMember) isTargetConfiguration()                    {}
 func (*UnknownUnionMember) isToolSchema()                             {}
+func (*UnknownUnionMember) isToolsFileSystemConfiguration()           {}
 func (*UnknownUnionMember) isTriggerCondition()                       {}
 func (*UnknownUnionMember) isTriggerConditionInput()                  {}
 func (*UnknownUnionMember) isValidation()                             {}

@@ -8,156 +8,167 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/service/bcmrecommendedactions/types"
 	smithy "github.com/aws/smithy-go"
-	"github.com/aws/smithy-go/encoding/httpbinding"
-	smithyjson "github.com/aws/smithy-go/encoding/json"
+	smithycbor "github.com/aws/smithy-go/encoding/cbor"
 	"github.com/aws/smithy-go/middleware"
 	"github.com/aws/smithy-go/tracing"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
-	"path"
+	"net/http"
 )
 
-type awsAwsjson10_serializeOpListRecommendedActions struct {
+type smithyRpcv2cbor_serializeOpListRecommendedActions struct {
 }
 
-func (*awsAwsjson10_serializeOpListRecommendedActions) ID() string {
+func (*smithyRpcv2cbor_serializeOpListRecommendedActions) ID() string {
 	return "OperationSerializer"
 }
 
-func (m *awsAwsjson10_serializeOpListRecommendedActions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+func (m *smithyRpcv2cbor_serializeOpListRecommendedActions) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
 	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
 ) {
 	_, span := tracing.StartSpan(ctx, "OperationSerializer")
 	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
 	defer endTimer()
 	defer span.End()
-	request, ok := in.Request.(*smithyhttp.Request)
-	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
-	}
-
 	input, ok := in.Parameters.(*ListRecommendedActionsInput)
-	_ = input
 	if !ok {
-		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+		return out, metadata, fmt.Errorf("unexpected input type %T", in.Parameters)
+	}
+	_ = input
+
+	req, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, fmt.Errorf("unexpected transport type %T", in.Request)
 	}
 
-	operationPath := "/"
-	if len(request.Request.URL.Path) == 0 {
-		request.Request.URL.Path = operationPath
-	} else {
-		request.Request.URL.Path = path.Join(request.Request.URL.Path, operationPath)
-		if request.Request.URL.Path != "/" && operationPath[len(operationPath)-1] == '/' {
-			request.Request.URL.Path += "/"
-		}
-	}
-	request.Request.Method = "POST"
-	httpBindingEncoder, err := httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	req.Method = http.MethodPost
+	req.URL.Path = "/service/AWSBillingAndCostManagementRecommendedActions/operation/ListRecommendedActions"
+	req.Header.Set("smithy-protocol", "rpc-v2-cbor")
+
+	req.Header.Set("Content-Type", "application/cbor")
+	req.Header.Set("Accept", "application/cbor")
+
+	cv, err := serializeCBOR_ListRecommendedActionsInput(input)
 	if err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
-	httpBindingEncoder.SetHeader("Content-Type").String("application/x-amz-json-1.0")
-	httpBindingEncoder.SetHeader("X-Amz-Target").String("AWSBillingAndCostManagementRecommendedActions.ListRecommendedActions")
 
-	jsonEncoder := smithyjson.NewEncoder()
-	if err := awsAwsjson10_serializeOpDocumentListRecommendedActionsInput(input, jsonEncoder.Value); err != nil {
+	payload := bytes.NewReader(smithycbor.Encode(cv))
+	if req, err = req.SetStream(payload); err != nil {
 		return out, metadata, &smithy.SerializationError{Err: err}
 	}
 
-	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-
-	if request.Request, err = httpBindingEncoder.Encode(request.Request); err != nil {
-		return out, metadata, &smithy.SerializationError{Err: err}
-	}
-	in.Request = request
+	in.Request = req
 
 	endTimer()
 	span.End()
+
 	return next.HandleSerialize(ctx, in)
 }
-func awsAwsjson10_serializeDocumentActionFilter(v *types.ActionFilter, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
-
+func serializeCBOR_ActionFilter(v *types.ActionFilter) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if len(v.Key) > 0 {
-		ok := object.Key("key")
-		ok.String(string(v.Key))
+		ser, err := serializeCBOR_FilterName(v.Key)
+		if err != nil {
+			return nil, err
+		}
+		vm["key"] = ser
 	}
-
 	if len(v.MatchOption) > 0 {
-		ok := object.Key("matchOption")
-		ok.String(string(v.MatchOption))
+		ser, err := serializeCBOR_MatchOption(v.MatchOption)
+		if err != nil {
+			return nil, err
+		}
+		vm["matchOption"] = ser
 	}
-
 	if v.Values != nil {
-		ok := object.Key("values")
-		if err := awsAwsjson10_serializeDocumentFilterValues(v.Values, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_FilterValues(v.Values)
+		if err != nil {
+			return nil, err
 		}
+		vm["values"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson10_serializeDocumentActionFilterList(v []types.ActionFilter, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
-
+func serializeCBOR_ActionFilterList(v []types.ActionFilter) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		if err := awsAwsjson10_serializeDocumentActionFilter(&v[i], av); err != nil {
-			return err
+
+		ser, err := serializeCBOR_ActionFilter(&v[i])
+		if err != nil {
+			return nil, err
 		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson10_serializeDocumentFilterValues(v []string, value smithyjson.Value) error {
-	array := value.Array()
-	defer array.Close()
+func serializeCBOR_FilterName(v types.FilterName) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_FilterValues(v []string) (smithycbor.Value, error) {
+	vl := smithycbor.List{}
 	for i := range v {
-		av := array.Value()
-		av.String(v[i])
+
+		ser, err := serializeCBOR_String(v[i])
+		if err != nil {
+			return nil, err
+		}
+		vl = append(vl, ser)
 	}
-	return nil
+	return vl, nil
 }
 
-func awsAwsjson10_serializeDocumentRequestFilter(v *types.RequestFilter, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_MatchOption(v types.MatchOption) (smithycbor.Value, error) {
+	return smithycbor.String(string(v)), nil
+}
 
+func serializeCBOR_RequestFilter(v *types.RequestFilter) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Actions != nil {
-		ok := object.Key("actions")
-		if err := awsAwsjson10_serializeDocumentActionFilterList(v.Actions, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_ActionFilterList(v.Actions)
+		if err != nil {
+			return nil, err
 		}
+		vm["actions"] = ser
 	}
-
-	return nil
+	return vm, nil
 }
 
-func awsAwsjson10_serializeOpDocumentListRecommendedActionsInput(v *ListRecommendedActionsInput, value smithyjson.Value) error {
-	object := value.Object()
-	defer object.Close()
+func serializeCBOR_Int32(v int32) (smithycbor.Value, error) {
+	if v < 0 {
+		return smithycbor.NegInt(uint64(-v)), nil
+	}
+	return smithycbor.Uint(uint64(v)), nil
+}
 
+func serializeCBOR_String(v string) (smithycbor.Value, error) {
+	return smithycbor.String(v), nil
+}
+
+func serializeCBOR_ListRecommendedActionsInput(v *ListRecommendedActionsInput) (smithycbor.Value, error) {
+	vm := smithycbor.Map{}
 	if v.Filter != nil {
-		ok := object.Key("filter")
-		if err := awsAwsjson10_serializeDocumentRequestFilter(v.Filter, ok); err != nil {
-			return err
+		ser, err := serializeCBOR_RequestFilter(v.Filter)
+		if err != nil {
+			return nil, err
 		}
+		vm["filter"] = ser
 	}
-
 	if v.MaxResults != nil {
-		ok := object.Key("maxResults")
-		ok.Integer(*v.MaxResults)
+		ser, err := serializeCBOR_Int32(*v.MaxResults)
+		if err != nil {
+			return nil, err
+		}
+		vm["maxResults"] = ser
 	}
-
 	if v.NextToken != nil {
-		ok := object.Key("nextToken")
-		ok.String(*v.NextToken)
+		ser, err := serializeCBOR_String(*v.NextToken)
+		if err != nil {
+			return nil, err
+		}
+		vm["nextToken"] = ser
 	}
-
-	return nil
+	return vm, nil
 }

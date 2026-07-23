@@ -16293,6 +16293,134 @@ func awsRestjson1_serializeOpDocumentStartNotebookRunInput(v *StartNotebookRunIn
 	return nil
 }
 
+type awsRestjson1_serializeOpStartNotebookSync struct {
+}
+
+func (*awsRestjson1_serializeOpStartNotebookSync) ID() string {
+	return "OperationSerializer"
+}
+
+func (m *awsRestjson1_serializeOpStartNotebookSync) HandleSerialize(ctx context.Context, in middleware.SerializeInput, next middleware.SerializeHandler) (
+	out middleware.SerializeOutput, metadata middleware.Metadata, err error,
+) {
+	_, span := tracing.StartSpan(ctx, "OperationSerializer")
+	endTimer := startMetricTimer(ctx, "client.call.serialization_duration")
+	defer endTimer()
+	defer span.End()
+	request, ok := in.Request.(*smithyhttp.Request)
+	if !ok {
+		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown transport type %T", in.Request)}
+	}
+
+	input, ok := in.Parameters.(*StartNotebookSyncInput)
+	_ = input
+	if !ok {
+		return out, metadata, &smithy.SerializationError{Err: fmt.Errorf("unknown input parameters type %T", in.Parameters)}
+	}
+
+	opPath, opQuery := httpbinding.SplitURI("/v2/domains/{domainIdentifier}/notebook-syncs")
+	request.URL.Path = smithyhttp.JoinPath(request.URL.Path, opPath)
+	request.URL.RawQuery = smithyhttp.JoinRawQuery(request.URL.RawQuery, opQuery)
+	request.Method = "POST"
+	var restEncoder *httpbinding.Encoder
+	if request.URL.RawPath == "" {
+		restEncoder, err = httpbinding.NewEncoder(request.URL.Path, request.URL.RawQuery, request.Header)
+	} else {
+		request.URL.RawPath = smithyhttp.JoinPath(request.URL.RawPath, opPath)
+		restEncoder, err = httpbinding.NewEncoderWithRawPath(request.URL.Path, request.URL.RawPath, request.URL.RawQuery, request.Header)
+	}
+
+	if err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	if err := awsRestjson1_serializeOpHttpBindingsStartNotebookSyncInput(input, restEncoder); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	restEncoder.SetHeader("Content-Type").String("application/json")
+
+	jsonEncoder := smithyjson.NewEncoder()
+	if err := awsRestjson1_serializeOpDocumentStartNotebookSyncInput(input, jsonEncoder.Value); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	if request, err = request.SetStream(bytes.NewReader(jsonEncoder.Bytes())); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+
+	if request.Request, err = restEncoder.Encode(request.Request); err != nil {
+		return out, metadata, &smithy.SerializationError{Err: err}
+	}
+	in.Request = request
+
+	endTimer()
+	span.End()
+	return next.HandleSerialize(ctx, in)
+}
+func awsRestjson1_serializeOpHttpBindingsStartNotebookSyncInput(v *StartNotebookSyncInput, encoder *httpbinding.Encoder) error {
+	if v == nil {
+		return fmt.Errorf("unsupported serialization of nil %T", v)
+	}
+
+	if v.DomainIdentifier == nil || len(*v.DomainIdentifier) == 0 {
+		return &smithy.SerializationError{Err: fmt.Errorf("input member domainIdentifier must not be empty")}
+	}
+	if v.DomainIdentifier != nil {
+		if err := encoder.SetURI("domainIdentifier").String(*v.DomainIdentifier); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func awsRestjson1_serializeOpDocumentStartNotebookSyncInput(v *StartNotebookSyncInput, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.ClientToken != nil {
+		ok := object.Key("clientToken")
+		ok.String(*v.ClientToken)
+	}
+
+	if v.Description != nil {
+		ok := object.Key("description")
+		ok.String(*v.Description)
+	}
+
+	if v.GitMetadata != nil {
+		ok := object.Key("gitMetadata")
+		if err := awsRestjson1_serializeDocumentGitMetadata(v.GitMetadata, ok); err != nil {
+			return err
+		}
+	}
+
+	if v.Name != nil {
+		ok := object.Key("name")
+		ok.String(*v.Name)
+	}
+
+	if v.NotebookId != nil {
+		ok := object.Key("notebookId")
+		ok.String(*v.NotebookId)
+	}
+
+	if v.OwningProjectIdentifier != nil {
+		ok := object.Key("owningProjectIdentifier")
+		ok.String(*v.OwningProjectIdentifier)
+	}
+
+	if v.SourceLocation != nil {
+		ok := object.Key("sourceLocation")
+		if err := awsRestjson1_serializeDocumentSourceLocation(v.SourceLocation, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 type awsRestjson1_serializeOpStopNotebookRun struct {
 }
 
@@ -21305,6 +21433,48 @@ func awsRestjson1_serializeDocumentFormsInputMap(v map[string]types.FormEntryInp
 			return err
 		}
 	}
+	return nil
+}
+
+func awsRestjson1_serializeDocumentGitMetadata(v *types.GitMetadata, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.Branch != nil {
+		ok := object.Key("branch")
+		ok.String(*v.Branch)
+	}
+
+	if v.CommitHash != nil {
+		ok := object.Key("commitHash")
+		ok.String(*v.CommitHash)
+	}
+
+	if v.CommitMessage != nil {
+		ok := object.Key("commitMessage")
+		ok.String(*v.CommitMessage)
+	}
+
+	if v.CommittedAt != nil {
+		ok := object.Key("committedAt")
+		ok.Double(smithytime.FormatEpochSeconds(*v.CommittedAt))
+	}
+
+	if v.ConnectionId != nil {
+		ok := object.Key("connectionId")
+		ok.String(*v.ConnectionId)
+	}
+
+	if v.FileName != nil {
+		ok := object.Key("fileName")
+		ok.String(*v.FileName)
+	}
+
+	if v.Repository != nil {
+		ok := object.Key("repository")
+		ok.String(*v.Repository)
+	}
+
 	return nil
 }
 

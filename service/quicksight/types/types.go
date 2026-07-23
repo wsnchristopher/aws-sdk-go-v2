@@ -3886,6 +3886,10 @@ type Capabilities struct {
 	// The ability to use Box Agent actions.
 	UseBoxAgentAction CapabilityState
 
+	// The ability to use Amazon Quick through the browser extension for Chrome,
+	// Firefox, and Edge.
+	UseBrowserExtension CapabilityState
+
 	// The ability to use Canva Agent actions.
 	UseCanvaAgentAction CapabilityState
 
@@ -3897,6 +3901,9 @@ type Capabilities struct {
 
 	// The ability to use Atlassian Confluence Cloud actions.
 	UseConfluenceAction CapabilityState
+
+	// The ability to use Amazon Quick through the Microsoft Excel add-in.
+	UseExcelAddInExtension CapabilityState
 
 	// The ability to use FactSet actions.
 	UseFactSetAction CapabilityState
@@ -3949,8 +3956,14 @@ type Capabilities struct {
 	// The ability to use OpenAPI Specification actions.
 	UseOpenAPIAction CapabilityState
 
+	// The ability to use Amazon Quick through the Microsoft Outlook add-in.
+	UseOutlookAddInExtension CapabilityState
+
 	// The ability to use PagerDuty Advance actions.
 	UsePagerDutyAction CapabilityState
+
+	// The ability to use Amazon Quick through the Microsoft PowerPoint add-in.
+	UsePowerpointAddInExtension CapabilityState
 
 	// The ability to use SAP Bill of Materials actions.
 	UseSAPBillOfMaterialAction CapabilityState
@@ -3990,6 +4003,9 @@ type Capabilities struct {
 
 	// The ability to use Textract actions.
 	UseTextractAction CapabilityState
+
+	// The ability to use Amazon Quick through the Microsoft Word add-in.
+	UseWordAddInExtension CapabilityState
 
 	// The ability to use Zendesk actions.
 	UseZendeskAction CapabilityState

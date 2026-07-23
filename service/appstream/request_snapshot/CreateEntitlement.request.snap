@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateEntitlement
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateEntitlement
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AppVisibility":"ALL","Attributes":[{"Name":"__Name__","Value":"__Value__"},{"Name":"__Name__","Value":"__Value__"}],"Description":"__Description__","Name":"__Name__","StackName":"__StackName__"}
+¥mAppVisibilitycALLjAttributes‚¢dNameh__Name__eValuei__Value__¢dNameh__Name__eValuei__Value__dNameh__Name__iStackNamem__StackName__kDescriptiono__Description__

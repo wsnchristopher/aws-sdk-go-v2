@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/TagResource
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.TagResource
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"arn":"__Arn__","tags":{"key0":"__Value__"}}
+¢carng__Arn__dtags¡dkey0i__Value__

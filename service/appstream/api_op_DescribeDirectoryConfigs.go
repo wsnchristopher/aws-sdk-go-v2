@@ -65,11 +65,11 @@ type DescribeDirectoryConfigsOutput struct {
 }
 
 func (c *Client) addOperationDescribeDirectoryConfigsMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeDirectoryConfigs{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDescribeDirectoryConfigs{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeDirectoryConfigs{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDescribeDirectoryConfigs{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -93,6 +93,9 @@ func (c *Client) addOperationDescribeDirectoryConfigsMiddlewares(stack *middlewa
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

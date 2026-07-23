@@ -117,6 +117,9 @@ type GetStreamSessionOutput struct {
 	// time.
 	Description *string
 
+	// The configuration for the stream session's virtual monitor.
+	DisplayConfiguration *types.DisplayConfiguration
+
 	// Provides details about the stream session's exported files.
 	ExportFilesMetadata *types.ExportFilesMetadata
 

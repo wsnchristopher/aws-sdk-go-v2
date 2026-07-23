@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSKendraRerankingFrontendService/operation/ListRescoreExecutionPlans
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSKendraRerankingFrontendService.ListRescoreExecutionPlans
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"MaxResults":1,"NextToken":"__NextToken__"}
+¢iNextTokenm__NextToken__jMaxResults

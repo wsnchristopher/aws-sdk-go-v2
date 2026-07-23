@@ -2360,6 +2360,52 @@ const (
 	ClusterInstanceTypeMlC8g16xlarge      ClusterInstanceType = "ml.c8g.16xlarge"
 	ClusterInstanceTypeMlC8g24xlarge      ClusterInstanceType = "ml.c8g.24xlarge"
 	ClusterInstanceTypeMlC8g48xlarge      ClusterInstanceType = "ml.c8g.48xlarge"
+	ClusterInstanceTypeMlC6aLarge         ClusterInstanceType = "ml.c6a.large"
+	ClusterInstanceTypeMlC6aXlarge        ClusterInstanceType = "ml.c6a.xlarge"
+	ClusterInstanceTypeMlC6a2xlarge       ClusterInstanceType = "ml.c6a.2xlarge"
+	ClusterInstanceTypeMlC6a4xlarge       ClusterInstanceType = "ml.c6a.4xlarge"
+	ClusterInstanceTypeMlC6a8xlarge       ClusterInstanceType = "ml.c6a.8xlarge"
+	ClusterInstanceTypeMlC6a12xlarge      ClusterInstanceType = "ml.c6a.12xlarge"
+	ClusterInstanceTypeMlC6a16xlarge      ClusterInstanceType = "ml.c6a.16xlarge"
+	ClusterInstanceTypeMlC6a24xlarge      ClusterInstanceType = "ml.c6a.24xlarge"
+	ClusterInstanceTypeMlC6a32xlarge      ClusterInstanceType = "ml.c6a.32xlarge"
+	ClusterInstanceTypeMlC6a48xlarge      ClusterInstanceType = "ml.c6a.48xlarge"
+	ClusterInstanceTypeMlM6aLarge         ClusterInstanceType = "ml.m6a.large"
+	ClusterInstanceTypeMlM6aXlarge        ClusterInstanceType = "ml.m6a.xlarge"
+	ClusterInstanceTypeMlM6a2xlarge       ClusterInstanceType = "ml.m6a.2xlarge"
+	ClusterInstanceTypeMlM6a4xlarge       ClusterInstanceType = "ml.m6a.4xlarge"
+	ClusterInstanceTypeMlM6a8xlarge       ClusterInstanceType = "ml.m6a.8xlarge"
+	ClusterInstanceTypeMlM6a12xlarge      ClusterInstanceType = "ml.m6a.12xlarge"
+	ClusterInstanceTypeMlM6a16xlarge      ClusterInstanceType = "ml.m6a.16xlarge"
+	ClusterInstanceTypeMlM6a24xlarge      ClusterInstanceType = "ml.m6a.24xlarge"
+	ClusterInstanceTypeMlM6a32xlarge      ClusterInstanceType = "ml.m6a.32xlarge"
+	ClusterInstanceTypeMlM6a48xlarge      ClusterInstanceType = "ml.m6a.48xlarge"
+	ClusterInstanceTypeMlM6gMedium        ClusterInstanceType = "ml.m6g.medium"
+	ClusterInstanceTypeMlM6gLarge         ClusterInstanceType = "ml.m6g.large"
+	ClusterInstanceTypeMlM6gXlarge        ClusterInstanceType = "ml.m6g.xlarge"
+	ClusterInstanceTypeMlM6g2xlarge       ClusterInstanceType = "ml.m6g.2xlarge"
+	ClusterInstanceTypeMlM6g4xlarge       ClusterInstanceType = "ml.m6g.4xlarge"
+	ClusterInstanceTypeMlM6g8xlarge       ClusterInstanceType = "ml.m6g.8xlarge"
+	ClusterInstanceTypeMlM6g12xlarge      ClusterInstanceType = "ml.m6g.12xlarge"
+	ClusterInstanceTypeMlM6g16xlarge      ClusterInstanceType = "ml.m6g.16xlarge"
+	ClusterInstanceTypeMlM7gMedium        ClusterInstanceType = "ml.m7g.medium"
+	ClusterInstanceTypeMlM7gLarge         ClusterInstanceType = "ml.m7g.large"
+	ClusterInstanceTypeMlM7gXlarge        ClusterInstanceType = "ml.m7g.xlarge"
+	ClusterInstanceTypeMlM7g2xlarge       ClusterInstanceType = "ml.m7g.2xlarge"
+	ClusterInstanceTypeMlM7g4xlarge       ClusterInstanceType = "ml.m7g.4xlarge"
+	ClusterInstanceTypeMlM7g8xlarge       ClusterInstanceType = "ml.m7g.8xlarge"
+	ClusterInstanceTypeMlM7g12xlarge      ClusterInstanceType = "ml.m7g.12xlarge"
+	ClusterInstanceTypeMlM7g16xlarge      ClusterInstanceType = "ml.m7g.16xlarge"
+	ClusterInstanceTypeMlM8gMedium        ClusterInstanceType = "ml.m8g.medium"
+	ClusterInstanceTypeMlM8gLarge         ClusterInstanceType = "ml.m8g.large"
+	ClusterInstanceTypeMlM8gXlarge        ClusterInstanceType = "ml.m8g.xlarge"
+	ClusterInstanceTypeMlM8g2xlarge       ClusterInstanceType = "ml.m8g.2xlarge"
+	ClusterInstanceTypeMlM8g4xlarge       ClusterInstanceType = "ml.m8g.4xlarge"
+	ClusterInstanceTypeMlM8g8xlarge       ClusterInstanceType = "ml.m8g.8xlarge"
+	ClusterInstanceTypeMlM8g12xlarge      ClusterInstanceType = "ml.m8g.12xlarge"
+	ClusterInstanceTypeMlM8g16xlarge      ClusterInstanceType = "ml.m8g.16xlarge"
+	ClusterInstanceTypeMlM8g24xlarge      ClusterInstanceType = "ml.m8g.24xlarge"
+	ClusterInstanceTypeMlM8g48xlarge      ClusterInstanceType = "ml.m8g.48xlarge"
 )
 
 // Values returns all known values for ClusterInstanceType. Note that this can be
@@ -2523,6 +2569,52 @@ func (ClusterInstanceType) Values() []ClusterInstanceType {
 		"ml.c8g.16xlarge",
 		"ml.c8g.24xlarge",
 		"ml.c8g.48xlarge",
+		"ml.c6a.large",
+		"ml.c6a.xlarge",
+		"ml.c6a.2xlarge",
+		"ml.c6a.4xlarge",
+		"ml.c6a.8xlarge",
+		"ml.c6a.12xlarge",
+		"ml.c6a.16xlarge",
+		"ml.c6a.24xlarge",
+		"ml.c6a.32xlarge",
+		"ml.c6a.48xlarge",
+		"ml.m6a.large",
+		"ml.m6a.xlarge",
+		"ml.m6a.2xlarge",
+		"ml.m6a.4xlarge",
+		"ml.m6a.8xlarge",
+		"ml.m6a.12xlarge",
+		"ml.m6a.16xlarge",
+		"ml.m6a.24xlarge",
+		"ml.m6a.32xlarge",
+		"ml.m6a.48xlarge",
+		"ml.m6g.medium",
+		"ml.m6g.large",
+		"ml.m6g.xlarge",
+		"ml.m6g.2xlarge",
+		"ml.m6g.4xlarge",
+		"ml.m6g.8xlarge",
+		"ml.m6g.12xlarge",
+		"ml.m6g.16xlarge",
+		"ml.m7g.medium",
+		"ml.m7g.large",
+		"ml.m7g.xlarge",
+		"ml.m7g.2xlarge",
+		"ml.m7g.4xlarge",
+		"ml.m7g.8xlarge",
+		"ml.m7g.12xlarge",
+		"ml.m7g.16xlarge",
+		"ml.m8g.medium",
+		"ml.m8g.large",
+		"ml.m8g.xlarge",
+		"ml.m8g.2xlarge",
+		"ml.m8g.4xlarge",
+		"ml.m8g.8xlarge",
+		"ml.m8g.12xlarge",
+		"ml.m8g.16xlarge",
+		"ml.m8g.24xlarge",
+		"ml.m8g.48xlarge",
 	}
 }
 

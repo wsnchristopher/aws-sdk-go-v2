@@ -1353,6 +1353,10 @@ const (
 	NotebookStatusActive NotebookStatus = "ACTIVE"
 	// The notebook is archived.
 	NotebookStatusArchived NotebookStatus = "ARCHIVED"
+	// The notebook sync is in progress.
+	NotebookStatusSyncInProgress NotebookStatus = "SYNC_IN_PROGRESS"
+	// The notebook sync failed.
+	NotebookStatusSyncFailed NotebookStatus = "SYNC_FAILED"
 )
 
 // Values returns all known values for NotebookStatus. Note that this can be
@@ -1363,6 +1367,8 @@ func (NotebookStatus) Values() []NotebookStatus {
 	return []NotebookStatus{
 		"ACTIVE",
 		"ARCHIVED",
+		"SYNC_IN_PROGRESS",
+		"SYNC_FAILED",
 	}
 }
 

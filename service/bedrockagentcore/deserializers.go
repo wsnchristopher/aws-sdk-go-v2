@@ -3817,6 +3817,11 @@ func awsRestjson1_deserializeOpDocumentGetBrowserSessionOutput(v **GetBrowserSes
 				return err
 			}
 
+		case "filesystemConfigurations":
+			if err := awsRestjson1_deserializeDocumentToolsFileSystemConfigurations(&sv.FilesystemConfigurations, value); err != nil {
+				return err
+			}
+
 		case "lastUpdatedAt":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -4083,6 +4088,11 @@ func awsRestjson1_deserializeOpDocumentGetCodeInterpreterSessionOutput(v **GetCo
 					return err
 				}
 				sv.CreatedAt = ptr.Time(t)
+			}
+
+		case "filesystemConfigurations":
+			if err := awsRestjson1_deserializeDocumentToolsFileSystemConfigurations(&sv.FilesystemConfigurations, value); err != nil {
+				return err
 			}
 
 		case "name":
@@ -18259,6 +18269,64 @@ func awsRestjson1_deserializeDocumentDuplicateIdException(v **types.DuplicateIdE
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentEfsConfiguration(v **types.EfsConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.EfsConfiguration
+	if *v == nil {
+		sv = &types.EfsConfiguration{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "accessPointArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected EfsAccessPointArn to be of type string, got %T instead", value)
+				}
+				sv.AccessPointArn = ptr.String(jtv)
+			}
+
+		case "fileSystemArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected EfsFileSystemArn to be of type string, got %T instead", value)
+				}
+				sv.FileSystemArn = ptr.String(jtv)
+			}
+
+		case "mountPath":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected MountPath to be of type string, got %T instead", value)
+				}
+				sv.MountPath = ptr.String(jtv)
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentEmbeddedCryptoWallet(v **types.EmbeddedCryptoWallet, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -23761,6 +23829,64 @@ func awsRestjson1_deserializeDocumentRootCauseClusterList(v *[]types.RootCauseCl
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentS3FilesConfiguration(v **types.S3FilesConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.S3FilesConfiguration
+	if *v == nil {
+		sv = &types.S3FilesConfiguration{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "accessPointArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected S3FilesAccessPointArn to be of type string, got %T instead", value)
+				}
+				sv.AccessPointArn = ptr.String(jtv)
+			}
+
+		case "fileSystemArn":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected S3FilesFileSystemArn to be of type string, got %T instead", value)
+				}
+				sv.FileSystemArn = ptr.String(jtv)
+			}
+
+		case "mountPath":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected MountPath to be of type string, got %T instead", value)
+				}
+				sv.MountPath = ptr.String(jtv)
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentS3Location(v **types.S3Location, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -25561,6 +25687,88 @@ func awsRestjson1_deserializeDocumentToolsDefinition(v **types.ToolsDefinition, 
 		}
 	}
 	*v = sv
+	return nil
+}
+
+func awsRestjson1_deserializeDocumentToolsFileSystemConfiguration(v *types.ToolsFileSystemConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var uv types.ToolsFileSystemConfiguration
+loop:
+	for key, value := range shape {
+		if value == nil {
+			continue
+		}
+		switch key {
+		case "efsConfiguration":
+			var mv types.EfsConfiguration
+			destAddr := &mv
+			if err := awsRestjson1_deserializeDocumentEfsConfiguration(&destAddr, value); err != nil {
+				return err
+			}
+			mv = *destAddr
+			uv = &types.ToolsFileSystemConfigurationMemberEfsConfiguration{Value: mv}
+			break loop
+
+		case "s3FilesConfiguration":
+			var mv types.S3FilesConfiguration
+			destAddr := &mv
+			if err := awsRestjson1_deserializeDocumentS3FilesConfiguration(&destAddr, value); err != nil {
+				return err
+			}
+			mv = *destAddr
+			uv = &types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{Value: mv}
+			break loop
+
+		default:
+			uv = &types.UnknownUnionMember{Tag: key}
+			break loop
+
+		}
+	}
+	*v = uv
+	return nil
+}
+
+func awsRestjson1_deserializeDocumentToolsFileSystemConfigurations(v *[]types.ToolsFileSystemConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.([]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var cv []types.ToolsFileSystemConfiguration
+	if *v == nil {
+		cv = []types.ToolsFileSystemConfiguration{}
+	} else {
+		cv = *v
+	}
+
+	for _, value := range shape {
+		var col types.ToolsFileSystemConfiguration
+		if err := awsRestjson1_deserializeDocumentToolsFileSystemConfiguration(&col, value); err != nil {
+			return err
+		}
+		cv = append(cv, col)
+
+	}
+	*v = cv
 	return nil
 }
 

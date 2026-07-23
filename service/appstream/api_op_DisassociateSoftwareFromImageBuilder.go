@@ -99,11 +99,11 @@ type DisassociateSoftwareFromImageBuilderOutput struct {
 }
 
 func (c *Client) addOperationDisassociateSoftwareFromImageBuilderMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDisassociateSoftwareFromImageBuilder{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDisassociateSoftwareFromImageBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDisassociateSoftwareFromImageBuilder{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDisassociateSoftwareFromImageBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -127,6 +127,9 @@ func (c *Client) addOperationDisassociateSoftwareFromImageBuilderMiddlewares(sta
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

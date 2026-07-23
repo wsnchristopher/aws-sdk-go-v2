@@ -624,6 +624,12 @@ func TestCheckResponseSnapshot_GetStreamSession(t *testing.T) {
 			OutputUri:    ptr.String("__OutputUri__"),
 		},
 		RoleArn: ptr.String("__RoleArn__"),
+		DisplayConfiguration: &types.DisplayConfiguration{
+			Resolution: &types.Resolution{
+				Width:  ptr.Int32(1),
+				Height: ptr.Int32(1),
+			},
+		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetStreamSession.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -931,6 +937,12 @@ func TestCheckResponseSnapshot_StartStreamSession(t *testing.T) {
 			OutputUri:    ptr.String("__OutputUri__"),
 		},
 		RoleArn: ptr.String("__RoleArn__"),
+		DisplayConfiguration: &types.DisplayConfiguration{
+			Resolution: &types.Resolution{
+				Width:  ptr.Int32(1),
+				Height: ptr.Int32(1),
+			},
+		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("StartStreamSession.response")
 	if errors.Is(err, fs.ErrNotExist) {

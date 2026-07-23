@@ -117,6 +117,9 @@ type CreateNotebookOutput struct {
 	// The error details if the notebook creation failed.
 	Error *types.NotebookError
 
+	// The Git metadata associated with the notebook.
+	GitMetadata *types.GitMetadata
+
 	// The timestamp of when the notebook lock expires.
 	LockExpiresAt *time.Time
 

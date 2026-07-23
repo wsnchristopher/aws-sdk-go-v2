@@ -382,6 +382,15 @@ func awsRestjson1_deserializeOpDocumentCreateChannelOutput(v **CreateChannelOutp
 				return err
 			}
 
+		case "OutputLockingMode":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OutputLockingMode to be of type string, got %T instead", value)
+				}
+				sv.OutputLockingMode = types.OutputLockingMode(jtv)
+			}
+
 		case "Tags":
 			if err := awsRestjson1_deserializeDocumentTagMap(&sv.Tags, value); err != nil {
 				return err
@@ -2004,6 +2013,15 @@ func awsRestjson1_deserializeOpDocumentGetChannelOutput(v **GetChannelOutput, va
 		case "OutputHeaderConfiguration":
 			if err := awsRestjson1_deserializeDocumentOutputHeaderConfiguration(&sv.OutputHeaderConfiguration, value); err != nil {
 				return err
+			}
+
+		case "OutputLockingMode":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OutputLockingMode to be of type string, got %T instead", value)
+				}
+				sv.OutputLockingMode = types.OutputLockingMode(jtv)
 			}
 
 		case "ResetAt":
@@ -5190,6 +5208,15 @@ func awsRestjson1_deserializeOpDocumentUpdateChannelOutput(v **UpdateChannelOutp
 				return err
 			}
 
+		case "OutputLockingMode":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OutputLockingMode to be of type string, got %T instead", value)
+				}
+				sv.OutputLockingMode = types.OutputLockingMode(jtv)
+			}
+
 		case "tags":
 			if err := awsRestjson1_deserializeDocumentTagMap(&sv.Tags, value); err != nil {
 				return err
@@ -6393,6 +6420,15 @@ func awsRestjson1_deserializeDocumentChannelListConfiguration(v **types.ChannelL
 					return fmt.Errorf("expected Timestamp to be a JSON Number, got %T instead", value)
 
 				}
+			}
+
+		case "OutputLockingMode":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OutputLockingMode to be of type string, got %T instead", value)
+				}
+				sv.OutputLockingMode = types.OutputLockingMode(jtv)
 			}
 
 		default:
@@ -9769,6 +9805,15 @@ func awsRestjson1_deserializeDocumentSegment(v **types.Segment, value interface{
 					return fmt.Errorf("expected Boolean to be of type *bool, got %T instead", value)
 				}
 				sv.IncludeIframeOnlyStreams = ptr.Bool(jtv)
+			}
+
+		case "OutputTimestampMode":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected OutputTimestampMode to be of type string, got %T instead", value)
+				}
+				sv.OutputTimestampMode = types.OutputTimestampMode(jtv)
 			}
 
 		case "Scte":

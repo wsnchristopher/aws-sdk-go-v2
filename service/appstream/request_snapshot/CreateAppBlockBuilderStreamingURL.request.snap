@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateAppBlockBuilderStreamingURL
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateAppBlockBuilderStreamingURL
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AppBlockBuilderName":"__AppBlockBuilderName__","Validity":1}
+¢sAppBlockBuilderNamew__AppBlockBuilderName__hValidity

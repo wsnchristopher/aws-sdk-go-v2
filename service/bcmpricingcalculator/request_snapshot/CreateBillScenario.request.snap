@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/CreateBillScenario
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.CreateBillScenario
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"clientToken":"__ClientToken__","costCategoryGroupSharingPreferenceArn":"__CostCategoryGroupSharingPreferenceArn__","groupSharingPreference":"OPEN","name":"__Name__","tags":{"key0":"__Value__"}}
+¥vgroupSharingPreferencedOPENx%costCategoryGroupSharingPreferenceArnx)__CostCategoryGroupSharingPreferenceArn__dnameh__Name__kclientTokeno__ClientToken__dtags¡dkey0i__Value__

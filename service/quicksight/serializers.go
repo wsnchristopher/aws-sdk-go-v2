@@ -31674,6 +31674,11 @@ func awsRestjson1_serializeDocumentCapabilities(v *types.Capabilities, value smi
 		ok.String(string(v.UseBoxAgentAction))
 	}
 
+	if len(v.UseBrowserExtension) > 0 {
+		ok := object.Key("UseBrowserExtension")
+		ok.String(string(v.UseBrowserExtension))
+	}
+
 	if len(v.UseCanvaAgentAction) > 0 {
 		ok := object.Key("UseCanvaAgentAction")
 		ok.String(string(v.UseCanvaAgentAction))
@@ -31692,6 +31697,11 @@ func awsRestjson1_serializeDocumentCapabilities(v *types.Capabilities, value smi
 	if len(v.UseConfluenceAction) > 0 {
 		ok := object.Key("UseConfluenceAction")
 		ok.String(string(v.UseConfluenceAction))
+	}
+
+	if len(v.UseExcelAddInExtension) > 0 {
+		ok := object.Key("UseExcelAddInExtension")
+		ok.String(string(v.UseExcelAddInExtension))
 	}
 
 	if len(v.UseFactSetAction) > 0 {
@@ -31779,9 +31789,19 @@ func awsRestjson1_serializeDocumentCapabilities(v *types.Capabilities, value smi
 		ok.String(string(v.UseOpenAPIAction))
 	}
 
+	if len(v.UseOutlookAddInExtension) > 0 {
+		ok := object.Key("UseOutlookAddInExtension")
+		ok.String(string(v.UseOutlookAddInExtension))
+	}
+
 	if len(v.UsePagerDutyAction) > 0 {
 		ok := object.Key("UsePagerDutyAction")
 		ok.String(string(v.UsePagerDutyAction))
+	}
+
+	if len(v.UsePowerpointAddInExtension) > 0 {
+		ok := object.Key("UsePowerpointAddInExtension")
+		ok.String(string(v.UsePowerpointAddInExtension))
 	}
 
 	if len(v.UseSalesforceAction) > 0 {
@@ -31847,6 +31867,11 @@ func awsRestjson1_serializeDocumentCapabilities(v *types.Capabilities, value smi
 	if len(v.UseTextractAction) > 0 {
 		ok := object.Key("UseTextractAction")
 		ok.String(string(v.UseTextractAction))
+	}
+
+	if len(v.UseWordAddInExtension) > 0 {
+		ok := object.Key("UseWordAddInExtension")
+		ok.String(string(v.UseWordAddInExtension))
 	}
 
 	if len(v.UseZendeskAction) > 0 {

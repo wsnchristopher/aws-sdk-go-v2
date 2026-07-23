@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSKendraRerankingFrontendService/operation/DeleteRescoreExecutionPlan
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSKendraRerankingFrontendService.DeleteRescoreExecutionPlan
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Id":"__Id__"}
+¡bIdf__Id__

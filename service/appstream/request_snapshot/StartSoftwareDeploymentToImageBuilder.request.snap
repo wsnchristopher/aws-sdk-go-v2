@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/StartSoftwareDeploymentToImageBuilder
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.StartSoftwareDeploymentToImageBuilder
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ImageBuilderName":"__ImageBuilderName__","RetryFailedDeployments":true}
+¢pImageBuilderNamet__ImageBuilderName__vRetryFailedDeploymentsõ

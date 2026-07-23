@@ -44,11 +44,11 @@ type DeleteDirectoryConfigOutput struct {
 }
 
 func (c *Client) addOperationDeleteDirectoryConfigMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDeleteDirectoryConfig{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDeleteDirectoryConfig{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDeleteDirectoryConfig{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDeleteDirectoryConfig{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -72,6 +72,9 @@ func (c *Client) addOperationDeleteDirectoryConfigMiddlewares(stack *middleware.
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

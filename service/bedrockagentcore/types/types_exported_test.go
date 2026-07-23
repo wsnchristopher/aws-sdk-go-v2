@@ -1283,6 +1283,28 @@ func ExampleToolDescriptionSource_outputUsage() {
 var _ *types.ToolDescriptionConfigurationBundle
 var _ *types.ToolDescriptionTextInput
 
+func ExampleToolsFileSystemConfiguration_outputUsage() {
+	var union types.ToolsFileSystemConfiguration
+	// type switches can be used to check the union value
+	switch v := union.(type) {
+	case *types.ToolsFileSystemConfigurationMemberEfsConfiguration:
+		_ = v.Value // Value is types.EfsConfiguration
+
+	case *types.ToolsFileSystemConfigurationMemberS3FilesConfiguration:
+		_ = v.Value // Value is types.S3FilesConfiguration
+
+	case *types.UnknownUnionMember:
+		fmt.Println("unknown tag:", v.Tag)
+
+	default:
+		fmt.Println("union is nil or unknown type")
+
+	}
+}
+
+var _ *types.S3FilesConfiguration
+var _ *types.EfsConfiguration
+
 func ExampleUserIdentifier_outputUsage() {
 	var union types.UserIdentifier
 	// type switches can be used to check the union value

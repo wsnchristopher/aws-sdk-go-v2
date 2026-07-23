@@ -47,11 +47,11 @@ type StartVirtualMachinesMetadataSyncOutput struct {
 }
 
 func (c *Client) addOperationStartVirtualMachinesMetadataSyncMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpStartVirtualMachinesMetadataSync{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpStartVirtualMachinesMetadataSync{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpStartVirtualMachinesMetadataSync{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpStartVirtualMachinesMetadataSync{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -75,6 +75,9 @@ func (c *Client) addOperationStartVirtualMachinesMetadataSyncMiddlewares(stack *
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateDirectoryConfig
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateDirectoryConfig
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"CertificateBasedAuthProperties":{"CertificateAuthorityArn":"__CertificateAuthorityArn__","Status":"DISABLED"},"DirectoryName":"__DirectoryName__","OrganizationalUnitDistinguishedNames":["__Member__","__Member__"],"ServiceAccountCredentials":{"AccountName":"__AccountName__","AccountPassword":"__AccountPassword__"}}
+¤mDirectoryNameq__DirectoryName__x$OrganizationalUnitDistinguishedNames‚j__Member__j__Member__xServiceAccountCredentials¢kAccountNameo__AccountName__oAccountPasswords__AccountPassword__xCertificateBasedAuthProperties¢fStatushDISABLEDwCertificateAuthorityArnx__CertificateAuthorityArn__

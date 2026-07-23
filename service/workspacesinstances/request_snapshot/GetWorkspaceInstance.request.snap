@@ -1,6 +1,7 @@
-POST /
+POST /service/EUCMIFrontendAPIService/operation/GetWorkspaceInstance
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: EUCMIFrontendAPIService.GetWorkspaceInstance
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"WorkspaceInstanceId":"__WorkspaceInstanceId__"}
+¡sWorkspaceInstanceIdw__WorkspaceInstanceId__

@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/ListWorkloadEstimateUsage
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.ListWorkloadEstimateUsage
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"filters":[{"matchOption":"EQUALS","name":"USAGE_ACCOUNT_ID","values":["__Member__","__Member__"]},{"matchOption":"EQUALS","name":"USAGE_ACCOUNT_ID","values":["__Member__","__Member__"]}],"maxResults":1,"nextToken":"__NextToken__","workloadEstimateId":"__WorkloadEstimateId__"}
+¤rworkloadEstimateIdv__WorkloadEstimateId__gfilters‚£dnamepUSAGE_ACCOUNT_IDfvalues‚j__Member__j__Member__kmatchOptionfEQUALS£dnamepUSAGE_ACCOUNT_IDfvalues‚j__Member__j__Member__kmatchOptionfEQUALSinextTokenm__NextToken__jmaxResults

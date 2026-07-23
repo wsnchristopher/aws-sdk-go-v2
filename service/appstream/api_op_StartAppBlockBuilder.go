@@ -52,11 +52,11 @@ type StartAppBlockBuilderOutput struct {
 }
 
 func (c *Client) addOperationStartAppBlockBuilderMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpStartAppBlockBuilder{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpStartAppBlockBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpStartAppBlockBuilder{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpStartAppBlockBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -80,6 +80,9 @@ func (c *Client) addOperationStartAppBlockBuilderMiddlewares(stack *middleware.S
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DisassociateAppBlockBuilderAppBlock
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DisassociateAppBlockBuilderAppBlock
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AppBlockArn":"__AppBlockArn__","AppBlockBuilderName":"__AppBlockBuilderName__"}
+¢kAppBlockArno__AppBlockArn__sAppBlockBuilderNamew__AppBlockBuilderName__

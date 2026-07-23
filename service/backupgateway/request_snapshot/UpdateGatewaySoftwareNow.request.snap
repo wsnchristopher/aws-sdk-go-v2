@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/UpdateGatewaySoftwareNow
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.UpdateGatewaySoftwareNow
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"GatewayArn":"__GatewayArn__"}
+¡jGatewayArnn__GatewayArn__

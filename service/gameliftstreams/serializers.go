@@ -1763,6 +1763,13 @@ func awsRestjson1_serializeOpDocumentStartStreamSessionInput(v *StartStreamSessi
 		ok.String(*v.Description)
 	}
 
+	if v.DisplayConfiguration != nil {
+		ok := object.Key("DisplayConfiguration")
+		if err := awsRestjson1_serializeDocumentDisplayConfiguration(v.DisplayConfiguration, ok); err != nil {
+			return err
+		}
+	}
+
 	if v.Locations != nil {
 		ok := object.Key("Locations")
 		if err := awsRestjson1_serializeDocumentLocationList(v.Locations, ok); err != nil {
@@ -2270,6 +2277,20 @@ func awsRestjson1_serializeOpDocumentUpdateStreamGroupInput(v *UpdateStreamGroup
 	return nil
 }
 
+func awsRestjson1_serializeDocumentDisplayConfiguration(v *types.DisplayConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.Resolution != nil {
+		ok := object.Key("Resolution")
+		if err := awsRestjson1_serializeDocumentResolution(v.Resolution, ok); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func awsRestjson1_serializeDocumentEnvironmentVariables(v map[string]string, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -2395,6 +2416,23 @@ func awsRestjson1_serializeDocumentPerformanceStatsConfiguration(v *types.Perfor
 	if v.SharedWithClient != nil {
 		ok := object.Key("SharedWithClient")
 		ok.Boolean(*v.SharedWithClient)
+	}
+
+	return nil
+}
+
+func awsRestjson1_serializeDocumentResolution(v *types.Resolution, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.Height != nil {
+		ok := object.Key("Height")
+		ok.Integer(*v.Height)
+	}
+
+	if v.Width != nil {
+		ok := object.Key("Width")
+		ok.Integer(*v.Width)
 	}
 
 	return nil

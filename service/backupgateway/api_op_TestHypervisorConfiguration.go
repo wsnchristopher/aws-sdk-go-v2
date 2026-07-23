@@ -55,11 +55,11 @@ type TestHypervisorConfigurationOutput struct {
 }
 
 func (c *Client) addOperationTestHypervisorConfigurationMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpTestHypervisorConfiguration{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpTestHypervisorConfiguration{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpTestHypervisorConfiguration{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpTestHypervisorConfiguration{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -83,6 +83,9 @@ func (c *Client) addOperationTestHypervisorConfigurationMiddlewares(stack *middl
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

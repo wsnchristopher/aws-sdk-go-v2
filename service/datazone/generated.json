@@ -172,6 +172,7 @@
         "api_op_StartNotebookExport.go",
         "api_op_StartNotebookImport.go",
         "api_op_StartNotebookRun.go",
+        "api_op_StartNotebookSync.go",
         "api_op_StopNotebookRun.go",
         "api_op_TagResource.go",
         "api_op_UntagResource.go",

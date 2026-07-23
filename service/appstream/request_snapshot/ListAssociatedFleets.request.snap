@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/ListAssociatedFleets
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.ListAssociatedFleets
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"NextToken":"__NextToken__","StackName":"__StackName__"}
+¢iStackNamem__StackName__iNextTokenm__NextToken__

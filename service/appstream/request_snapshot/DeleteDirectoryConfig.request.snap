@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DeleteDirectoryConfig
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DeleteDirectoryConfig
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"DirectoryName":"__DirectoryName__"}
+¡mDirectoryNameq__DirectoryName__

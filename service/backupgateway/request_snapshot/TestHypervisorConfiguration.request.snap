@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/TestHypervisorConfiguration
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.TestHypervisorConfiguration
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"GatewayArn":"__GatewayArn__","Host":"__Host__","Password":"__Password__","Username":"__Username__"}
+¤jGatewayArnn__GatewayArn__dHosth__Host__hUsernamel__Username__hPasswordl__Password__

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateUpdatedImage
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateUpdatedImage
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"dryRun":true,"existingImageName":"__ExistingImageName__","newImageDescription":"__NewImageDescription__","newImageDisplayName":"__NewImageDisplayName__","newImageName":"__NewImageName__","newImageTags":{"key0":"__Value__"}}
+¦lnewImageTags¡dkey0i__Value__fdryRunõqexistingImageNameu__ExistingImageName__lnewImageNamep__NewImageName__snewImageDescriptionw__NewImageDescription__snewImageDisplayNamew__NewImageDisplayName__

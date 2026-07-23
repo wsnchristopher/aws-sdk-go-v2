@@ -240,6 +240,11 @@ func awsRestjson1_serializeOpDocumentCreateChannelInput(v *CreateChannelInput, v
 		}
 	}
 
+	if len(v.OutputLockingMode) > 0 {
+		ok := object.Key("OutputLockingMode")
+		ok.String(string(v.OutputLockingMode))
+	}
+
 	if v.Tags != nil {
 		ok := object.Key("tags")
 		if err := awsRestjson1_serializeDocumentTagMap(v.Tags, ok); err != nil {
@@ -3957,6 +3962,11 @@ func awsRestjson1_serializeDocumentSegment(v *types.Segment, value smithyjson.Va
 	if v.IncludeIframeOnlyStreams != nil {
 		ok := object.Key("IncludeIframeOnlyStreams")
 		ok.Boolean(*v.IncludeIframeOnlyStreams)
+	}
+
+	if len(v.OutputTimestampMode) > 0 {
+		ok := object.Key("OutputTimestampMode")
+		ok.String(string(v.OutputTimestampMode))
 	}
 
 	if v.Scte != nil {

@@ -2928,6 +2928,22 @@ func TestCheckResponseSnapshot_GetBrowser(t *testing.T) {
 				},
 			},
 		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+		},
 		Status:        types.BrowserStatus("CREATING"),
 		FailureReason: ptr.String("__FailureReason__"),
 		CreatedAt:     ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
@@ -3015,6 +3031,22 @@ func TestCheckResponseSnapshot_GetCodeInterpreter(t *testing.T) {
 					Value: types.SecretsManagerLocation{
 						SecretArn: ptr.String("__SecretArn__"),
 					},
+				},
+			},
+		},
+		FilesystemConfigurations: []types.ToolsFileSystemConfiguration{
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
+				},
+			},
+			&types.ToolsFileSystemConfigurationMemberS3FilesConfiguration{
+				Value: types.S3FilesConfiguration{
+					AccessPointArn: ptr.String("__AccessPointArn__"),
+					MountPath:      ptr.String("__MountPath__"),
+					FileSystemArn:  ptr.String("__FileSystemArn__"),
 				},
 			},
 		},

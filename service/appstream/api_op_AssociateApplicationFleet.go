@@ -55,11 +55,11 @@ type AssociateApplicationFleetOutput struct {
 }
 
 func (c *Client) addOperationAssociateApplicationFleetMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpAssociateApplicationFleet{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpAssociateApplicationFleet{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpAssociateApplicationFleet{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpAssociateApplicationFleet{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -83,6 +83,9 @@ func (c *Client) addOperationAssociateApplicationFleetMiddlewares(stack *middlew
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

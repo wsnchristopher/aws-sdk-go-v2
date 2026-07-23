@@ -61,11 +61,11 @@ type DescribeEntitlementsOutput struct {
 }
 
 func (c *Client) addOperationDescribeEntitlementsMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeEntitlements{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDescribeEntitlements{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeEntitlements{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDescribeEntitlements{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -89,6 +89,9 @@ func (c *Client) addOperationDescribeEntitlementsMiddlewares(stack *middleware.S
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

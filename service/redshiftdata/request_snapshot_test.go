@@ -209,6 +209,8 @@ func TestCheckRequestSnapshot_BatchExecuteStatement(t *testing.T) {
 		ResultFormat:            types.ResultFormatString("JSON"),
 		SessionKeepAliveSeconds: ptr.Int32(1),
 		SessionId:               ptr.String("__SessionId__"),
+		ExecutionMode:           types.ExecutionMode("TRANSACTION"),
+		WaitTimeSeconds:         ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -262,7 +264,8 @@ func TestCheckRequestSnapshot_CancelStatement(t *testing.T) {
 
 func TestCheckRequestSnapshot_DescribeStatement(t *testing.T) {
 	input := &DescribeStatementInput{
-		Id: ptr.String("__Id__"),
+		Id:              ptr.String("__Id__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -347,6 +350,7 @@ func TestCheckRequestSnapshot_ExecuteStatement(t *testing.T) {
 		ResultFormat:            types.ResultFormatString("JSON"),
 		SessionKeepAliveSeconds: ptr.Int32(1),
 		SessionId:               ptr.String("__SessionId__"),
+		WaitTimeSeconds:         ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -373,8 +377,9 @@ func TestCheckRequestSnapshot_ExecuteStatement(t *testing.T) {
 
 func TestCheckRequestSnapshot_GetStatementResult(t *testing.T) {
 	input := &GetStatementResultInput{
-		Id:        ptr.String("__Id__"),
-		NextToken: ptr.String("__NextToken__"),
+		Id:              ptr.String("__Id__"),
+		NextToken:       ptr.String("__NextToken__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -401,8 +406,9 @@ func TestCheckRequestSnapshot_GetStatementResult(t *testing.T) {
 
 func TestCheckRequestSnapshot_GetStatementResultV2(t *testing.T) {
 	input := &GetStatementResultV2Input{
-		Id:        ptr.String("__Id__"),
-		NextToken: ptr.String("__NextToken__"),
+		Id:              ptr.String("__Id__"),
+		NextToken:       ptr.String("__NextToken__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -491,6 +497,40 @@ func TestCheckRequestSnapshot_ListSchemas(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSchemas"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckRequestSnapshot_ListSessions(t *testing.T) {
+	input := &ListSessionsInput{
+		NextToken:         ptr.String("__NextToken__"),
+		MaxResults:        1,
+		SessionId:         ptr.String("__SessionId__"),
+		Status:            types.SessionStatusString("AVAILABLE"),
+		RoleLevel:         ptr.Bool(true),
+		ClusterIdentifier: ptr.String("__ClusterIdentifier__"),
+		WorkgroupName:     ptr.String("__WorkgroupName__"),
+		Database:          ptr.String("__Database__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListSessions(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSessions"); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -591,6 +631,8 @@ func TestUpdateRequestSnapshot_BatchExecuteStatement(t *testing.T) {
 		ResultFormat:            types.ResultFormatString("JSON"),
 		SessionKeepAliveSeconds: ptr.Int32(1),
 		SessionId:               ptr.String("__SessionId__"),
+		ExecutionMode:           types.ExecutionMode("TRANSACTION"),
+		WaitTimeSeconds:         ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -644,7 +686,8 @@ func TestUpdateRequestSnapshot_CancelStatement(t *testing.T) {
 
 func TestUpdateRequestSnapshot_DescribeStatement(t *testing.T) {
 	input := &DescribeStatementInput{
-		Id: ptr.String("__Id__"),
+		Id:              ptr.String("__Id__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -729,6 +772,7 @@ func TestUpdateRequestSnapshot_ExecuteStatement(t *testing.T) {
 		ResultFormat:            types.ResultFormatString("JSON"),
 		SessionKeepAliveSeconds: ptr.Int32(1),
 		SessionId:               ptr.String("__SessionId__"),
+		WaitTimeSeconds:         ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -755,8 +799,9 @@ func TestUpdateRequestSnapshot_ExecuteStatement(t *testing.T) {
 
 func TestUpdateRequestSnapshot_GetStatementResult(t *testing.T) {
 	input := &GetStatementResultInput{
-		Id:        ptr.String("__Id__"),
-		NextToken: ptr.String("__NextToken__"),
+		Id:              ptr.String("__Id__"),
+		NextToken:       ptr.String("__NextToken__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -783,8 +828,9 @@ func TestUpdateRequestSnapshot_GetStatementResult(t *testing.T) {
 
 func TestUpdateRequestSnapshot_GetStatementResultV2(t *testing.T) {
 	input := &GetStatementResultV2Input{
-		Id:        ptr.String("__Id__"),
-		NextToken: ptr.String("__NextToken__"),
+		Id:              ptr.String("__Id__"),
+		NextToken:       ptr.String("__NextToken__"),
+		WaitTimeSeconds: ptr.Int32(1),
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -873,6 +919,40 @@ func TestUpdateRequestSnapshot_ListSchemas(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSchemas"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_ListSessions(t *testing.T) {
+	input := &ListSessionsInput{
+		NextToken:         ptr.String("__NextToken__"),
+		MaxResults:        1,
+		SessionId:         ptr.String("__SessionId__"),
+		Status:            types.SessionStatusString("AVAILABLE"),
+		RoleLevel:         ptr.Bool(true),
+		ClusterIdentifier: ptr.String("__ClusterIdentifier__"),
+		WorkgroupName:     ptr.String("__WorkgroupName__"),
+		Database:          ptr.String("__Database__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.ListSessions(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "ListSessions"); err != nil {
 		t.Fatal(err)
 	}
 }

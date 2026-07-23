@@ -98,6 +98,17 @@ type DefaultApplication struct {
 	noSmithyDocumentSerde
 }
 
+// The virtual monitor settings for a stream session, including the resolution. If
+// not specified, the stream session uses the default resolution of 1920 × 1080.
+type DisplayConfiguration struct {
+
+	// The resolution to apply to the stream session's virtual monitor. When
+	// specified, this value overrides the default resolution of 1920 × 1080.
+	Resolution *Resolution
+
+	noSmithyDocumentSerde
+}
+
 // Provides details about the stream session's exported files.
 type ExportFilesMetadata struct {
 
@@ -306,6 +317,26 @@ type ReplicationStatus struct {
 
 	// The current status of the replication process.
 	Status ReplicationStatusType
+
+	noSmithyDocumentSerde
+}
+
+// Contains the width and height dimensions, in pixels, that define the resolution
+// of the stream session's virtual monitor. The total number of pixels (width ×
+// height) must not exceed 2,073,600 (equivalent to 1920 × 1080).
+type Resolution struct {
+
+	// The height of the stream session's virtual monitor, in pixels. The value must
+	// be an even number.
+	//
+	// This member is required.
+	Height *int32
+
+	// The width of the stream session's virtual monitor, in pixels. The value must be
+	// an even number.
+	//
+	// This member is required.
+	Width *int32
 
 	noSmithyDocumentSerde
 }

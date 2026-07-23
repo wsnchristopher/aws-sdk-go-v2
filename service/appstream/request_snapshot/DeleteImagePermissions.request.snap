@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DeleteImagePermissions
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DeleteImagePermissions
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Name":"__Name__","SharedAccountId":"__SharedAccountId__"}
+¢dNameh__Name__oSharedAccountIds__SharedAccountId__

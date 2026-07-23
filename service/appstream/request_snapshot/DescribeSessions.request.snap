@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeSessions
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeSessions
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AuthenticationType":"API","FleetName":"__FleetName__","InstanceId":"__InstanceId__","Limit":1,"NextToken":"__NextToken__","StackName":"__StackName__","UserId":"__UserId__"}
+§iStackNamem__StackName__iFleetNamem__FleetName__fUserIdj__UserId__iNextTokenm__NextToken__eLimitrAuthenticationTypecAPIjInstanceIdn__InstanceId__

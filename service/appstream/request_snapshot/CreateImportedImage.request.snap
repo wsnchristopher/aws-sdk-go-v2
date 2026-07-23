@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateImportedImage
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateImportedImage
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AgentSoftwareVersion":"CURRENT_LATEST","AppCatalogConfig":[{"AbsoluteAppPath":"__AbsoluteAppPath__","AbsoluteIconPath":"__AbsoluteIconPath__","AbsoluteManifestPath":"__AbsoluteManifestPath__","DisplayName":"__DisplayName__","LaunchParameters":"__LaunchParameters__","Name":"__Name__","WorkingDirectory":"__WorkingDirectory__"},{"AbsoluteAppPath":"__AbsoluteAppPath__","AbsoluteIconPath":"__AbsoluteIconPath__","AbsoluteManifestPath":"__AbsoluteManifestPath__","DisplayName":"__DisplayName__","LaunchParameters":"__LaunchParameters__","Name":"__Name__","WorkingDirectory":"__WorkingDirectory__"}],"Description":"__Description__","DisplayName":"__DisplayName__","DryRun":true,"IamRoleArn":"__IamRoleArn__","Name":"__Name__","RuntimeValidationConfig":{"IntendedInstanceType":"__IntendedInstanceType__"},"SourceAmiId":"__SourceAmiId__","Tags":{"key0":"__Value__"},"WorkspaceImageId":"__WorkspaceImageId__"}
+«jIamRoleArnn__IamRoleArn__kDescriptiono__Description__kDisplayNameo__DisplayName__dTags¡dkey0i__Value__wRuntimeValidationConfig¡tIntendedInstanceTypex__IntendedInstanceType__tAgentSoftwareVersionnCURRENT_LATESTpAppCatalogConfig‚§pLaunchParameterst__LaunchParameters__dNameh__Name__kDisplayNameo__DisplayName__oAbsoluteAppPaths__AbsoluteAppPath__pAbsoluteIconPatht__AbsoluteIconPath__tAbsoluteManifestPathx__AbsoluteManifestPath__pWorkingDirectoryt__WorkingDirectory__§oAbsoluteAppPaths__AbsoluteAppPath__pAbsoluteIconPatht__AbsoluteIconPath__tAbsoluteManifestPathx__AbsoluteManifestPath__pWorkingDirectoryt__WorkingDirectory__pLaunchParameterst__LaunchParameters__dNameh__Name__kDisplayNameo__DisplayName__dNameh__Name__pWorkspaceImageIdt__WorkspaceImageId__fDryRunõkSourceAmiIdo__SourceAmiId__

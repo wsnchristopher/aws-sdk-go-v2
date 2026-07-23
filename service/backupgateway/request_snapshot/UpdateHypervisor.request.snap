@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/UpdateHypervisor
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.UpdateHypervisor
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Host":"__Host__","HypervisorArn":"__HypervisorArn__","LogGroupArn":"__LogGroupArn__","Name":"__Name__","Password":"__Password__","Username":"__Username__"}
+¦mHypervisorArnq__HypervisorArn__dHosth__Host__hUsernamel__Username__hPasswordl__Password__dNameh__Name__kLogGroupArno__LogGroupArn__

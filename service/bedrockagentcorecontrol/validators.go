@@ -4525,6 +4525,27 @@ func validateEfsAccessPointConfiguration(v *types.EfsAccessPointConfiguration) e
 	}
 }
 
+func validateEfsConfiguration(v *types.EfsConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "EfsConfiguration"}
+	if v.AccessPointArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("AccessPointArn"))
+	}
+	if v.MountPath == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("MountPath"))
+	}
+	if v.FileSystemArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("FileSystemArn"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateEpisodicMemoryStrategyInput(v *types.EpisodicMemoryStrategyInput) error {
 	if v == nil {
 		return nil
@@ -7018,6 +7039,27 @@ func validateS3FilesAccessPointConfiguration(v *types.S3FilesAccessPointConfigur
 	}
 }
 
+func validateS3FilesConfiguration(v *types.S3FilesConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "S3FilesConfiguration"}
+	if v.AccessPointArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("AccessPointArn"))
+	}
+	if v.MountPath == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("MountPath"))
+	}
+	if v.FileSystemArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("FileSystemArn"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateS3Location(v *types.S3Location) error {
 	if v == nil {
 		return nil
@@ -7675,6 +7717,47 @@ func validateToolSchema(v types.ToolSchema) error {
 	}
 }
 
+func validateToolsFileSystemConfiguration(v types.ToolsFileSystemConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "ToolsFileSystemConfiguration"}
+	switch uv := v.(type) {
+	case *types.ToolsFileSystemConfigurationMemberEfsConfiguration:
+		if err := validateEfsConfiguration(&uv.Value); err != nil {
+			invalidParams.AddNested("[efsConfiguration]", err.(smithy.InvalidParamsError))
+		}
+
+	case *types.ToolsFileSystemConfigurationMemberS3FilesConfiguration:
+		if err := validateS3FilesConfiguration(&uv.Value); err != nil {
+			invalidParams.AddNested("[s3FilesConfiguration]", err.(smithy.InvalidParamsError))
+		}
+
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateToolsFileSystemConfigurations(v []types.ToolsFileSystemConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "ToolsFileSystemConfigurations"}
+	for i := range v {
+		if err := validateToolsFileSystemConfiguration(v[i]); err != nil {
+			invalidParams.AddNested(fmt.Sprintf("[%d]", i), err.(smithy.InvalidParamsError))
+		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateTrafficSplitEntries(v []types.TrafficSplitEntry) error {
 	if v == nil {
 		return nil
@@ -8095,6 +8178,11 @@ func validateOpCreateBrowserInput(v *CreateBrowserInput) error {
 			invalidParams.AddNested("Certificates", err.(smithy.InvalidParamsError))
 		}
 	}
+	if v.FilesystemConfigurations != nil {
+		if err := validateToolsFileSystemConfigurations(v.FilesystemConfigurations); err != nil {
+			invalidParams.AddNested("FilesystemConfigurations", err.(smithy.InvalidParamsError))
+		}
+	}
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	} else {
@@ -8135,6 +8223,11 @@ func validateOpCreateCodeInterpreterInput(v *CreateCodeInterpreterInput) error {
 	if v.Certificates != nil {
 		if err := validateCertificates(v.Certificates); err != nil {
 			invalidParams.AddNested("Certificates", err.(smithy.InvalidParamsError))
+		}
+	}
+	if v.FilesystemConfigurations != nil {
+		if err := validateToolsFileSystemConfigurations(v.FilesystemConfigurations); err != nil {
+			invalidParams.AddNested("FilesystemConfigurations", err.(smithy.InvalidParamsError))
 		}
 	}
 	if invalidParams.Len() > 0 {

@@ -46,6 +46,10 @@ type DescribeStatementInput struct {
 	// This member is required.
 	Id *string
 
+	// The number of seconds to wait for the SQL statement to complete execution
+	// before returning the description. The maximum value is 30 seconds.
+	WaitTimeSeconds *int32
+
 	noSmithyDocumentSerde
 }
 
@@ -75,6 +79,11 @@ type DescribeStatementOutput struct {
 	// The error message from the cluster if the SQL statement encountered an error
 	// while running.
 	Error *string
+
+	// The execution mode of the batch request. TRANSACTION indicates all SQL
+	// statements are run as a single transaction. AUTO_COMMIT indicates each SQL
+	// statement is committed individually.
+	ExecutionMode types.ExecutionMode
 
 	// A value that indicates whether the statement has a result set. The result set
 	// can be empty. The value is true for an empty result set. The value is true if

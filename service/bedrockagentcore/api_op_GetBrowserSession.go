@@ -85,6 +85,10 @@ type GetBrowserSessionOutput struct {
 	// The list of browser extensions that are configured in the browser session.
 	Extensions []types.BrowserExtension
 
+	// The file system configurations for the browser session. Each entry describes an
+	// access point and its mount path.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// The time at which the browser session was last updated.
 	LastUpdatedAt *time.Time
 

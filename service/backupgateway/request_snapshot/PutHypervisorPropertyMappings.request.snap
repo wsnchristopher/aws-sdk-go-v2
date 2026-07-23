@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/PutHypervisorPropertyMappings
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.PutHypervisorPropertyMappings
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"HypervisorArn":"__HypervisorArn__","IamRoleArn":"__IamRoleArn__","VmwareToAwsTagMappings":[{"AwsTagKey":"__AwsTagKey__","AwsTagValue":"__AwsTagValue__","VmwareCategory":"__VmwareCategory__","VmwareTagName":"__VmwareTagName__"},{"AwsTagKey":"__AwsTagKey__","AwsTagValue":"__AwsTagValue__","VmwareCategory":"__VmwareCategory__","VmwareTagName":"__VmwareTagName__"}]}
+£mHypervisorArnq__HypervisorArn__vVmwareToAwsTagMappings‚¤nVmwareCategoryr__VmwareCategory__mVmwareTagNameq__VmwareTagName__iAwsTagKeym__AwsTagKey__kAwsTagValueo__AwsTagValue__¤mVmwareTagNameq__VmwareTagName__iAwsTagKeym__AwsTagKey__kAwsTagValueo__AwsTagValue__nVmwareCategoryr__VmwareCategory__jIamRoleArnn__IamRoleArn__

@@ -1244,6 +1244,32 @@ type Descriptors struct {
 	noSmithyDocumentSerde
 }
 
+// The configuration for mounting an Amazon Elastic File System (Amazon EFS)
+// access point that you own into a session.
+type EfsConfiguration struct {
+
+	// The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS)
+	// access point to mount.
+	//
+	// This member is required.
+	AccessPointArn *string
+
+	// The Amazon Resource Name (ARN) of the Amazon Elastic File System (Amazon EFS)
+	// file system that owns the access point.
+	//
+	// This member is required.
+	FileSystemArn *string
+
+	// The absolute path within the session at which the access point is mounted, for
+	// example /mnt/efs . Each mount path must be unique across all file system
+	// configurations in the session.
+	//
+	// This member is required.
+	MountPath *string
+
+	noSmithyDocumentSerde
+}
+
 // Embedded crypto wallet instrument details.
 type EmbeddedCryptoWallet struct {
 
@@ -4716,6 +4742,32 @@ type RootCauseCluster struct {
 	noSmithyDocumentSerde
 }
 
+// The configuration for mounting an Amazon Simple Storage Service (Amazon S3)
+// Files access point that you own into a session.
+type S3FilesConfiguration struct {
+
+	// The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3)
+	// Files access point to mount.
+	//
+	// This member is required.
+	AccessPointArn *string
+
+	// The Amazon Resource Name (ARN) of the Amazon Simple Storage Service (Amazon S3)
+	// Files file system that owns the access point.
+	//
+	// This member is required.
+	FileSystemArn *string
+
+	// The absolute path within the session at which the access point is mounted, for
+	// example /mnt/s3data . Each mount path must be unique across all file system
+	// configurations in the session.
+	//
+	// This member is required.
+	MountPath *string
+
+	noSmithyDocumentSerde
+}
+
 // The Amazon S3 location configuration of a resource.
 type S3Location struct {
 
@@ -5395,6 +5447,43 @@ type ToolsDefinition struct {
 	noSmithyDocumentSerde
 }
 
+// Specifies a file system to mount into the session by providing exactly one of
+// the following:
+//
+//   - s3FilesConfiguration - Mounts an Amazon Simple Storage Service (Amazon S3)
+//     Files access point.
+//
+//   - efsConfiguration - Mounts an Amazon Elastic File System (Amazon EFS) access
+//     point.
+//
+// The following types satisfy this interface:
+//
+//	ToolsFileSystemConfigurationMemberEfsConfiguration
+//	ToolsFileSystemConfigurationMemberS3FilesConfiguration
+type ToolsFileSystemConfiguration interface {
+	isToolsFileSystemConfiguration()
+}
+
+// The configuration for mounting your own Amazon Elastic File System (Amazon EFS)
+// access point into the session.
+type ToolsFileSystemConfigurationMemberEfsConfiguration struct {
+	Value EfsConfiguration
+
+	noSmithyDocumentSerde
+}
+
+func (*ToolsFileSystemConfigurationMemberEfsConfiguration) isToolsFileSystemConfiguration() {}
+
+// The configuration for mounting your own Amazon Simple Storage Service (Amazon
+// S3) Files access point into the session.
+type ToolsFileSystemConfigurationMemberS3FilesConfiguration struct {
+	Value S3FilesConfiguration
+
+	noSmithyDocumentSerde
+}
+
+func (*ToolsFileSystemConfigurationMemberS3FilesConfiguration) isToolsFileSystemConfiguration() {}
+
 // The OAuth2.0 token or user ID that was used to generate the workload access
 // token used for initiating the user authorization flow to retrieve OAuth2.0
 // tokens.
@@ -5668,4 +5757,5 @@ func (*UnknownUnionMember) isStreamUpdate()                          {}
 func (*UnknownUnionMember) isSystemPromptConfig()                    {}
 func (*UnknownUnionMember) isToolDescriptionConfig()                 {}
 func (*UnknownUnionMember) isToolDescriptionSource()                 {}
+func (*UnknownUnionMember) isToolsFileSystemConfiguration()          {}
 func (*UnknownUnionMember) isUserIdentifier()                        {}

@@ -2030,6 +2030,18 @@ func TestCheckSnapshot_StartNotebookRun(t *testing.T) {
 	}
 }
 
+func TestCheckSnapshot_StartNotebookSync(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.StartNotebookSync(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return testSnapshot(stack, "StartNotebookSync")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckSnapshot_StopNotebookRun(t *testing.T) {
 	svc := New(Options{})
 	_, err := svc.StopNotebookRun(context.Background(), nil, func(o *Options) {
@@ -4290,6 +4302,18 @@ func TestUpdateSnapshot_StartNotebookRun(t *testing.T) {
 	_, err := svc.StartNotebookRun(context.Background(), nil, func(o *Options) {
 		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
 			return updateSnapshot(stack, "StartNotebookRun")
+		})
+	})
+	if _, ok := err.(snapshotOK); !ok && err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateSnapshot_StartNotebookSync(t *testing.T) {
+	svc := New(Options{})
+	_, err := svc.StartNotebookSync(context.Background(), nil, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			return updateSnapshot(stack, "StartNotebookSync")
 		})
 	})
 	if _, ok := err.(snapshotOK); !ok && err != nil {

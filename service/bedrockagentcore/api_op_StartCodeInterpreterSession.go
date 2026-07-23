@@ -65,6 +65,13 @@ type StartCodeInterpreterSessionInput struct {
 	// issues.
 	ClientToken *string
 
+	// The file system configurations to mount into the code interpreter session. Use
+	// these configurations to mount your own Amazon Simple Storage Service (Amazon S3)
+	// Files or Amazon Elastic File System (Amazon EFS) access points. Your session can
+	// then read and write your data. If you don't specify this field, no additional
+	// file systems are mounted.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// The name of the code interpreter session. This name helps you identify and
 	// manage the session. The name does not need to be unique.
 	Name *string

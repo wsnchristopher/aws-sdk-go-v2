@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/EnableUser
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.EnableUser
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AuthenticationType":"API","UserName":"__UserName__"}
+¢hUserNamel__UserName__rAuthenticationTypecAPI

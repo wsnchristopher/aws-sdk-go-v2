@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/ListBillEstimateCommitments
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.ListBillEstimateCommitments
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"billEstimateId":"__BillEstimateId__","maxResults":1,"nextToken":"__NextToken__"}
+£nbillEstimateIdr__BillEstimateId__inextTokenm__NextToken__jmaxResults

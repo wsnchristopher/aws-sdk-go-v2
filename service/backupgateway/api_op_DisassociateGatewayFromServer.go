@@ -48,11 +48,11 @@ type DisassociateGatewayFromServerOutput struct {
 }
 
 func (c *Client) addOperationDisassociateGatewayFromServerMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpDisassociateGatewayFromServer{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDisassociateGatewayFromServer{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpDisassociateGatewayFromServer{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDisassociateGatewayFromServer{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -76,6 +76,9 @@ func (c *Client) addOperationDisassociateGatewayFromServerMiddlewares(stack *mid
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

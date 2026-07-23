@@ -1,6 +1,7 @@
-POST /
+POST /service/EUCMIFrontendAPIService/operation/ListInstanceTypes
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: EUCMIFrontendAPIService.ListInstanceTypes
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"InstanceConfigurationFilter":{"BillingMode":"MONTHLY","PlatformType":"Windows","Tenancy":"SHARED"},"MaxResults":1,"NextToken":"__NextToken__"}
+£jMaxResultsiNextTokenm__NextToken__xInstanceConfigurationFilter£kBillingModegMONTHLYlPlatformTypegWindowsgTenancyfSHARED

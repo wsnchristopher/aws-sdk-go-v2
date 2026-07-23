@@ -3063,6 +3063,43 @@ type FormTypeData struct {
 	noSmithyDocumentSerde
 }
 
+// The Git metadata for a notebook sync operation in Amazon SageMaker Unified
+// Studio. Contains information about the Git repository, branch, and commit
+// associated with the notebook.
+type GitMetadata struct {
+
+	// The name of the Git branch.
+	//
+	// This member is required.
+	Branch *string
+
+	// The commit hash in the Git repository.
+	//
+	// This member is required.
+	CommitHash *string
+
+	// The identifier of the Git connection.
+	//
+	// This member is required.
+	ConnectionId *string
+
+	// The name of the Git repository.
+	//
+	// This member is required.
+	Repository *string
+
+	// The commit message associated with the Git commit.
+	CommitMessage *string
+
+	// The timestamp of when the commit was made.
+	CommittedAt *time.Time
+
+	// The name of the file in the Git repository.
+	FileName *string
+
+	noSmithyDocumentSerde
+}
+
 // The details of a business glossary.
 type GlossaryItem struct {
 

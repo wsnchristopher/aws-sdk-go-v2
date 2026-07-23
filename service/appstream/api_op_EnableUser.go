@@ -55,11 +55,11 @@ type EnableUserOutput struct {
 }
 
 func (c *Client) addOperationEnableUserMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpEnableUser{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpEnableUser{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpEnableUser{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpEnableUser{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -83,6 +83,9 @@ func (c *Client) addOperationEnableUserMiddlewares(stack *middleware.Stack, opti
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

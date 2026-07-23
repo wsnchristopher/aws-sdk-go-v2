@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeUsers
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeUsers
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AuthenticationType":"API","MaxResults":1,"NextToken":"__NextToken__"}
+£rAuthenticationTypecAPIjMaxResultsiNextTokenm__NextToken__

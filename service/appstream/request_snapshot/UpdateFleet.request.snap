@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/UpdateFleet
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.UpdateFleet
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AttributesToDelete":["VPC_CONFIGURATION","VPC_CONFIGURATION"],"ComputeCapacity":{"DesiredInstances":1,"DesiredSessions":1},"DeleteVpcConfig":true,"Description":"__Description__","DisableIMDSV1":true,"DisconnectTimeoutInSeconds":1,"DisplayName":"__DisplayName__","DomainJoinInfo":{"DirectoryName":"__DirectoryName__","OrganizationalUnitDistinguishedName":"__OrganizationalUnitDistinguishedName__"},"EnableDefaultInternetAccess":true,"IamRoleArn":"__IamRoleArn__","IdleDisconnectTimeoutInSeconds":1,"ImageArn":"__ImageArn__","ImageName":"__ImageName__","InstanceType":"__InstanceType__","MaxConcurrentSessions":1,"MaxSessionsPerInstance":1,"MaxUserDurationInSeconds":1,"Name":"__Name__","Platform":"WINDOWS","RootVolumeConfig":{"VolumeSizeInGb":1},"SessionScriptS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"StreamView":"APP","UsbDeviceFilterStrings":["__Member__","__Member__"],"VpcConfig":{"SecurityGroupIds":["__Member__","__Member__"],"SubnetIds":["__Member__","__Member__"]}}
+¸vMaxSessionsPerInstancehImageArnl__ImageArn__dNameh__Name__xEnableDefaultInternetAccessõnDomainJoinInfo¢mDirectoryNameq__DirectoryName__x#OrganizationalUnitDistinguishedNamex'__OrganizationalUnitDistinguishedName__mDisableIMDSV1õlInstanceTypep__InstanceType__oComputeCapacity¢oDesiredSessionspDesiredInstancesxMaxUserDurationInSecondskDescriptiono__Description__kDisplayNameo__DisplayName__vUsbDeviceFilterStrings‚j__Member__j__Member__wSessionScriptS3Location¢hS3Bucketl__S3Bucket__eS3Keyi__S3Key__iImageNamem__ImageName__iVpcConfig¢iSubnetIds‚j__Member__j__Member__pSecurityGroupIds‚j__Member__j__Member__xDisconnectTimeoutInSecondsoDeleteVpcConfigõjIamRoleArnn__IamRoleArn__hPlatformgWINDOWSuMaxConcurrentSessionspRootVolumeConfig¡nVolumeSizeInGbxIdleDisconnectTimeoutInSecondsrAttributesToDelete‚qVPC_CONFIGURATIONqVPC_CONFIGURATIONjStreamViewcAPP

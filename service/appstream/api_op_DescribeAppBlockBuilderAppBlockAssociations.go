@@ -60,11 +60,11 @@ type DescribeAppBlockBuilderAppBlockAssociationsOutput struct {
 }
 
 func (c *Client) addOperationDescribeAppBlockBuilderAppBlockAssociationsMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeAppBlockBuilderAppBlockAssociations{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDescribeAppBlockBuilderAppBlockAssociations{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeAppBlockBuilderAppBlockAssociations{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDescribeAppBlockBuilderAppBlockAssociations{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -88,6 +88,9 @@ func (c *Client) addOperationDescribeAppBlockBuilderAppBlockAssociationsMiddlewa
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

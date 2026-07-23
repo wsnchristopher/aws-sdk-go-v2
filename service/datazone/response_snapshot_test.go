@@ -1872,6 +1872,15 @@ func TestCheckResponseSnapshot_CreateNotebook(t *testing.T) {
 		Error: &types.NotebookError{
 			Message: ptr.String("__Message__"),
 		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
+		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("CreateNotebook.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -4942,6 +4951,15 @@ func TestCheckResponseSnapshot_GetNotebook(t *testing.T) {
 		},
 		Error: &types.NotebookError{
 			Message: ptr.String("__Message__"),
+		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
 		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetNotebook.response")
@@ -9978,6 +9996,46 @@ func TestCheckResponseSnapshot_StartNotebookRun(t *testing.T) {
 	}
 }
 
+func TestCheckResponseSnapshot_StartNotebookSync(t *testing.T) {
+	want := &StartNotebookSyncOutput{
+		NotebookId:      ptr.String("__NotebookId__"),
+		Status:          types.NotebookStatus("ACTIVE"),
+		DomainId:        ptr.String("__DomainId__"),
+		OwningProjectId: ptr.String("__OwningProjectId__"),
+		SourceLocation: &types.SourceLocationMemberS3{
+			Value: "__SourceLocationMemberS3__",
+		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
+		},
+		Name:        ptr.String("__Name__"),
+		Description: ptr.String("__Description__"),
+		CreatedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+		CreatedBy:   ptr.String("__CreatedBy__"),
+	}
+	status, header, body, err := serdeRespReadSnapshot("StartNotebookSync.response")
+	if errors.Is(err, fs.ErrNotExist) {
+		t.Skip("no response snapshot fixture")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	svc := serdeRespClient(status, header, body)
+	got, err := svc.StartNotebookSync(context.Background(), &StartNotebookSyncInput{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := smithytesting.CompareValues(want, got); err != nil {
+		t.Errorf("response snapshot mismatch for %s: %v", "StartNotebookSync.response", err)
+	}
+}
+
 func TestCheckResponseSnapshot_StopNotebookRun(t *testing.T) {
 	want := &StopNotebookRunOutput{
 		Id:              ptr.String("__Id__"),
@@ -10949,6 +11007,15 @@ func TestCheckResponseSnapshot_UpdateNotebook(t *testing.T) {
 		},
 		Error: &types.NotebookError{
 			Message: ptr.String("__Message__"),
+		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
 		},
 	}
 	status, header, body, err := serdeRespReadSnapshot("UpdateNotebook.response")

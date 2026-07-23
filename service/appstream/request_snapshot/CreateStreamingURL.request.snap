@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateStreamingURL
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateStreamingURL
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ApplicationId":"__ApplicationId__","FleetName":"__FleetName__","SessionContext":"__SessionContext__","StackName":"__StackName__","UserId":"__UserId__","Validity":1}
+¦nSessionContextr__SessionContext__iStackNamem__StackName__iFleetNamem__FleetName__fUserIdj__UserId__mApplicationIdq__ApplicationId__hValidity

@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/CreateBillEstimate
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.CreateBillEstimate
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"billScenarioId":"__BillScenarioId__","clientToken":"__ClientToken__","name":"__Name__","tags":{"key0":"__Value__"}}
+¤nbillScenarioIdr__BillScenarioId__dnameh__Name__kclientTokeno__ClientToken__dtags¡dkey0i__Value__

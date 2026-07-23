@@ -52,11 +52,11 @@ type AssociateApplicationToEntitlementOutput struct {
 }
 
 func (c *Client) addOperationAssociateApplicationToEntitlementMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpAssociateApplicationToEntitlement{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpAssociateApplicationToEntitlement{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpAssociateApplicationToEntitlement{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpAssociateApplicationToEntitlement{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -80,6 +80,9 @@ func (c *Client) addOperationAssociateApplicationToEntitlementMiddlewares(stack 
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

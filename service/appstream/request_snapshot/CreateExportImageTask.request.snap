@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateExportImageTask
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateExportImageTask
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AmiDescription":"__AmiDescription__","AmiName":"__AmiName__","IamRoleArn":"__IamRoleArn__","ImageName":"__ImageName__","TagSpecifications":{"key0":"__Value__"}}
+¥iImageNamem__ImageName__gAmiNamek__AmiName__jIamRoleArnn__IamRoleArn__qTagSpecifications¡dkey0i__Value__nAmiDescriptionr__AmiDescription__

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateAppBlock
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateAppBlock
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Description":"__Description__","DisplayName":"__DisplayName__","Name":"__Name__","PackagingType":"CUSTOM","PostSetupScriptDetails":{"ExecutableParameters":"__ExecutableParameters__","ExecutablePath":"__ExecutablePath__","ScriptS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"TimeoutInSeconds":1},"SetupScriptDetails":{"ExecutableParameters":"__ExecutableParameters__","ExecutablePath":"__ExecutablePath__","ScriptS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"TimeoutInSeconds":1},"SourceS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"Tags":{"key0":"__Value__"}}
+¨vPostSetupScriptDetails¤pScriptS3Location¢hS3Bucketl__S3Bucket__eS3Keyi__S3Key__nExecutablePathr__ExecutablePath__tExecutableParametersx__ExecutableParameters__pTimeoutInSecondsmPackagingTypefCUSTOMdNameh__Name__kDescriptiono__Description__kDisplayNameo__DisplayName__pSourceS3Location¢hS3Bucketl__S3Bucket__eS3Keyi__S3Key__rSetupScriptDetails¤pScriptS3Location¢eS3Keyi__S3Key__hS3Bucketl__S3Bucket__nExecutablePathr__ExecutablePath__tExecutableParametersx__ExecutableParameters__pTimeoutInSecondsdTags¡dkey0i__Value__

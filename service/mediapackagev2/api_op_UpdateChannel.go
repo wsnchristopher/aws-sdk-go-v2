@@ -132,6 +132,19 @@ type UpdateChannelOutput struct {
 	// InputType is CMAF .
 	OutputHeaderConfiguration *types.OutputHeaderConfiguration
 
+	// The output locking mode configured for the channel. This value is immutable
+	// after channel creation.
+	//
+	// The allowed values are:
+	//
+	//   - EPOCH_LOCKED - The channel uses epoch-locked behavior with deterministic
+	//   sequence numbering and fixed segment boundaries aligned to epoch time.
+	//
+	//   - NON_EPOCH_LOCKED - The channel uses non-epoch-locked behavior with
+	//   duration-based segment combining and monotonically increasing sequence numbers
+	//   starting from 0.
+	OutputLockingMode types.OutputLockingMode
+
 	// The comma-separated list of tag key:value pairs assigned to the channel.
 	Tags map[string]string
 

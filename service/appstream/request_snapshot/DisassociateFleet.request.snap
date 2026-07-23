@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DisassociateFleet
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DisassociateFleet
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"FleetName":"__FleetName__","StackName":"__StackName__"}
+¢iFleetNamem__FleetName__iStackNamem__StackName__

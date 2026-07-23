@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeAppBlockBuilderAppBlockAssociations
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeAppBlockBuilderAppBlockAssociations
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AppBlockArn":"__AppBlockArn__","AppBlockBuilderName":"__AppBlockBuilderName__","MaxResults":1,"NextToken":"__NextToken__"}
+¤jMaxResultsiNextTokenm__NextToken__kAppBlockArno__AppBlockArn__sAppBlockBuilderNamew__AppBlockBuilderName__

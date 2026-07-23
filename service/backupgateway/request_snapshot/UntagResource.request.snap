@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/UntagResource
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.UntagResource
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ResourceARN":"__ResourceARN__","TagKeys":["__Member__","__Member__"]}
+¢gTagKeys‚j__Member__j__Member__kResourceARNo__ResourceARN__

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateThemeForStack
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateThemeForStack
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"FaviconS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"FooterLinks":[{"DisplayName":"__DisplayName__","FooterLinkURL":"__FooterLinkURL__"},{"DisplayName":"__DisplayName__","FooterLinkURL":"__FooterLinkURL__"}],"OrganizationLogoS3Location":{"S3Bucket":"__S3Bucket__","S3Key":"__S3Key__"},"StackName":"__StackName__","ThemeStyling":"LIGHT_BLUE","TitleText":"__TitleText__"}
+¦qFaviconS3Location¢hS3Bucketl__S3Bucket__eS3Keyi__S3Key__iStackNamem__StackName__kFooterLinks‚¢mFooterLinkURLq__FooterLinkURL__kDisplayNameo__DisplayName__¢kDisplayNameo__DisplayName__mFooterLinkURLq__FooterLinkURL__iTitleTextm__TitleText__lThemeStylingjLIGHT_BLUExOrganizationLogoS3Location¢hS3Bucketl__S3Bucket__eS3Keyi__S3Key__

@@ -1,6 +1,7 @@
-POST /
+POST /service/EUCMIFrontendAPIService/operation/DeleteVolume
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: EUCMIFrontendAPIService.DeleteVolume
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"VolumeId":"__VolumeId__"}
+¡hVolumeIdl__VolumeId__

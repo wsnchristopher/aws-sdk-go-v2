@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/UpdatePreferences
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.UpdatePreferences
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"managementAccountRateTypeSelections":["BEFORE_DISCOUNTS","BEFORE_DISCOUNTS"],"memberAccountRateTypeSelections":["BEFORE_DISCOUNTS","BEFORE_DISCOUNTS"],"standaloneAccountRateTypeSelections":["BEFORE_DISCOUNTS","BEFORE_DISCOUNTS"]}
+£x#managementAccountRateTypeSelections‚pBEFORE_DISCOUNTSpBEFORE_DISCOUNTSxmemberAccountRateTypeSelections‚pBEFORE_DISCOUNTSpBEFORE_DISCOUNTSx#standaloneAccountRateTypeSelections‚pBEFORE_DISCOUNTSpBEFORE_DISCOUNTS

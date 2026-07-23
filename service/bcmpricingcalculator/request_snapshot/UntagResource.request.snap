@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/UntagResource
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.UntagResource
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"arn":"__Arn__","tagKeys":["__Member__","__Member__"]}
+¢carng__Arn__gtagKeys‚j__Member__j__Member__

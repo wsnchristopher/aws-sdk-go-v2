@@ -53,6 +53,10 @@ type GetStatementResultInput struct {
 	// all response records have been retrieved for the request.
 	NextToken *string
 
+	// The number of seconds to wait for the SQL statement to complete execution
+	// before returning the result. The maximum value is 30 seconds.
+	WaitTimeSeconds *int32
+
 	noSmithyDocumentSerde
 }
 

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateImageBuilder
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateImageBuilder
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AccessEndpoints":[{"EndpointType":"STREAMING","VpceId":"__VpceId__"},{"EndpointType":"STREAMING","VpceId":"__VpceId__"}],"AppstreamAgentVersion":"__AppstreamAgentVersion__","Description":"__Description__","DisableIMDSV1":true,"DisplayName":"__DisplayName__","DomainJoinInfo":{"DirectoryName":"__DirectoryName__","OrganizationalUnitDistinguishedName":"__OrganizationalUnitDistinguishedName__"},"EnableDefaultInternetAccess":true,"IamRoleArn":"__IamRoleArn__","ImageArn":"__ImageArn__","ImageName":"__ImageName__","InstanceType":"__InstanceType__","Name":"__Name__","RootVolumeConfig":{"VolumeSizeInGb":1},"SoftwaresToInstall":["__Member__","__Member__"],"SoftwaresToUninstall":["__Member__","__Member__"],"Tags":{"key0":"__Value__"},"VpcConfig":{"SecurityGroupIds":["__Member__","__Member__"],"SubnetIds":["__Member__","__Member__"]}}
+±iVpcConfig¢iSubnetIds‚j__Member__j__Member__pSecurityGroupIds‚j__Member__j__Member__dTags¡dkey0i__Value__pRootVolumeConfig¡nVolumeSizeInGbiImageNamem__ImageName__hImageArnl__ImageArn__kDisplayNameo__DisplayName__nDomainJoinInfo¢mDirectoryNameq__DirectoryName__x#OrganizationalUnitDistinguishedNamex'__OrganizationalUnitDistinguishedName__rSoftwaresToInstall‚j__Member__j__Member__dNameh__Name__jIamRoleArnn__IamRoleArn__tSoftwaresToUninstall‚j__Member__j__Member__oAccessEndpoints‚¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__lInstanceTypep__InstanceType__kDescriptiono__Description__xEnableDefaultInternetAccessõuAppstreamAgentVersionx__AppstreamAgentVersion__mDisableIMDSV1õ

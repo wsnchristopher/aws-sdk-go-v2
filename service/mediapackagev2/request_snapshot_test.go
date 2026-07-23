@@ -228,6 +228,7 @@ func TestCheckRequestSnapshot_CreateChannel(t *testing.T) {
 		OutputHeaderConfiguration: &types.OutputHeaderConfiguration{
 			PublishMQCS: ptr.Bool(true),
 		},
+		OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
@@ -405,6 +406,7 @@ func TestCheckRequestSnapshot_CreateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		ClientToken:            ptr.String("__ClientToken__"),
 		Description:            ptr.String("__Description__"),
@@ -1492,6 +1494,7 @@ func TestCheckRequestSnapshot_UpdateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		Description:            ptr.String("__Description__"),
 		StartoverWindowSeconds: ptr.Int32(1),
@@ -1865,6 +1868,7 @@ func TestUpdateRequestSnapshot_CreateChannel(t *testing.T) {
 		OutputHeaderConfiguration: &types.OutputHeaderConfiguration{
 			PublishMQCS: ptr.Bool(true),
 		},
+		OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 		Tags: map[string]string{
 			"key0": "__Value__",
 		},
@@ -2042,6 +2046,7 @@ func TestUpdateRequestSnapshot_CreateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		ClientToken:            ptr.String("__ClientToken__"),
 		Description:            ptr.String("__Description__"),
@@ -3129,6 +3134,7 @@ func TestUpdateRequestSnapshot_UpdateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		Description:            ptr.String("__Description__"),
 		StartoverWindowSeconds: ptr.Int32(1),

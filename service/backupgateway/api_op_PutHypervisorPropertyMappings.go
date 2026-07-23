@@ -61,11 +61,11 @@ type PutHypervisorPropertyMappingsOutput struct {
 }
 
 func (c *Client) addOperationPutHypervisorPropertyMappingsMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpPutHypervisorPropertyMappings{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpPutHypervisorPropertyMappings{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpPutHypervisorPropertyMappings{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpPutHypervisorPropertyMappings{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -89,6 +89,9 @@ func (c *Client) addOperationPutHypervisorPropertyMappingsMiddlewares(stack *mid
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

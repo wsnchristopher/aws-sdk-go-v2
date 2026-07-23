@@ -79,6 +79,10 @@ type GetCodeInterpreterSessionOutput struct {
 	// The list of certificates installed in the code interpreter session.
 	Certificates []types.Certificate
 
+	// The file system configurations for the code interpreter session. Each entry
+	// describes an access point and its mount path.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// The name of the code interpreter session.
 	Name *string
 

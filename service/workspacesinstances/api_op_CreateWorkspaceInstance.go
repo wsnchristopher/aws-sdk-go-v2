@@ -64,11 +64,11 @@ type CreateWorkspaceInstanceOutput struct {
 }
 
 func (c *Client) addOperationCreateWorkspaceInstanceMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpCreateWorkspaceInstance{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpCreateWorkspaceInstance{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpCreateWorkspaceInstance{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpCreateWorkspaceInstance{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -92,6 +92,9 @@ func (c *Client) addOperationCreateWorkspaceInstanceMiddlewares(stack *middlewar
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

@@ -104,6 +104,18 @@ type ChannelListConfiguration struct {
 	//   with optional DASH manifests).
 	InputType InputType
 
+	// The output locking mode configured for the channel.
+	//
+	// The allowed values are:
+	//
+	//   - EPOCH_LOCKED - The channel uses epoch-locked behavior with deterministic
+	//   sequence numbering and fixed segment boundaries aligned to epoch time.
+	//
+	//   - NON_EPOCH_LOCKED - The channel uses non-epoch-locked behavior with
+	//   duration-based segment combining and monotonically increasing sequence numbers
+	//   starting from 0.
+	OutputLockingMode OutputLockingMode
+
 	noSmithyDocumentSerde
 }
 
@@ -1478,6 +1490,20 @@ type Segment struct {
 	// generates and includes an I-frames only playlist in the stream. This playlist
 	// permits player functionality like fast forward and rewind.
 	IncludeIframeOnlyStreams *bool
+
+	// The output timestamp mode for the origin endpoint's segments. This setting is
+	// only configurable on channels with OutputLockingMode set to NON_EPOCH_LOCKED .
+	// This value is immutable after endpoint creation. If you don't specify a value,
+	// the default is PASSTHROUGH .
+	//
+	// The allowed values are:
+	//
+	//   - PASSTHROUGH - Output PTS (Presentation Timestamp) values pass through
+	//   unchanged from the input.
+	//
+	//   - REBASED_TO_CHANNEL_START - Output PTS is rebased relative to the channel
+	//   start time.
+	OutputTimestampMode OutputTimestampMode
 
 	// The SCTE configuration options in the segment settings.
 	Scte *Scte

@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/ListEntitledApplications
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.ListEntitledApplications
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"EntitlementName":"__EntitlementName__","MaxResults":1,"NextToken":"__NextToken__","StackName":"__StackName__"}
+¤iStackNamem__StackName__oEntitlementNames__EntitlementName__iNextTokenm__NextToken__jMaxResults

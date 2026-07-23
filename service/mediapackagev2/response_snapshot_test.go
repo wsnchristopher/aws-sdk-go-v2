@@ -156,6 +156,7 @@ func TestCheckResponseSnapshot_CreateChannel(t *testing.T) {
 		OutputHeaderConfiguration: &types.OutputHeaderConfiguration{
 			PublishMQCS: ptr.Bool(true),
 		},
+		OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("CreateChannel.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -322,6 +323,7 @@ func TestCheckResponseSnapshot_CreateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		CreatedAt:              ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 		ModifiedAt:             ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
@@ -784,6 +786,7 @@ func TestCheckResponseSnapshot_GetChannel(t *testing.T) {
 		OutputHeaderConfiguration: &types.OutputHeaderConfiguration{
 			PublishMQCS: ptr.Bool(true),
 		},
+		OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("GetChannel.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -973,6 +976,7 @@ func TestCheckResponseSnapshot_GetOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		CreatedAt:              ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 		ModifiedAt:             ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
@@ -1382,22 +1386,24 @@ func TestCheckResponseSnapshot_ListChannels(t *testing.T) {
 	want := &ListChannelsOutput{
 		Items: []types.ChannelListConfiguration{
 			{
-				Arn:              ptr.String("__Arn__"),
-				ChannelName:      ptr.String("__ChannelName__"),
-				ChannelGroupName: ptr.String("__ChannelGroupName__"),
-				CreatedAt:        ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				ModifiedAt:       ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				Description:      ptr.String("__Description__"),
-				InputType:        types.InputType("HLS"),
+				Arn:               ptr.String("__Arn__"),
+				ChannelName:       ptr.String("__ChannelName__"),
+				ChannelGroupName:  ptr.String("__ChannelGroupName__"),
+				CreatedAt:         ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				ModifiedAt:        ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				Description:       ptr.String("__Description__"),
+				InputType:         types.InputType("HLS"),
+				OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 			},
 			{
-				Arn:              ptr.String("__Arn__"),
-				ChannelName:      ptr.String("__ChannelName__"),
-				ChannelGroupName: ptr.String("__ChannelGroupName__"),
-				CreatedAt:        ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				ModifiedAt:       ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
-				Description:      ptr.String("__Description__"),
-				InputType:        types.InputType("HLS"),
+				Arn:               ptr.String("__Arn__"),
+				ChannelName:       ptr.String("__ChannelName__"),
+				ChannelGroupName:  ptr.String("__ChannelGroupName__"),
+				CreatedAt:         ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				ModifiedAt:        ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+				Description:       ptr.String("__Description__"),
+				InputType:         types.InputType("HLS"),
+				OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 			},
 		},
 		NextToken: ptr.String("__NextToken__"),
@@ -1863,6 +1869,7 @@ func TestCheckResponseSnapshot_UpdateChannel(t *testing.T) {
 		OutputHeaderConfiguration: &types.OutputHeaderConfiguration{
 			PublishMQCS: ptr.Bool(true),
 		},
+		OutputLockingMode: types.OutputLockingMode("EPOCH_LOCKED"),
 	}
 	status, header, body, err := serdeRespReadSnapshot("UpdateChannel.response")
 	if errors.Is(err, fs.ErrNotExist) {
@@ -1959,6 +1966,7 @@ func TestCheckResponseSnapshot_UpdateOriginEndpoint(t *testing.T) {
 					CertificateArn: ptr.String("__CertificateArn__"),
 				},
 			},
+			OutputTimestampMode: types.OutputTimestampMode("PASSTHROUGH"),
 		},
 		CreatedAt:              ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
 		ModifiedAt:             ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),

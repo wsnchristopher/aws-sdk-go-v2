@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/BatchDeleteBillScenarioCommitmentModification
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.BatchDeleteBillScenarioCommitmentModification
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"billScenarioId":"__BillScenarioId__","ids":["__Member__","__Member__"]}
+¢nbillScenarioIdr__BillScenarioId__cids‚j__Member__j__Member__

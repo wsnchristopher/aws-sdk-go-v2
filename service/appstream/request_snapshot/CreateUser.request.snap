@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateUser
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateUser
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AuthenticationType":"API","FirstName":"__FirstName__","LastName":"__LastName__","MessageAction":"SUPPRESS","UserName":"__UserName__"}
+¥mMessageActionhSUPPRESSiFirstNamem__FirstName__hLastNamel__LastName__rAuthenticationTypecAPIhUserNamel__UserName__

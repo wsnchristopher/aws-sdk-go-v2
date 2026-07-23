@@ -79,6 +79,22 @@ type CreateChannelInput struct {
 	// InputType is CMAF .
 	OutputHeaderConfiguration *types.OutputHeaderConfiguration
 
+	// The output locking mode for the channel. This setting is only valid when
+	// InputType is CMAF . This value is immutable after channel creation. If you don't
+	// specify a value, the default is EPOCH_LOCKED .
+	//
+	// The allowed values are:
+	//
+	//   - EPOCH_LOCKED - The channel uses epoch-locked behavior with deterministic
+	//   sequence numbering and fixed segment boundaries aligned to epoch time. This mode
+	//   supports cross-region synchronization and failover.
+	//
+	//   - NON_EPOCH_LOCKED - The channel uses non-epoch-locked behavior with
+	//   duration-based segment combining and monotonically increasing sequence numbers
+	//   starting from 0. This mode does not support cross-region synchronization or
+	//   failover.
+	OutputLockingMode types.OutputLockingMode
+
 	// A comma-separated list of tag key:value pairs that you define. For example:
 	//
 	//     "Key1": "Value1",
@@ -151,6 +167,18 @@ type CreateChannelOutput struct {
 	// MediaPackage includes in responses to the CDN. This setting is valid only when
 	// InputType is CMAF .
 	OutputHeaderConfiguration *types.OutputHeaderConfiguration
+
+	// The output locking mode configured for the channel.
+	//
+	// The allowed values are:
+	//
+	//   - EPOCH_LOCKED - The channel uses epoch-locked behavior with deterministic
+	//   sequence numbering and fixed segment boundaries aligned to epoch time.
+	//
+	//   - NON_EPOCH_LOCKED - The channel uses non-epoch-locked behavior with
+	//   duration-based segment combining and monotonically increasing sequence numbers
+	//   starting from 0.
+	OutputLockingMode types.OutputLockingMode
 
 	// The comma-separated list of tag key:value pairs assigned to the channel.
 	Tags map[string]string

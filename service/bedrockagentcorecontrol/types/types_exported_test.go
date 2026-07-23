@@ -1626,6 +1626,28 @@ func ExampleToolSchema_outputUsage() {
 var _ *types.S3Configuration
 var _ []types.ToolDefinition
 
+func ExampleToolsFileSystemConfiguration_outputUsage() {
+	var union types.ToolsFileSystemConfiguration
+	// type switches can be used to check the union value
+	switch v := union.(type) {
+	case *types.ToolsFileSystemConfigurationMemberEfsConfiguration:
+		_ = v.Value // Value is types.EfsConfiguration
+
+	case *types.ToolsFileSystemConfigurationMemberS3FilesConfiguration:
+		_ = v.Value // Value is types.S3FilesConfiguration
+
+	case *types.UnknownUnionMember:
+		fmt.Println("unknown tag:", v.Tag)
+
+	default:
+		fmt.Println("union is nil or unknown type")
+
+	}
+}
+
+var _ *types.EfsConfiguration
+var _ *types.S3FilesConfiguration
+
 func ExampleTriggerCondition_outputUsage() {
 	var union types.TriggerCondition
 	// type switches can be used to check the union value

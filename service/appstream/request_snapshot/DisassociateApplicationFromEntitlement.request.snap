@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DisassociateApplicationFromEntitlement
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DisassociateApplicationFromEntitlement
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"ApplicationIdentifier":"__ApplicationIdentifier__","EntitlementName":"__EntitlementName__","StackName":"__StackName__"}
+£uApplicationIdentifierx__ApplicationIdentifier__iStackNamem__StackName__oEntitlementNames__EntitlementName__

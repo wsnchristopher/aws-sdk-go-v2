@@ -47,11 +47,11 @@ type BatchDisassociateUserStackOutput struct {
 }
 
 func (c *Client) addOperationBatchDisassociateUserStackMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpBatchDisassociateUserStack{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpBatchDisassociateUserStack{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpBatchDisassociateUserStack{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpBatchDisassociateUserStack{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -75,6 +75,9 @@ func (c *Client) addOperationBatchDisassociateUserStackMiddlewares(stack *middle
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

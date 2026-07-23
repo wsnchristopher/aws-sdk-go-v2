@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSBCMPricingCalculator/operation/ListBillScenarioCommitmentModifications
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSBCMPricingCalculator.ListBillScenarioCommitmentModifications
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"billScenarioId":"__BillScenarioId__","maxResults":1,"nextToken":"__NextToken__"}
+£nbillScenarioIdr__BillScenarioId__inextTokenm__NextToken__jmaxResults

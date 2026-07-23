@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/BatchAssociateUserStack
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.BatchAssociateUserStack
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"UserStackAssociations":[{"AuthenticationType":"API","SendEmailNotification":true,"StackName":"__StackName__","UserName":"__UserName__"},{"AuthenticationType":"API","SendEmailNotification":true,"StackName":"__StackName__","UserName":"__UserName__"}]}
+¡uUserStackAssociations‚¤iStackNamem__StackName__hUserNamel__UserName__rAuthenticationTypecAPIuSendEmailNotificationõ¤iStackNamem__StackName__hUserNamel__UserName__rAuthenticationTypecAPIuSendEmailNotificationõ

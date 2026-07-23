@@ -66,11 +66,11 @@ type PutMaintenanceStartTimeOutput struct {
 }
 
 func (c *Client) addOperationPutMaintenanceStartTimeMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpPutMaintenanceStartTime{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpPutMaintenanceStartTime{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpPutMaintenanceStartTime{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpPutMaintenanceStartTime{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -94,6 +94,9 @@ func (c *Client) addOperationPutMaintenanceStartTimeMiddlewares(stack *middlewar
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

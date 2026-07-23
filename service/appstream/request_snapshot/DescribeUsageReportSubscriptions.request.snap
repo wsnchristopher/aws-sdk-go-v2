@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeUsageReportSubscriptions
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeUsageReportSubscriptions
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"MaxResults":1,"NextToken":"__NextToken__"}
+¢iNextTokenm__NextToken__jMaxResults

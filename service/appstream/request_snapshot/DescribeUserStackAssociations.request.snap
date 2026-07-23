@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeUserStackAssociations
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeUserStackAssociations
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AuthenticationType":"API","MaxResults":1,"NextToken":"__NextToken__","StackName":"__StackName__","UserName":"__UserName__"}
+¥hUserNamel__UserName__rAuthenticationTypecAPIjMaxResultsiNextTokenm__NextToken__iStackNamem__StackName__

@@ -2062,6 +2062,27 @@ func validateDataSourceConfig(v types.DataSourceConfig) error {
 	}
 }
 
+func validateEfsConfiguration(v *types.EfsConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "EfsConfiguration"}
+	if v.AccessPointArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("AccessPointArn"))
+	}
+	if v.MountPath == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("MountPath"))
+	}
+	if v.FileSystemArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("FileSystemArn"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateEmbeddedCryptoWallet(v *types.EmbeddedCryptoWallet) error {
 	if v == nil {
 		return nil
@@ -3585,6 +3606,27 @@ func validateResourceLocation(v types.ResourceLocation) error {
 	}
 }
 
+func validateS3FilesConfiguration(v *types.S3FilesConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "S3FilesConfiguration"}
+	if v.AccessPointArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("AccessPointArn"))
+	}
+	if v.MountPath == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("MountPath"))
+	}
+	if v.FileSystemArn == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("FileSystemArn"))
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
 func validateS3Location(v *types.S3Location) error {
 	if v == nil {
 		return nil
@@ -3945,6 +3987,47 @@ func validateToolDescriptionTextInput(v *types.ToolDescriptionTextInput) error {
 	} else if v.Tools != nil {
 		if err := validateToolDescriptionList(v.Tools); err != nil {
 			invalidParams.AddNested("Tools", err.(smithy.InvalidParamsError))
+		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateToolsFileSystemConfiguration(v types.ToolsFileSystemConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "ToolsFileSystemConfiguration"}
+	switch uv := v.(type) {
+	case *types.ToolsFileSystemConfigurationMemberEfsConfiguration:
+		if err := validateEfsConfiguration(&uv.Value); err != nil {
+			invalidParams.AddNested("[efsConfiguration]", err.(smithy.InvalidParamsError))
+		}
+
+	case *types.ToolsFileSystemConfigurationMemberS3FilesConfiguration:
+		if err := validateS3FilesConfiguration(&uv.Value); err != nil {
+			invalidParams.AddNested("[s3FilesConfiguration]", err.(smithy.InvalidParamsError))
+		}
+
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateToolsFileSystemConfigurations(v []types.ToolsFileSystemConfiguration) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "ToolsFileSystemConfigurations"}
+	for i := range v {
+		if err := validateToolsFileSystemConfiguration(v[i]); err != nil {
+			invalidParams.AddNested(fmt.Sprintf("[%d]", i), err.(smithy.InvalidParamsError))
 		}
 	}
 	if invalidParams.Len() > 0 {
@@ -5156,6 +5239,11 @@ func validateOpStartBrowserSessionInput(v *StartBrowserSessionInput) error {
 			invalidParams.AddNested("Certificates", err.(smithy.InvalidParamsError))
 		}
 	}
+	if v.FilesystemConfigurations != nil {
+		if err := validateToolsFileSystemConfigurations(v.FilesystemConfigurations); err != nil {
+			invalidParams.AddNested("FilesystemConfigurations", err.(smithy.InvalidParamsError))
+		}
+	}
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	} else {
@@ -5174,6 +5262,11 @@ func validateOpStartCodeInterpreterSessionInput(v *StartCodeInterpreterSessionIn
 	if v.Certificates != nil {
 		if err := validateCertificates(v.Certificates); err != nil {
 			invalidParams.AddNested("Certificates", err.(smithy.InvalidParamsError))
+		}
+	}
+	if v.FilesystemConfigurations != nil {
+		if err := validateToolsFileSystemConfigurations(v.FilesystemConfigurations); err != nil {
+			invalidParams.AddNested("FilesystemConfigurations", err.(smithy.InvalidParamsError))
 		}
 	}
 	if invalidParams.Len() > 0 {

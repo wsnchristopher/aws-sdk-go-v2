@@ -53,11 +53,11 @@ type DescribeUsageReportSubscriptionsOutput struct {
 }
 
 func (c *Client) addOperationDescribeUsageReportSubscriptionsMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeUsageReportSubscriptions{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDescribeUsageReportSubscriptions{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeUsageReportSubscriptions{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDescribeUsageReportSubscriptions{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -81,6 +81,9 @@ func (c *Client) addOperationDescribeUsageReportSubscriptionsMiddlewares(stack *
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

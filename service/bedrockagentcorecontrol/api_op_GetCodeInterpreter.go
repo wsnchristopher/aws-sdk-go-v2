@@ -86,6 +86,10 @@ type GetCodeInterpreterOutput struct {
 	// The reason for failure if the code interpreter is in a failed state.
 	FailureReason *string
 
+	// The file system configurations mounted into the code interpreter. Each entry
+	// describes an access point and its mount path.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// Metadata pertaining to the operation's result.
 	ResultMetadata middleware.Metadata
 

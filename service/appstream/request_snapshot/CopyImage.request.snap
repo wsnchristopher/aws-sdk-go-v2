@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CopyImage
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CopyImage
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"DestinationImageDescription":"__DestinationImageDescription__","DestinationImageName":"__DestinationImageName__","DestinationRegion":"__DestinationRegion__","SourceImageName":"__SourceImageName__"}
+¤oSourceImageNames__SourceImageName__tDestinationImageNamex__DestinationImageName__qDestinationRegionu__DestinationRegion__xDestinationImageDescriptionx__DestinationImageDescription__

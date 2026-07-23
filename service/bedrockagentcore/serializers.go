@@ -5704,6 +5704,13 @@ func awsRestjson1_serializeOpDocumentStartBrowserSessionInput(v *StartBrowserSes
 		}
 	}
 
+	if v.FilesystemConfigurations != nil {
+		ok := object.Key("filesystemConfigurations")
+		if err := awsRestjson1_serializeDocumentToolsFileSystemConfigurations(v.FilesystemConfigurations, ok); err != nil {
+			return err
+		}
+	}
+
 	if v.Name != nil {
 		ok := object.Key("name")
 		ok.String(*v.Name)
@@ -5844,6 +5851,13 @@ func awsRestjson1_serializeOpDocumentStartCodeInterpreterSessionInput(v *StartCo
 	if v.ClientToken != nil {
 		ok := object.Key("clientToken")
 		ok.String(*v.ClientToken)
+	}
+
+	if v.FilesystemConfigurations != nil {
+		ok := object.Key("filesystemConfigurations")
+		if err := awsRestjson1_serializeDocumentToolsFileSystemConfigurations(v.FilesystemConfigurations, ok); err != nil {
+			return err
+		}
 	}
 
 	if v.Name != nil {
@@ -7363,6 +7377,28 @@ func awsRestjson1_serializeDocumentDomainPatterns(v []string, value smithyjson.V
 		av := array.Value()
 		av.String(v[i])
 	}
+	return nil
+}
+
+func awsRestjson1_serializeDocumentEfsConfiguration(v *types.EfsConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.AccessPointArn != nil {
+		ok := object.Key("accessPointArn")
+		ok.String(*v.AccessPointArn)
+	}
+
+	if v.FileSystemArn != nil {
+		ok := object.Key("fileSystemArn")
+		ok.String(*v.FileSystemArn)
+	}
+
+	if v.MountPath != nil {
+		ok := object.Key("mountPath")
+		ok.String(*v.MountPath)
+	}
+
 	return nil
 }
 
@@ -9989,6 +10025,28 @@ func awsRestjson1_serializeDocumentRightExpression(v types.RightExpression, valu
 	return nil
 }
 
+func awsRestjson1_serializeDocumentS3FilesConfiguration(v *types.S3FilesConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	if v.AccessPointArn != nil {
+		ok := object.Key("accessPointArn")
+		ok.String(*v.AccessPointArn)
+	}
+
+	if v.FileSystemArn != nil {
+		ok := object.Key("fileSystemArn")
+		ok.String(*v.FileSystemArn)
+	}
+
+	if v.MountPath != nil {
+		ok := object.Key("mountPath")
+		ok.String(*v.MountPath)
+	}
+
+	return nil
+}
+
 func awsRestjson1_serializeDocumentS3Location(v *types.S3Location, value smithyjson.Value) error {
 	object := value.Object()
 	defer object.Close()
@@ -10625,6 +10683,46 @@ func awsRestjson1_serializeDocumentToolDescriptionTextInput(v *types.ToolDescrip
 		}
 	}
 
+	return nil
+}
+
+func awsRestjson1_serializeDocumentToolsFileSystemConfiguration(v types.ToolsFileSystemConfiguration, value smithyjson.Value) error {
+	object := value.Object()
+	defer object.Close()
+
+	switch uv := v.(type) {
+	case *types.ToolsFileSystemConfigurationMemberEfsConfiguration:
+		av := object.Key("efsConfiguration")
+		if err := awsRestjson1_serializeDocumentEfsConfiguration(&uv.Value, av); err != nil {
+			return err
+		}
+
+	case *types.ToolsFileSystemConfigurationMemberS3FilesConfiguration:
+		av := object.Key("s3FilesConfiguration")
+		if err := awsRestjson1_serializeDocumentS3FilesConfiguration(&uv.Value, av); err != nil {
+			return err
+		}
+
+	default:
+		return fmt.Errorf("attempted to serialize unknown member type %T for union %T", uv, v)
+
+	}
+	return nil
+}
+
+func awsRestjson1_serializeDocumentToolsFileSystemConfigurations(v []types.ToolsFileSystemConfiguration, value smithyjson.Value) error {
+	array := value.Array()
+	defer array.Close()
+
+	for i := range v {
+		av := array.Value()
+		if vv := v[i]; vv == nil {
+			continue
+		}
+		if err := awsRestjson1_serializeDocumentToolsFileSystemConfiguration(v[i], av); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

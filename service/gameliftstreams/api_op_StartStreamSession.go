@@ -201,6 +201,13 @@ type StartStreamSessionInput struct {
 	// A human-readable label for the stream session. You can update this value later.
 	Description *string
 
+	// The configuration for the stream session's virtual monitor, including the
+	// resolution settings.
+	//
+	// If not specified, Amazon GameLift Streams uses the default resolution of 1920 ×
+	// 1080.
+	DisplayConfiguration *types.DisplayConfiguration
+
 	//  A list of locations, in order of priority, where you want Amazon GameLift
 	// Streams to start a stream from. For example, us-east-1 . Amazon GameLift Streams
 	// selects the location with the next available capacity to start a single stream
@@ -294,6 +301,9 @@ type StartStreamSessionOutput struct {
 	// A human-readable label for the stream session. You can update this value at any
 	// time.
 	Description *string
+
+	// The configuration for the stream session's virtual monitor.
+	DisplayConfiguration *types.DisplayConfiguration
 
 	// Provides details about the stream session's exported files.
 	ExportFilesMetadata *types.ExportFilesMetadata

@@ -55,6 +55,12 @@ type CreateCodeInterpreterInput struct {
 	// the code interpreter to access Amazon Web Services services.
 	ExecutionRoleArn *string
 
+	// The file system configurations to mount into the code interpreter. Use these
+	// configurations to mount your own Amazon Simple Storage Service (Amazon S3) Files
+	// or Amazon Elastic File System (Amazon EFS) access points. Your sessions can then
+	// access your data. If you don't specify this field, no file systems are mounted.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// A map of tag keys and values to assign to the code interpreter. Tags enable you
 	// to categorize your resources in different ways, for example, by purpose, owner,
 	// or environment.

@@ -54,11 +54,11 @@ type AssociateVolumeOutput struct {
 }
 
 func (c *Client) addOperationAssociateVolumeMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpAssociateVolume{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpAssociateVolume{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpAssociateVolume{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpAssociateVolume{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -82,6 +82,9 @@ func (c *Client) addOperationAssociateVolumeMiddlewares(stack *middleware.Stack,
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

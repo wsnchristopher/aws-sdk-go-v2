@@ -45,11 +45,11 @@ type StartSoftwareDeploymentToImageBuilderOutput struct {
 }
 
 func (c *Client) addOperationStartSoftwareDeploymentToImageBuilderMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpStartSoftwareDeploymentToImageBuilder{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpStartSoftwareDeploymentToImageBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpStartSoftwareDeploymentToImageBuilder{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpStartSoftwareDeploymentToImageBuilder{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -73,6 +73,9 @@ func (c *Client) addOperationStartSoftwareDeploymentToImageBuilderMiddlewares(st
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

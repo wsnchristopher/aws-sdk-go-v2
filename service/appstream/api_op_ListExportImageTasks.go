@@ -59,11 +59,11 @@ type ListExportImageTasksOutput struct {
 }
 
 func (c *Client) addOperationListExportImageTasksMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpListExportImageTasks{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpListExportImageTasks{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpListExportImageTasks{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpListExportImageTasks{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -87,6 +87,9 @@ func (c *Client) addOperationListExportImageTasksMiddlewares(stack *middleware.S
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

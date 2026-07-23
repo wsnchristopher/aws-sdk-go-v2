@@ -1,6 +1,7 @@
-POST /
+POST /service/AWSKendraRerankingFrontendService/operation/UpdateRescoreExecutionPlan
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: AWSKendraRerankingFrontendService.UpdateRescoreExecutionPlan
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"CapacityUnits":{"RescoreCapacityUnits":1},"Description":"__Description__","Id":"__Id__","Name":"__Name__"}
+¤bIdf__Id__dNameh__Name__kDescriptiono__Description__mCapacityUnits¡tRescoreCapacityUnits

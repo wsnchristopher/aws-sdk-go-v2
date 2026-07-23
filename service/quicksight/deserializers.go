@@ -67838,6 +67838,15 @@ func awsRestjson1_deserializeDocumentCapabilities(v **types.Capabilities, value 
 				sv.UseBoxAgentAction = types.CapabilityState(jtv)
 			}
 
+		case "UseBrowserExtension":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
+				}
+				sv.UseBrowserExtension = types.CapabilityState(jtv)
+			}
+
 		case "UseCanvaAgentAction":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -67872,6 +67881,15 @@ func awsRestjson1_deserializeDocumentCapabilities(v **types.Capabilities, value 
 					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
 				}
 				sv.UseConfluenceAction = types.CapabilityState(jtv)
+			}
+
+		case "UseExcelAddInExtension":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
+				}
+				sv.UseExcelAddInExtension = types.CapabilityState(jtv)
 			}
 
 		case "UseFactSetAction":
@@ -68027,6 +68045,15 @@ func awsRestjson1_deserializeDocumentCapabilities(v **types.Capabilities, value 
 				sv.UseOpenAPIAction = types.CapabilityState(jtv)
 			}
 
+		case "UseOutlookAddInExtension":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
+				}
+				sv.UseOutlookAddInExtension = types.CapabilityState(jtv)
+			}
+
 		case "UsePagerDutyAction":
 			if value != nil {
 				jtv, ok := value.(string)
@@ -68034,6 +68061,15 @@ func awsRestjson1_deserializeDocumentCapabilities(v **types.Capabilities, value 
 					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
 				}
 				sv.UsePagerDutyAction = types.CapabilityState(jtv)
+			}
+
+		case "UsePowerpointAddInExtension":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
+				}
+				sv.UsePowerpointAddInExtension = types.CapabilityState(jtv)
 			}
 
 		case "UseSalesforceAction":
@@ -68151,6 +68187,15 @@ func awsRestjson1_deserializeDocumentCapabilities(v **types.Capabilities, value 
 					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
 				}
 				sv.UseTextractAction = types.CapabilityState(jtv)
+			}
+
+		case "UseWordAddInExtension":
+			if value != nil {
+				jtv, ok := value.(string)
+				if !ok {
+					return fmt.Errorf("expected CapabilityState to be of type string, got %T instead", value)
+				}
+				sv.UseWordAddInExtension = types.CapabilityState(jtv)
 			}
 
 		case "UseZendeskAction":

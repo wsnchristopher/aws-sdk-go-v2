@@ -1,6 +1,7 @@
-POST /
+POST /service/BackupOnPremises_v20210101/operation/ImportHypervisorConfiguration
 
-Content-Type: application/x-amz-json-1.0
-X-Amz-Target: BackupOnPremises_v20210101.ImportHypervisorConfiguration
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Host":"__Host__","KmsKeyArn":"__KmsKeyArn__","Name":"__Name__","Password":"__Password__","Tags":[{"Key":"__Key__","Value":"__Value__"},{"Key":"__Key__","Value":"__Value__"}],"Username":"__Username__"}
+¦iKmsKeyArnm__KmsKeyArn__dTags‚¢cKeyg__Key__eValuei__Value__¢cKeyg__Key__eValuei__Value__dNameh__Name__dHosth__Host__hUsernamel__Username__hPasswordl__Password__

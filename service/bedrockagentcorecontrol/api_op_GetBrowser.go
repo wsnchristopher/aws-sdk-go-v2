@@ -93,6 +93,10 @@ type GetBrowserOutput struct {
 	// The reason for failure if the browser is in a failed state.
 	FailureReason *string
 
+	// The file system configurations mounted into the browser. Each entry describes
+	// an access point and its mount path.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// The recording configuration for a browser. This structure defines how browser
 	// sessions are recorded.
 	Recording *types.RecordingConfig

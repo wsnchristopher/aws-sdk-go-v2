@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/CreateAppBlockBuilder
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.CreateAppBlockBuilder
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"AccessEndpoints":[{"EndpointType":"STREAMING","VpceId":"__VpceId__"},{"EndpointType":"STREAMING","VpceId":"__VpceId__"}],"Description":"__Description__","DisableIMDSV1":true,"DisplayName":"__DisplayName__","EnableDefaultInternetAccess":true,"IamRoleArn":"__IamRoleArn__","InstanceType":"__InstanceType__","Name":"__Name__","Platform":"WINDOWS_SERVER_2019","Tags":{"key0":"__Value__"},"VpcConfig":{"SecurityGroupIds":["__Member__","__Member__"],"SubnetIds":["__Member__","__Member__"]}}
+«dNameh__Name__kDescriptiono__Description__dTags¡dkey0i__Value__xEnableDefaultInternetAccessõmDisableIMDSV1õkDisplayNameo__DisplayName__hPlatformsWINDOWS_SERVER_2019lInstanceTypep__InstanceType__iVpcConfig¢iSubnetIds‚j__Member__j__Member__pSecurityGroupIds‚j__Member__j__Member__jIamRoleArnn__IamRoleArn__oAccessEndpoints‚¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__¢lEndpointTypeiSTREAMINGfVpceIdj__VpceId__

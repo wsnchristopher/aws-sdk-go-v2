@@ -1,6 +1,7 @@
-POST /
+POST /service/PhotonAdminProxyService/operation/DescribeImages
 
-Content-Type: application/x-amz-json-1.1
-X-Amz-Target: PhotonAdminProxyService.DescribeImages
+Accept: application/cbor
+Content-Type: application/cbor
+Smithy-Protocol: rpc-v2-cbor
 
-{"Arns":["__Member__","__Member__"],"MaxResults":1,"Names":["__Member__","__Member__"],"NextToken":"__NextToken__","Type":"PUBLIC"}
+¥eNames‚j__Member__j__Member__dArns‚j__Member__j__Member__dTypefPUBLICiNextTokenm__NextToken__jMaxResults

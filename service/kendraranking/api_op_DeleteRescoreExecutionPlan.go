@@ -43,11 +43,11 @@ type DeleteRescoreExecutionPlanOutput struct {
 }
 
 func (c *Client) addOperationDeleteRescoreExecutionPlanMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson10_serializeOpDeleteRescoreExecutionPlan{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpDeleteRescoreExecutionPlan{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson10_deserializeOpDeleteRescoreExecutionPlan{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpDeleteRescoreExecutionPlan{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -71,6 +71,9 @@ func (c *Client) addOperationDeleteRescoreExecutionPlanMiddlewares(stack *middle
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

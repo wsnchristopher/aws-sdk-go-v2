@@ -414,6 +414,44 @@ func (MssManifestLayout) Values() []MssManifestLayout {
 	}
 }
 
+type OutputLockingMode string
+
+// Enum values for OutputLockingMode
+const (
+	OutputLockingModeEpochLocked    OutputLockingMode = "EPOCH_LOCKED"
+	OutputLockingModeNonEpochLocked OutputLockingMode = "NON_EPOCH_LOCKED"
+)
+
+// Values returns all known values for OutputLockingMode. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (OutputLockingMode) Values() []OutputLockingMode {
+	return []OutputLockingMode{
+		"EPOCH_LOCKED",
+		"NON_EPOCH_LOCKED",
+	}
+}
+
+type OutputTimestampMode string
+
+// Enum values for OutputTimestampMode
+const (
+	OutputTimestampModePassthrough           OutputTimestampMode = "PASSTHROUGH"
+	OutputTimestampModeRebasedToChannelStart OutputTimestampMode = "REBASED_TO_CHANNEL_START"
+)
+
+// Values returns all known values for OutputTimestampMode. Note that this can be
+// expanded in the future, and so it is only as up to date as the client.
+//
+// The ordering of this slice is not guaranteed to be stable across updates.
+func (OutputTimestampMode) Values() []OutputTimestampMode {
+	return []OutputTimestampMode{
+		"PASSTHROUGH",
+		"REBASED_TO_CHANNEL_START",
+	}
+}
+
 type PresetSpeke20Audio string
 
 // Enum values for PresetSpeke20Audio
@@ -751,6 +789,10 @@ const (
 	ValidationExceptionTypeInvalidArn                                             ValidationExceptionType = "INVALID_ARN"
 	ValidationExceptionTypeScteInManifestsInvalidConfiguration                    ValidationExceptionType = "SCTE_IN_MANIFESTS_INVALID_CONFIGURATION"
 	ValidationExceptionTypeCustomAdTypesInvalidConfiguration                      ValidationExceptionType = "CUSTOM_AD_TYPES_INVALID_CONFIGURATION"
+	ValidationExceptionTypeOnlyCmafInputTypeAllowOutputLockingMode                ValidationExceptionType = "ONLY_CMAF_INPUT_TYPE_ALLOW_OUTPUT_LOCKING_MODE"
+	ValidationExceptionTypeOnlyNonEpochLockedAllowOutputTimestampMode             ValidationExceptionType = "ONLY_NON_EPOCH_LOCKED_ALLOW_OUTPUT_TIMESTAMP_MODE"
+	ValidationExceptionTypeOutputTimestampModeImmutable                           ValidationExceptionType = "OUTPUT_TIMESTAMP_MODE_IMMUTABLE"
+	ValidationExceptionTypeNonEpochLockedWithForceEndpointErrorConfiguration      ValidationExceptionType = "NON_EPOCH_LOCKED_WITH_FORCE_ENDPOINT_ERROR_CONFIGURATION"
 )
 
 // Values returns all known values for ValidationExceptionType. Note that this can
@@ -859,5 +901,9 @@ func (ValidationExceptionType) Values() []ValidationExceptionType {
 		"INVALID_ARN",
 		"SCTE_IN_MANIFESTS_INVALID_CONFIGURATION",
 		"CUSTOM_AD_TYPES_INVALID_CONFIGURATION",
+		"ONLY_CMAF_INPUT_TYPE_ALLOW_OUTPUT_LOCKING_MODE",
+		"ONLY_NON_EPOCH_LOCKED_ALLOW_OUTPUT_TIMESTAMP_MODE",
+		"OUTPUT_TIMESTAMP_MODE_IMMUTABLE",
+		"NON_EPOCH_LOCKED_WITH_FORCE_ENDPOINT_ERROR_CONFIGURATION",
 	}
 }

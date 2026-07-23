@@ -830,6 +830,12 @@ func TestCheckRequestSnapshot_StartStreamSession(t *testing.T) {
 			SharedWithClient: ptr.Bool(true),
 		},
 		RoleArn: ptr.String("__RoleArn__"),
+		DisplayConfiguration: &types.DisplayConfiguration{
+			Resolution: &types.Resolution{
+				Width:  ptr.Int32(1),
+				Height: ptr.Int32(1),
+			},
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""
@@ -1682,6 +1688,12 @@ func TestUpdateRequestSnapshot_StartStreamSession(t *testing.T) {
 			SharedWithClient: ptr.Bool(true),
 		},
 		RoleArn: ptr.String("__RoleArn__"),
+		DisplayConfiguration: &types.DisplayConfiguration{
+			Resolution: &types.Resolution{
+				Width:  ptr.Int32(1),
+				Height: ptr.Int32(1),
+			},
+		},
 	}
 	body := &bytes.Buffer{}
 	method := ""

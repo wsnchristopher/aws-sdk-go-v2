@@ -62,6 +62,12 @@ type CreateBrowserInput struct {
 	// the browser to access Amazon Web Services services.
 	ExecutionRoleArn *string
 
+	// The file system configurations to mount into the browser. Use these
+	// configurations to mount your own Amazon Simple Storage Service (Amazon S3) Files
+	// or Amazon Elastic File System (Amazon EFS) access points. Your sessions can then
+	// access your data. If you don't specify this field, no file systems are mounted.
+	FilesystemConfigurations []types.ToolsFileSystemConfiguration
+
 	// The recording configuration for the browser. When enabled, browser sessions are
 	// recorded and stored in the specified Amazon S3 location.
 	Recording *types.RecordingConfig

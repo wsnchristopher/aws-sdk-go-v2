@@ -2566,6 +2566,11 @@ func awsRestjson1_deserializeOpDocumentGetStreamSessionOutput(v **GetStreamSessi
 				sv.Description = ptr.String(jtv)
 			}
 
+		case "DisplayConfiguration":
+			if err := awsRestjson1_deserializeDocumentDisplayConfiguration(&sv.DisplayConfiguration, value); err != nil {
+				return err
+			}
+
 		case "ExportFilesMetadata":
 			if err := awsRestjson1_deserializeDocumentExportFilesMetadata(&sv.ExportFilesMetadata, value); err != nil {
 				return err
@@ -3880,6 +3885,11 @@ func awsRestjson1_deserializeOpDocumentStartStreamSessionOutput(v **StartStreamS
 					return fmt.Errorf("expected Description to be of type string, got %T instead", value)
 				}
 				sv.Description = ptr.String(jtv)
+			}
+
+		case "DisplayConfiguration":
+			if err := awsRestjson1_deserializeDocumentDisplayConfiguration(&sv.DisplayConfiguration, value); err != nil {
+				return err
 			}
 
 		case "ExportFilesMetadata":
@@ -5485,6 +5495,42 @@ func awsRestjson1_deserializeDocumentDefaultApplication(v **types.DefaultApplica
 	return nil
 }
 
+func awsRestjson1_deserializeDocumentDisplayConfiguration(v **types.DisplayConfiguration, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.DisplayConfiguration
+	if *v == nil {
+		sv = &types.DisplayConfiguration{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "Resolution":
+			if err := awsRestjson1_deserializeDocumentResolution(&sv.Resolution, value); err != nil {
+				return err
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
+	return nil
+}
+
 func awsRestjson1_deserializeDocumentEnvironmentVariables(v *map[string]string, value interface{}) error {
 	if v == nil {
 		return fmt.Errorf("unexpected nil of type %T", v)
@@ -6035,6 +6081,63 @@ func awsRestjson1_deserializeDocumentReplicationStatuses(v *[]types.ReplicationS
 
 	}
 	*v = cv
+	return nil
+}
+
+func awsRestjson1_deserializeDocumentResolution(v **types.Resolution, value interface{}) error {
+	if v == nil {
+		return fmt.Errorf("unexpected nil of type %T", v)
+	}
+	if value == nil {
+		return nil
+	}
+
+	shape, ok := value.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("unexpected JSON type %v", value)
+	}
+
+	var sv *types.Resolution
+	if *v == nil {
+		sv = &types.Resolution{}
+	} else {
+		sv = *v
+	}
+
+	for key, value := range shape {
+		switch key {
+		case "Height":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected ResolutionHeight to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.Height = ptr.Int32(int32(i64))
+			}
+
+		case "Width":
+			if value != nil {
+				jtv, ok := value.(json.Number)
+				if !ok {
+					return fmt.Errorf("expected ResolutionWidth to be json.Number, got %T instead", value)
+				}
+				i64, err := jtv.Int64()
+				if err != nil {
+					return err
+				}
+				sv.Width = ptr.Int32(int32(i64))
+			}
+
+		default:
+			_, _ = key, value
+
+		}
+	}
+	*v = sv
 	return nil
 }
 

@@ -54,11 +54,11 @@ type CreateAppBlockBuilderStreamingURLOutput struct {
 }
 
 func (c *Client) addOperationCreateAppBlockBuilderStreamingURLMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpCreateAppBlockBuilderStreamingURL{}, middleware.After)
+	err = stack.Serialize.Add(&smithyRpcv2cbor_serializeOpCreateAppBlockBuilderStreamingURL{}, middleware.After)
 	if err != nil {
 		return err
 	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpCreateAppBlockBuilderStreamingURL{}, middleware.After)
+	err = stack.Deserialize.Add(&smithyRpcv2cbor_deserializeOpCreateAppBlockBuilderStreamingURL{}, middleware.After)
 	if err != nil {
 		return err
 	}
@@ -82,6 +82,9 @@ func (c *Client) addOperationCreateAppBlockBuilderStreamingURLMiddlewares(stack 
 		return err
 	}
 	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
+		return err
+	}
+	if err = addUserAgentFeatureProtocolRPCV2CBOR(stack, options); err != nil {
 		return err
 	}
 	if err = addCredentialSource(stack, options); err != nil {

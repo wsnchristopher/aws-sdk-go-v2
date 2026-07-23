@@ -3270,6 +3270,26 @@ func (m *validateOpStartNotebookRun) HandleInitialize(ctx context.Context, in mi
 	return next.HandleInitialize(ctx, in)
 }
 
+type validateOpStartNotebookSync struct {
+}
+
+func (*validateOpStartNotebookSync) ID() string {
+	return "OperationInputValidation"
+}
+
+func (m *validateOpStartNotebookSync) HandleInitialize(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
+	out middleware.InitializeOutput, metadata middleware.Metadata, err error,
+) {
+	input, ok := in.Parameters.(*StartNotebookSyncInput)
+	if !ok {
+		return out, metadata, fmt.Errorf("unknown input parameters type %T", in.Parameters)
+	}
+	if err := validateOpStartNotebookSyncInput(input); err != nil {
+		return out, metadata, err
+	}
+	return next.HandleInitialize(ctx, in)
+}
+
 type validateOpStopNotebookRun struct {
 }
 
@@ -4422,6 +4442,10 @@ func addOpStartNotebookRunValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpStartNotebookRun{}, middleware.After)
 }
 
+func addOpStartNotebookSyncValidationMiddleware(stack *middleware.Stack) error {
+	return stack.Initialize.Add(&validateOpStartNotebookSync{}, middleware.After)
+}
+
 func addOpStopNotebookRunValidationMiddleware(stack *middleware.Stack) error {
 	return stack.Initialize.Add(&validateOpStopNotebookRun{}, middleware.After)
 }
@@ -5472,6 +5496,30 @@ func validateFormsInputMap(v map[string]types.FormEntryInput) error {
 		if err := validateFormEntryInput(&value); err != nil {
 			invalidParams.AddNested(fmt.Sprintf("[%q]", key), err.(smithy.InvalidParamsError))
 		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateGitMetadata(v *types.GitMetadata) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "GitMetadata"}
+	if v.ConnectionId == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("ConnectionId"))
+	}
+	if v.Repository == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("Repository"))
+	}
+	if v.Branch == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("Branch"))
+	}
+	if v.CommitHash == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("CommitHash"))
 	}
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -10284,6 +10332,32 @@ func validateOpStartNotebookRunInput(v *StartNotebookRunInput) error {
 	if v.NetworkConfiguration != nil {
 		if err := validateNetworkConfig(v.NetworkConfiguration); err != nil {
 			invalidParams.AddNested("NetworkConfiguration", err.(smithy.InvalidParamsError))
+		}
+	}
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	} else {
+		return nil
+	}
+}
+
+func validateOpStartNotebookSyncInput(v *StartNotebookSyncInput) error {
+	if v == nil {
+		return nil
+	}
+	invalidParams := smithy.InvalidParamsError{Context: "StartNotebookSyncInput"}
+	if v.DomainIdentifier == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("DomainIdentifier"))
+	}
+	if v.OwningProjectIdentifier == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("OwningProjectIdentifier"))
+	}
+	if v.SourceLocation == nil {
+		invalidParams.Add(smithy.NewErrParamRequired("SourceLocation"))
+	}
+	if v.GitMetadata != nil {
+		if err := validateGitMetadata(v.GitMetadata); err != nil {
+			invalidParams.AddNested("GitMetadata", err.(smithy.InvalidParamsError))
 		}
 	}
 	if invalidParams.Len() > 0 {

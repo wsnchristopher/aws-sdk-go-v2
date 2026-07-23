@@ -6135,6 +6135,50 @@ func TestCheckRequestSnapshot_StartNotebookRun(t *testing.T) {
 	}
 }
 
+func TestCheckRequestSnapshot_StartNotebookSync(t *testing.T) {
+	input := &StartNotebookSyncInput{
+		DomainIdentifier:        ptr.String("__DomainIdentifier__"),
+		OwningProjectIdentifier: ptr.String("__OwningProjectIdentifier__"),
+		SourceLocation: &types.SourceLocationMemberS3{
+			Value: "__SourceLocationMemberS3__",
+		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
+		},
+		NotebookId:  ptr.String("__NotebookId__"),
+		Name:        ptr.String("__Name__"),
+		Description: ptr.String("__Description__"),
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.StartNotebookSync(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeTestSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "StartNotebookSync"); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestCheckRequestSnapshot_StopNotebookRun(t *testing.T) {
 	input := &StopNotebookRunInput{
 		DomainIdentifier: ptr.String("__DomainIdentifier__"),
@@ -13274,6 +13318,50 @@ func TestUpdateRequestSnapshot_StartNotebookRun(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "StartNotebookRun"); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUpdateRequestSnapshot_StartNotebookSync(t *testing.T) {
+	input := &StartNotebookSyncInput{
+		DomainIdentifier:        ptr.String("__DomainIdentifier__"),
+		OwningProjectIdentifier: ptr.String("__OwningProjectIdentifier__"),
+		SourceLocation: &types.SourceLocationMemberS3{
+			Value: "__SourceLocationMemberS3__",
+		},
+		GitMetadata: &types.GitMetadata{
+			ConnectionId:  ptr.String("__ConnectionId__"),
+			Repository:    ptr.String("__Repository__"),
+			Branch:        ptr.String("__Branch__"),
+			CommitHash:    ptr.String("__CommitHash__"),
+			FileName:      ptr.String("__FileName__"),
+			CommittedAt:   ptr.Time(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)),
+			CommitMessage: ptr.String("__CommitMessage__"),
+		},
+		NotebookId:  ptr.String("__NotebookId__"),
+		Name:        ptr.String("__Name__"),
+		Description: ptr.String("__Description__"),
+		ClientToken: ptr.String("__ClientToken__"),
+	}
+	body := &bytes.Buffer{}
+	method := ""
+	rawPath := ""
+	rawQuery := ""
+	header := map[string][]string{}
+	svc := serdeNewClient()
+	_, err := svc.StartNotebookSync(context.Background(), input, func(o *Options) {
+		o.APIOptions = append(o.APIOptions, func(stack *middleware.Stack) error {
+			stack.Initialize.Remove("OperationInputValidation")
+			stack.Serialize.Remove("RequestCompression")
+			return stack.Finalize.Add(&captureSerdeRequestMiddleware{
+				body: body, method: &method, rawPath: &rawPath, rawQuery: &rawQuery, header: &header,
+			}, middleware.Before)
+		})
+	})
+	if err != nil && !errors.Is(err, errSerdeSnapshotOK) {
+		t.Fatal(err)
+	}
+	if err := serdeUpdateSnapshot(method, rawPath, rawQuery, header, body.Bytes(), "StartNotebookSync"); err != nil {
 		t.Fatal(err)
 	}
 }
